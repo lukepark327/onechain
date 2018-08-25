@@ -12,12 +12,11 @@ function Block(index, hash, previousHash, timestamp, data){   //except diificult
     this.timestamp = timestamp;
     this.data = data;
     this.hash = hash;
-    this.difficulty = difficulty;
-    this.nonce = nonce;
+    
     
 }
 
-Blockchain.prototype.calculateHashForBlock=function(index,previousHash,timestamp,data){
+Block.prototype.calculateHashForBlock=function(index,previousHash,timestamp,data){
     hash=CryptoJS.SHA256(index+previousHash+timestamp+data).toString();
     return hash;
 }
@@ -27,7 +26,7 @@ Blockchain.prototype.generateNextBlock=function(hash, previousHash, data){
     hash=hash, 
     previousHash=previousHash,
     timestamp= Math.round(new Date().getTime()/1000),    
-    data=data  //이거는 transactionLIst 거래내역임 나중에 리스트로 바꿔도 될 듯
+    data=data; //이거는 transactionLIst 거래내역임 나중에 리스트로 바꿔도 될 듯
     nextBlock= new Block(index, hash, previousHash, timestamp, data);
 
 
@@ -35,7 +34,7 @@ Blockchain.prototype.generateNextBlock=function(hash, previousHash, data){
     return nextBlock;
 }
 
-Block.prototype.isValidBlockStructure=function(Block){
+Block.prototype.isValidBlockStructure=function(){
     return typeof block.index==='number'
     &&typeof block.hash==='string'
     && typeof block.previousHash==='string'
@@ -43,18 +42,18 @@ Block.prototype.isValidBlockStructure=function(Block){
     &&typeof block.data==='object';
 }
 
-Block.prototype.isValidBlock=function(newBlock,previousBlock){
-    if(!this.isValidBlockStructure(newBlock)){  //타입 미스
-        console.log('invalis block structure %s',JSON.stringify(newBlock));  //여기 수정 중
+Block.prototype.isValidBlock=function(previousBlock){  //newBlock ->this
+    if(!this.isValidBlockStructure()){  //타입 미스
+        console.log('invalis block structure %s',JSON.stringify(this));  //여기 수정 중
         return false;
     }
-    if(previousBlock.index+1 !== newBLock.index){  //내용 미스
+    if(previousBlock.index+1 !== this.index){  //내용 미스
         console.log('invalid index');
         return false;
-    }else if(previousBlock.hash!==newBlock.previousHash){
+    }else if(previousBlock.hash!==this.previousHash){
         console.log('invalid previoushash');
         return false;
-    }else if(calculateHashForBlock(newBlock)!==newBlock.hash){
+    }else if(calculateHashForBlock(this)!==this.hash){
         console.log('invalid hash\n'+'Hash:'+newBlock.hash+'\ncalculatedHash:'+calculateHashForBlock(newBlock));
         return false;
     }
@@ -73,3 +72,8 @@ Blockchain.prototype.isValidChain=function(blockchain){
     }
     return true;
 }
+
+
+
+
+
