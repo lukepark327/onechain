@@ -71,7 +71,7 @@ function initConnection(ws){
 };
 
 function initMessageHandler(ws){
-    ws.on('message', function(data){
+    ws.on('message', function (data){
         var message = JSON.parse(data);
         console.log('Received message' + JSON.stringify(message));
         switch (message.type) {
@@ -194,12 +194,12 @@ function isValidChain(blockchainToValidate){
 };
 
 function getLatestBlock(){return blockchain[blockchain.length - 1]};
-function queryChainLengthMsg(){({'type': MessageType.QUERY_LATEST})};
-function queryAllMsg(){({'type': MessageType.QUERY_ALL})};
-function responseChainMsg(){({
+function queryChainLengthMsg(){return ({'type': MessageType.QUERY_LATEST})};
+function queryAllMsg(){return ({'type': MessageType.QUERY_ALL})};
+function responseChainMsg(){return ({
     'type': MessageType.RESPONSE_BLOCKCHAIN, 'data': JSON.stringify(blockchain)
 })};
-function responseLatestMsg(){({
+function responseLatestMsg(){return ({
     'type': MessageType.RESPONSE_BLOCKCHAIN,
     'data': JSON.stringify([getLatestBlock()])
 })};
