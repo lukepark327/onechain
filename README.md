@@ -20,3 +20,12 @@
 
 원체인은 블록체인 프로토콜 핵심 부분의 구현체이다. 기능별로 모듈화함으로써 복잡한 코드를 보다 명료하게 전달하고자 하였다. 이 코드 및 문서에 기초하여 누구나 학습하고 재사용 가능하도록 하였다.
 
+# How to Start
+## install packages
+<pre><code>npm install</code></pre>
+## start
+<code><pre>npm start</code></pre>
+## set node 2
+<code><pre>$env:HTTP_PORT=3002   
+$env:P2P_PORT=6002   
+$env:PEERS = "ws://localhost:6001"</code></pre>
