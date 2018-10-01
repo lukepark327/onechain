@@ -26,6 +26,6 @@
 ## start
 <code>npm start</code>
 ## set node 2
-<code>$env:HTTP_PORT=3002   
-$env:P2P_PORT=6002   
+<code>$env:HTTP_PORT=3002    <p>
+$env:P2P_PORT=6002    <p>
 $env:PEERS = "ws://localhost:6001"</code>
