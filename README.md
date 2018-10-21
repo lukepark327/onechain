@@ -16,7 +16,7 @@
 
 ------
 
-원체인은 Java Script(Type Script)로 개발되어 쉽게 다루고 개발 시간을 단축할 수 있으며, 명료한 알고리즘을 통해 블록체인 교육을 위한 용도로도 활용 가능하다.
+원체인은 JavaScript로 개발되어 쉽게 다루고 개발 시간을 단축할 수 있으며, 명료한 알고리즘을 통해 블록체인 교육을 위한 용도로도 활용 가능하다.
 
 프로그래밍 언어로는 편리성과 이식성에서 뛰어난 자바스크립트를 채택했다. 또한 자바스크립트는 front end와 back end에 모두 사용 가능한 언어이다. 추후 서비스를 제공하고자 할 경우 여러 언어를 사용해야 하는 번거로움을 줄여줄 수 있다.
 
@@ -28,6 +28,6 @@
 ## start
 <code>npm start</code>
 ## set node 2
-<code>$env:HTTP_PORT=3002    <p>
-$env:P2P_PORT=6002    <p>
-$env:PEERS = "ws://localhost:6001"</code>
+<code>$env:HTTP_PORT=3003    <p>
+$env:P2P_PORT=6003    <p>
+$env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"</code>
