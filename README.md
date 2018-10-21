@@ -1,4 +1,6 @@
 # onechain   
+> Special Thanks to naive-coin   
+   
 
 블록체인이란 순차적 거래내역을 블록으로 형성한 체인 형태의 공공거래 장부이다.    
 
