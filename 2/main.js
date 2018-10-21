@@ -42,7 +42,7 @@ var MessageType = {
     RESPONSE_BLOCKCHAIN: 2
 };
 
-// REST API
+// RESTful API
 function initHttpServer(){
     var app = express();
     app.use(bodyParser.json());
