@@ -26,9 +26,7 @@
 - Node.js v8.11.3 (>=4.3.2)
 - cURL 7.55.1 or Postman v6.4.4
 
-## How to Use
-[![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
-> 위 이미지를 클릭하면 동영상이 재생됩니다.
+## How to Start
 
 ### install packages
 ```
@@ -52,6 +50,10 @@ $env:P2P_PORT=6003
 (optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
 npm start
 ```
+
+## How to Use
+[![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
+> 위 이미지를 클릭하면 동영상이 재생됩니다.
 
 ### Get blockchain
 ```
