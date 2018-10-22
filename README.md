@@ -25,28 +25,31 @@
 - Node.js v8.11.3 (>=4.3.2)
 - Postman v6.4.4
 
-## How to Start
+## How to Use
 동영상 추가 예정   
 
 ### install packages
 ```
 npm install
 ```
-### start (node 1)
+### start node #1
 ```
 npm start
 ```
-### start node 2
+### start node #2
 ```
 $env:HTTP_PORT=3002
 $env:P2P_PORT=6002
 (optional) $env:PEERS = "ws://127.0.0.1:6001"
 npm start
 ```
-### start node 3
+### start node #3
 ```
 $env:HTTP_PORT=3003
 $env:P2P_PORT=6003
 (optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
 npm start
 ```
+
+## License
+The onechain project is licensed under the Apache License, Version 2.0, also included in our repository in the [LICENSE](https://github.com/JOYUJEONG/onechain/blob/master/LICENSE) file.
