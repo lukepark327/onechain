@@ -24,10 +24,10 @@
 ## Environments
 - Windows 10 Pro 64-bit operating system
 - Node.js v8.11.3 (>=4.3.2)
-- Postman v6.4.4 or cURL 7.55.1
+- cURL 7.55.1 or Postman v6.4.4
 
 ## How to Use
-동영상 추가 예정   
+[![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)
 
 ### install packages
 ```
