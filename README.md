@@ -17,8 +17,8 @@
 폴더 이름 바꾸기
 
 ## Environments
-- Node.js v8.11.3
-- Postman Version 6.4.4
+- Node.js   v8.11.3
+- Postman   Version 6.4.4
 
 ## How to Start
 동영상 추가 예정   
