@@ -2,16 +2,24 @@
 
 또한 노드(피어)간의 소통, 그리고 사용자와 노드와의 소통을 위해 P2P 구현체 및 HTTP 웹소켓 프로그래밍 구현체를 제공한다.
 
-# How to Start
-## install packages
-<code>npm install</code>
-## start
-<code>npm start</code>
-## set node 2
-<code>$env:HTTP_PORT=3002    <p>
-$env:P2P_PORT=6002    <p>
-(optional) $env:PEERS = "ws://127.0.0.1:6001"</code>
-## set node 3
-<code>$env:HTTP_PORT=3003    <p>
-$env:P2P_PORT=6003    <p>
-(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"</code>
+## How to Start
+### install packages
+```
+npm install
+```
+### start
+```
+npm start
+```
+### set node 2
+```
+$env:HTTP_PORT=3002
+$env:P2P_PORT=6002
+(optional) $env:PEERS = "ws://127.0.0.1:6001"
+```
+### set node 3
+```
+$env:HTTP_PORT=3003
+$env:P2P_PORT=6003
+(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+```
