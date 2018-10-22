@@ -20,7 +20,7 @@ curl http://127.0.0.1:3001/blocks
 ### Add new block
 ```
 curl -X POST http://127.0.0.1:3001/mineBlock
-curl -H "Content-type:application/json" --data '{"data" : "Anything you want"}' http://127.0.0.1:3001/mineBlock
+curl -H "Content-type:application/json" --data "{\"data\" : \"Anything you want\"}" http://127.0.0.1:3001/mineBlock
 ```
 
 ### Get connected peers
@@ -30,7 +30,7 @@ curl http://127.0.0.1:3001/peers
 
 ### Add peer
 ```
-curl -H "Content-type:application/json" --data '{"peer" : "ws://127.0.0.1:6002"}' http://127.0.0.1:3001/addPeer
+curl -H "Content-type:application/json" --data "{\"peer\" : \"ws://127.0.0.1:6002\"}" http://127.0.0.1:3001/addPeer
 ```
 
 ### Stop
