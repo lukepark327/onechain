@@ -18,7 +18,7 @@
 
 ## Environments
 - Node.js v8.11.3
-- Postman Version 6.4.4
+- Postman v6.4.4
 
 ## How to Start
 동영상 추가 예정   
