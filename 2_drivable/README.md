@@ -10,7 +10,30 @@
 
 P2P 통신을 위해 웹소켓을 활용합니다. 최소한의 기능만을 제공하기 위하여 자동 피어 탐색 기능은 구현되지 않았습니다. 따라서 다른 피어의 위치(웹소켓 URLs)는 사용자로 하여금 수동으로 입력되어져야 합니다.
    
-가장 직관적으로 노드를 조작하는 방법은 Curl을 활용하는 것입니다. 혹은 Postman 프로그램을 통해 보다 쉽게 상호작용할 수 있습니다.
+사용자와의 통신은 HTTP 인터페이스를 통해 이루어집니다. 가장 직관적으로 노드를 조작하는 방법은 Curl을 활용하는 것입니다. 다음의 예시는 원체인에서 가능한 명령들을 나열한 것입니다. 혹은 동영상처럼 Postman 프로그램을 통해 보다 쉽게 상호작용할 수 있습니다.
+
+### Get blockchain
 ```
-> curl http://127.0.0.1:3001/blocks
+curl http://127.0.0.1:3001/blocks
+```
+
+### Add new block
+```
+curl -X POST http://127.0.0.1:3001/mineBlock
+curl -H "Content-type:application/json" --data '{"data" : "Anything you want"}' http://127.0.0.1:3001/mineBlock
+```
+
+### Get connected peers
+```
+curl http://127.0.0.1:3001/peers
+```
+
+### Add peer
+```
+curl -H "Content-type:application/json" --data '{"peer" : "ws://127.0.0.1:6002"}' http://127.0.0.1:3001/addPeer
+```
+
+### Stop
+```
+curl -X POST http://127.0.0.1:3001/stop
 ```
