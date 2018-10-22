@@ -10,7 +10,34 @@
 
 P2P 통신을 위해 웹소켓을 활용합니다. 최소한의 기능만을 제공하기 위하여 자동 피어 탐색 기능은 구현되지 않았습니다. 따라서 다른 피어의 위치(웹소켓 URLs)는 사용자로 하여금 수동으로 입력되어져야 합니다.
    
-사용자와의 통신은 HTTP 인터페이스를 통해 이루어집니다. 가장 직관적으로 노드를 조작하는 방법은 **cURL**을 활용하는 것입니다. 다음의 예시는 원체인에서 가능한 명령들을 나열한 것입니다. 혹은 동영상처럼 Postman 프로그램을 통해 보다 쉽게 상호작용할 수 있습니다.
+사용자와의 통신은 HTTP 인터페이스를 통해 이루어집니다. 가장 직관적으로 노드를 조작하는 방법은 **cURL**을 활용하는 것입니다. 다음의 예시는 원체인에서 가능한 명령들을 나열한 것입니다. 혹은 아래의 동영상처럼 Postman 프로그램을 통해 보다 쉽게 상호작용할 수 있습니다.
+
+## How to Use
+[![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
+위 이미지를 클릭하면 동영상이 재생됩니다.
+
+### install packages
+```
+npm install
+```
+### start node #1
+```
+npm start
+```
+### start node #2
+```
+$env:HTTP_PORT=3002
+$env:P2P_PORT=6002
+(optional) $env:PEERS = "ws://127.0.0.1:6001"
+npm start
+```
+### start node #3
+```
+$env:HTTP_PORT=3003
+$env:P2P_PORT=6003
+(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+npm start
+```
 
 ### Get blockchain
 ```
