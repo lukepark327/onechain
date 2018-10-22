@@ -15,8 +15,8 @@
 그림 설명
 
 ## Details
-[최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)   
-[동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)
+- [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)   
+- [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)
 
 ## Environments
 - Node.js v8.11.3 (>=4.3.2)
