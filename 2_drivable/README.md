@@ -5,7 +5,7 @@
    
 원체인에서는 노드 간의 소통, 그리고 사용자와 노드와의 소통을 위해 **P2P 및 HTTP 웹소켓 프로그래밍 구현체**를 제공합니다. 이전 [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)에 이어 구현됩니다.
 
-## 그림 2.1 원체인 코어 구조
+## 그림 2.1. 원체인 코어 구조
 ![그림2.1](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/images/2-1.png)
 
 그림 설명
