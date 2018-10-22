@@ -19,7 +19,7 @@
 폴더 이름 바꾸기
 
 ## Environments
-- Node.js v8.11.3
+- Node.js v8.11.3 (>=4.3.2)
 - Postman v6.4.4
 
 ## How to Start
