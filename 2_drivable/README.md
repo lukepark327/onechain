@@ -8,30 +8,9 @@
 ## 그림 2.1. 원체인 코어 구조
 ![그림2.1](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/images/2-1.png)
 
-그림 설명
-
-## How to Start
-동영상 추가 예정   
-
-### install packages
+P2P 통신을 위해 웹소켓을 활용합니다. 최소한의 기능만을 제공하기 위하여 자동 피어 탐색 기능은 구현되지 않았습니다. 따라서 다른 피어의 위치(웹소켓 URLs)는 사용자로 하여금 수동으로 입력되어져야 합니다.
+   
+가장 직관적으로 노드를 조작하는 방법은 Curl을 활용하는 것입니다. 혹은 Postman 프로그램을 통해 보다 쉽게 상호작용할 수 있습니다.
 ```
-npm install
-```
-### start (node 1)
-```
-npm start
-```
-### start node 2
-```
-$env:HTTP_PORT=3002
-$env:P2P_PORT=6002
-(optional) $env:PEERS = "ws://127.0.0.1:6001"
-npm start
-```
-### start node 3
-```
-$env:HTTP_PORT=3003
-$env:P2P_PORT=6003
-(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
-npm start
+> curl http://127.0.0.1:3001/blocks
 ```
