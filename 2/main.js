@@ -64,6 +64,10 @@ function initHttpServer(){
         connectToPeers([req.body.peer]);
         res.send();
     });
+    app.post('/stop', function(req, res){
+        res.send({'msg' : 'stopping server'});
+        process.exit();
+    });
     app.listen(http_port, function(){console.log('Listening http on port: ' + http_port)});
 };
 
