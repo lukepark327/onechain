@@ -1,4 +1,5 @@
 # onechain   
+Badge 달기   
 > 핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
 > Special Thanks to lhartikk/naivecoin   
 
@@ -47,3 +48,6 @@ $env:P2P_PORT=6003
 (optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
 npm start
 ```
+
+## License
+정보 추가
