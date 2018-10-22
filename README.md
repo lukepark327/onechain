@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-brightgreen.svg)](https://nodejs.org/en/)   
 
-> 핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.
+> 핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조다.
 
 ## Abstract
 블록체인 기반 서비스가 크게 성장하면서 블록체인 프로토콜 개발을 위한 오픈소스의 필요성이 대두되었다. 비트코인, 이더리움 등 기(旣)공개된 코드가 있지만 복잡도가 높아 다루기 까다롭고 교육용으로 사용하기에도 어려운 실정이다.    
@@ -82,5 +82,4 @@ curl -X POST http://127.0.0.1:3001/stop
 
 ## License
 The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/JOYUJEONG/onechain/blob/master/LICENSE) file.   
-   
 Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
