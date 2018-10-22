@@ -22,7 +22,7 @@
 - [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)
 
 ## Environments
-- Windows 10 64-bit operating system
+- Windows 10 Pro 64-bit operating system
 - Node.js v8.11.3 (>=4.3.2)
 - Postman v6.4.4
 
