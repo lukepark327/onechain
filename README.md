@@ -16,22 +16,22 @@
 
 ## How to Start
 ### install packages
-'''
+```
 npm install
-'''
+```
 ### start
-'''
+```
 npm start
-'''
+```
 ### set node 2
-'''
+```
 $env:HTTP_PORT=3002
 $env:P2P_PORT=6002
 (optional) $env:PEERS = "ws://127.0.0.1:6001"
-'''
+```
 ### set node 3
-'''
+```
 $env:HTTP_PORT=3003
 $env:P2P_PORT=6003
 (optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
-'''
+```
