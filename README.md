@@ -12,6 +12,8 @@
 ## Overview
 ![그림2.1](https://github.com/JOYUJEONG/onechain/blob/master/images/2-1.png)
 
+그림 설명
+
 ## Details
 폴더별 README.md 링크 추가 예정   
 폴더 이름 바꾸기
