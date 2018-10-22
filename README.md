@@ -16,14 +16,22 @@
 
 ## How to Start
 ### install packages
-<code>npm install</code>
+'''
+npm install
+'''
 ### start
-<code>npm start</code>
+'''
+npm start
+'''
 ### set node 2
-<code>$env:HTTP_PORT=3002    <p>
-$env:P2P_PORT=6002    <p>
-(optional) $env:PEERS = "ws://127.0.0.1:6001"</code>
+'''
+$env:HTTP_PORT=3002
+$env:P2P_PORT=6002
+(optional) $env:PEERS = "ws://127.0.0.1:6001"
+'''
 ### set node 3
-<code>$env:HTTP_PORT=3003    <p>
-$env:P2P_PORT=6003    <p>
-(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"</code>
+'''
+$env:HTTP_PORT=3003
+$env:P2P_PORT=6003
+(optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+'''
