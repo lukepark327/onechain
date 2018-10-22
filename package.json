@@ -1,8 +1,8 @@
 {
-  "name": "naivechain",
+  "name": "onechain",
   "version": "1.0.0",
   "scripts": {
-    "start": "node 2/main.js"
+    "start": "node 2_drivable/main.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

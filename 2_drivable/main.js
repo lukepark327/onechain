@@ -42,7 +42,7 @@ var MessageType = {
     RESPONSE_BLOCKCHAIN: 2
 };
 
-// RESTful API
+// REST API
 function initHttpServer(){
     var app = express();
     app.use(bodyParser.json());
@@ -132,14 +132,14 @@ function calculateHash(index, previousHash, timestamp, data){
 };
 
 // add new block
-// need validation check
+// need validation test
 function addBlock(newBlock){
     if (isValidNewBlock(newBlock, getLatestBlock())) {
         blockchain.push(newBlock);
     }
 };
 
-// validation check of new block
+// validation test of new block
 function isValidNewBlock(newBlock, previousBlock){
     if (previousBlock.index + 1 !== newBlock.index) {
         console.log('invalid index');
@@ -199,7 +199,7 @@ function replaceChain(newBlocks){
     }
 };
 
-// validation check of blockchain
+// validation test of blockchain
 function isValidChain(blockchainToValidate){
     if (JSON.stringify(blockchainToValidate[0]) !== JSON.stringify(getGenesisBlock())) {
         return false;
