@@ -14,7 +14,7 @@ P2P 통신을 위해 웹소켓을 활용합니다. 최소한의 기능만을 제
 
 ## How to Use
 [![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
-위 이미지를 클릭하면 동영상이 재생됩니다.
+> 위 이미지를 클릭하면 동영상이 재생됩니다.
 
 ### install packages
 ```
