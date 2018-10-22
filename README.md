@@ -10,7 +10,7 @@
 원체인은 편리성과 이식성에서 뛰어난 **JavaScript**에 기반하여 작성되었으므로 쉽게 다룰 수 있고, 개발 시간을 단축할 수 있다. 전반적으로 수도코드(pseudo-code) 스타일로 구현하여 타 언어 개발자도 이해가 용이하도록 하였다.
 
 ## Overview
-이미지 및 개요 추가 예정
+![그림2.1](https://github.com/JOYUJEONG/onechain/blob/master/images/2-1.png)
 
 ## Details
 폴더별 README.md 링크 추가 예정   
