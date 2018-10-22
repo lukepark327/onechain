@@ -27,19 +27,21 @@
 ```
 npm install
 ```
-### start
+### start (node 1)
 ```
 npm start
 ```
-### set node 2
+### start node 2
 ```
 $env:HTTP_PORT=3002
 $env:P2P_PORT=6002
 (optional) $env:PEERS = "ws://127.0.0.1:6001"
+npm start
 ```
-### set node 3
+### start node 3
 ```
 $env:HTTP_PORT=3003
 $env:P2P_PORT=6003
 (optional) $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+npm start
 ```
