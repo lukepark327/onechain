@@ -2,13 +2,14 @@
   "name": "onechain",
   "version": "1.0.0",
   "scripts": {
-    "start": "node 2_drivable/main.js"
+    "start": "node 3_wallet/main.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "crypto-js": "^3.1.6",
     "express": "~4.11.1",
-    "ws": "^1.1.0"
+    "ws": "^1.1.0",
+    "elliptic": "^6.4.0"
   },
   "engines": {
     "node": ">=4.3.2"

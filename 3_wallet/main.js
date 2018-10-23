@@ -1,18 +1,58 @@
 /*
-// communicates with the user via HTTP.
-// communicates with other nodes through P2P connections.
+// add the private key and public key address system.
+// store the private key permanently.
 */
 
 'use strict';
 var CryptoJS = require("crypto-js");
 var express = require("express");
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 var WebSocket = require("ws");
+var fs = require("fs");
+var ecdsa = require("elliptic");
+
+var ec = new ecdsa.ec("secp256k1");
 
 // set environment variable
 var http_port = process.env.HTTP_PORT || 3001;                              // > $env:HTTP_PORT=3003
 var p2p_port = process.env.P2P_PORT || 6001;                                // > $env:P2P_PORT=6003
 var initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];   // > $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+
+// private key location
+var privateKeyLocation = process.env.PRIVATE_KEY || ('wallet/' + p2p_port.toString() + '/private_key');
+
+function getPrivateFromWallet(){
+    var buffer = fs.readFileSync(privateKeyLocation, 'utf8');
+    return buffer.toString();
+}
+function getPublicFromWallet(){
+    var privateKey = getPrivateFromWallet();
+    var key = ec.keyFromPrivate(privateKey, 'hex');
+    return key.getPublic().encode('hex');
+}
+function generatePrivateKey(){
+    var keyPair = ec.genKeyPair();
+    var privateKey = keyPair.getPrivate();
+    return privateKey.toString(16);
+}
+
+function initWallet(){
+    // do not override existing private keys
+    if (fs.existsSync(privateKeyLocation)) {return;}
+
+    var newPrivateKey = generatePrivateKey();
+    fs.mkdirSync('wallet/');
+    fs.mkdirSync('wallet/' + p2p_port.toString());
+    fs.writeFileSync(privateKeyLocation, newPrivateKey);
+    
+    console.log('new wallet with private key created to : %s', privateKeyLocation);
+}
+
+function deleteWallet(){
+    if (fs.existsSync(privateKeyLocation)) {
+        fs.unlinkSync(privateKeyLocation);
+    }
+}
 
 // minimum block structure
 class Block {
@@ -51,10 +91,18 @@ function initHttpServer(){
         res.send(JSON.stringify(blockchain));
     });
     app.post('/mineBlock', function(req, res){
-        var newBlock = generateNextBlock(req.body.data);
+        var newBlock = generateNextBlock(req.body.data || "");
         addBlock(newBlock);
         broadcast(responseLatestMsg());
         console.log('block added: ' + JSON.stringify(newBlock));
+        res.send();
+    });
+    app.get('/address', function(req, res){
+        var address = getPublicFromWallet().toString();
+        res.send({'address': address});
+    });
+    app.post('/deleteWallet', function(req, res){
+        deleteWallet();
         res.send();
     });
     app.get('/peers', function(req, res){
@@ -235,3 +283,4 @@ function broadcast(message){sockets.forEach(socket => write(socket, message))};
 connectToPeers(initialPeers);
 initHttpServer();
 initP2PServer();
+initWallet();
