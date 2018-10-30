@@ -27,7 +27,6 @@
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
 ## Environments
-- Windows 10 Pro 64-bit operating system
 - Node.js v8.11.3 (>=4.3.2)
 - cURL 7.55.1 *or* Postman v6.4.4
 
