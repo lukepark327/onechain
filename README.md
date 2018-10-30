@@ -84,7 +84,7 @@ curl -X POST http://127.0.0.1:3001/stop
 
 ### Blockchain Policy Simulator
 - [BBR 해커톤 우수상](http://decenter.sedaily.com/NewsView/1S639FV540)   
-[![video](http://img.youtube.com/vi/aFcnPziT4FEDME/0.jpg)](https://www.youtube.com/watch?v=aFcnPziT4FEDME)   
+[![video](http://img.youtube.com/vi/aFcnPziT4FE/0.jpg)](https://www.youtube.com/watch?v=aFcnPziT4FE)   
 > 위 이미지를 클릭하면 동영상이 재생됩니다.
 
 ## License
