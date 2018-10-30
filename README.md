@@ -83,9 +83,9 @@ curl -X POST http://127.0.0.1:3001/stop
 ## Use Case
 
 ### Blockchain Policy Simulator
-- [BBR 해커톤 우수상](http://decenter.sedaily.com/NewsView/1S639FV540)   
 [![video](http://img.youtube.com/vi/aFcnPziT4FE/0.jpg)](https://www.youtube.com/watch?v=aFcnPziT4FE)   
-> 위 이미지를 클릭하면 동영상이 재생됩니다.
+> 위 이미지를 클릭하면 동영상이 재생됩니다.   
+- [BBR 해커톤 우수상](http://decenter.sedaily.com/NewsView/1S639FV540)   
 
 ## License
 The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/JOYUJEONG/onechain/blob/master/LICENSE) file.   
