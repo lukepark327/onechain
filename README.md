@@ -20,6 +20,12 @@
 - [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)   
 - [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)
 
+## Use-case
+
+### Blockchain Policy Simulator
+- [BBR Hackathon 우수상 수상작](http://decenter.sedaily.com/NewsView/1S639FV540)    
+- [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
+
 ## Environments
 - Windows 10 Pro 64-bit operating system
 - Node.js v8.11.3 (>=4.3.2)
@@ -79,13 +85,6 @@ curl -H "Content-type:application/json" --data "{\"peer\" : \"ws://127.0.0.1:600
 ```
 curl -X POST http://127.0.0.1:3001/stop
 ```
-
-## Use Case
-
-### Blockchain Policy Simulator
-[![video](http://img.youtube.com/vi/aFcnPziT4FE/0.jpg)](https://www.youtube.com/watch?v=aFcnPziT4FE)   
-> 위 이미지를 클릭하면 동영상이 재생됩니다.   
-- [BBR 해커톤 우수상](http://decenter.sedaily.com/NewsView/1S639FV540)   
 
 ## License
 The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/JOYUJEONG/onechain/blob/master/LICENSE) file.   
