@@ -1,6 +1,6 @@
 /*
-// Communicates with the user via HTTP.
-// Communicates with other nodes through P2P connections.
+// communicates with the user via HTTP.
+// communicates with other nodes through P2P connections.
 */
 
 'use strict';
