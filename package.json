@@ -2,7 +2,7 @@
   "name": "onechain",
   "version": "1.0.0",
   "scripts": {
-    "start": "node 4_modular/main.js"
+    "start": "node 3_pow/main.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

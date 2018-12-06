@@ -97,7 +97,6 @@ function handleBlockchainResponse(message) {
 
 function queryAllMsg() { return ({ 'type': MessageType.QUERY_ALL }) }
 function queryChainLengthMsg() { return ({ 'type': MessageType.QUERY_LATEST }) }
-
 function responseChainMsg() {
     return ({
         'type': MessageType.RESPONSE_BLOCKCHAIN,

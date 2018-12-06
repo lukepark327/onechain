@@ -45,7 +45,6 @@ function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
     const difficulty = getDifficulty(getBlockchain());
-    console.log('difficulty: ' + difficulty);
     const nextIndex = previousBlock.index + 1;
     const nextTimestamp = Math.round(new Date().getTime() / 1000);
     const newBlock = findBlock(nextIndex, previousBlock.hash, nextTimestamp, blockData, difficulty);
@@ -62,16 +61,6 @@ function findBlock(nextIndex, previoushash, nextTimestamp, blockData, difficulty
         }
         nonce++;
     }
-}
-
-// add new block
-// need validation test
-function addBlock(newBlock) {
-    if (isValidNewBlock(newBlock, getLatestBlock())) {
-        blockchain.push(newBlock);
-        return true;
-    }
-    return false;
 }
 
 // PoW
@@ -117,6 +106,16 @@ function calculateHashForBlock(block) {
 
 function calculateHash(index, previousHash, timestamp, data, difficulty, nonce) {
     return CryptoJS.SHA256(index + previousHash + timestamp + data + difficulty + nonce).toString();
+}
+
+// add new block
+// need validation test
+function addBlock(newBlock) {
+    if (isValidNewBlock(newBlock, getLatestBlock())) {
+        blockchain.push(newBlock);
+        return true;
+    }
+    return false;
 }
 
 // validation test of new block
