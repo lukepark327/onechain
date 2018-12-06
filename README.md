@@ -1,7 +1,7 @@
-# onechain   
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-brightgreen.svg)](https://nodejs.org/en/)   
 
+# onechain
 > 핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
 > [제12회 공개소프트웨어 개발자대회 후원기업상 수상작](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
