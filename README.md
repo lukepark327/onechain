@@ -18,12 +18,13 @@
 
 ## Details
 - [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)   
-- [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md).  
+- [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
 ## Use-case
 
 ### Blockchain Policy Simulator
-- [BBR Hackathon 우수상 수상작](http://decenter.sedaily.com/NewsView/1S639FV540)    
+- [BBR Hackathon](http://www.breview.kr)
+[우수상 수상작](http://decenter.sedaily.com/NewsView/1S639FV540)    
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
 ### instructional-blockchain
