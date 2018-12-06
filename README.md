@@ -17,7 +17,7 @@
 전반적으로 수도코드(pseudo-code) 스타일로 구현하여 타 언어 개발자도 이해가 용이하도록 하였다.   
 
 ## Details
-- [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal_functional/README.md)   
+- [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
 - [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
 ## Use-case
