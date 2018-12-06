@@ -54,11 +54,11 @@ def stopNode():
 
 if __name__ == '__main__':
     """
-    res = getBlockchain()                                       # pprint(ast.literal_eval(res.text)[0]['data'])
+    res = getBlockchain()                       # pprint(ast.literal_eval(res.text)[0]['data'])
     res = addNewBlock(req="Anything") 
-    res = getPeers()                                            # pprint(ast.literal_eval(res.text)[0])
+    res = getPeers()                            # pprint(ast.literal_eval(res.text)[0])
     res = addPeer(req="ws://127.0.0.1:6003")
-    res = stopNode()                                            # pprint(ast.literal_eval(res.text)['msg'])
+    res = stopNode()                            # pprint(ast.literal_eval(res.text)['msg'])
     
     print(res.text)
     """
