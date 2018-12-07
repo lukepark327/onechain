@@ -46,20 +46,35 @@ npm start
 ```
 ### start node #2
 ```
-(windows)   $env:HTTP_PORT=3002
-(windows)   $env:P2P_PORT=6002
-(mac)       $env:HTTP_PORT=3002
-(mac)       $env:P2P_PORT=6002
-(optional)  $env:PEERS = "ws://127.0.0.1:6001"
+$env:HTTP_PORT=3002
+$env:P2P_PORT=6002
+(optional) $env:PEERS="ws://127.0.0.1:6001"
 npm start
 ```
+
+*or*
+
+```
+export HTTP_PORT=3002
+export P2P_PORT=6002
+(optional) export PEERS="ws://127.0.0.1:6001"
+npm start
+```
+
 ### start node #3
 ```
-(windows)   $env:HTTP_PORT=3003
-(windows)   $env:P2P_PORT=6003
-(mac)       $env:HTTP_PORT=3003
-(mac)       $env:P2P_PORT=6003
-(optional)  $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+$env:HTTP_PORT=3003
+$env:P2P_PORT=6003
+(optional) $env:PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+npm start
+```
+
+*or*
+
+```
+export HTTP_PORT=3003
+export P2P_PORT=6003
+(optional) export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"
 npm start
 ```
 
