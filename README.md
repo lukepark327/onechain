@@ -3,7 +3,7 @@
 
 # one-chain
 minimal blockchain ever.
-> 핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
+핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
 > [제12회 공개소프트웨어 개발자대회 후원기업상 수상작](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
