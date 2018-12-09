@@ -43,37 +43,34 @@ minimal blockchain ever.
 ```
 npm install
 ```
+
 ### start node #1
 ```
 npm start
 ```
+
 ### start node #2
 ```
 $env:HTTP_PORT=3002
 $env:P2P_PORT=6002
 ```
-*optionally*
-```
-$env:PEERS="ws://127.0.0.1:6001"
-```
-```
-npm start
-```
-
----
-
 *or*
-
 ```
 export HTTP_PORT=3002
 export P2P_PORT=6002
 ```
-*optionally*
-```
-export PEERS="ws://127.0.0.1:6001"
-```
+
 ```
 npm start
+```
+
+*optionally*
+```
+$env:PEERS="ws://127.0.0.1:6001"
+```
+*or*
+```
+export PEERS="ws://127.0.0.1:6001"
 ```
 
 ### start node #3
@@ -81,28 +78,23 @@ npm start
 $env:HTTP_PORT=3003
 $env:P2P_PORT=6003
 ```
-*optionally*
-```
-$env:PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"
-```
-```
-npm start
-```
-
----
-
 *or*
-
 ```
 export HTTP_PORT=3003
 export P2P_PORT=6003
 ```
-*optionally*
-```
-export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"
-```
+
 ```
 npm start
+```
+
+*optionally*
+```
+$env:PEERS="ws://127.0.0.1:6003"
+```
+*or*
+```
+export PEERS="ws://127.0.0.1:6003"
 ```
 
 # How to Use
