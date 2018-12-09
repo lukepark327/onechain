@@ -7,7 +7,7 @@ minimal blockchain ever.
 > [제12회 공개소프트웨어 개발자대회 후원기업상 수상작](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
-# Abstract
+## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
 블록체인 기반 서비스가 크게 성장하면서 블록체인 프로토콜 개발을 위한 오픈소스의 필요성이 대두되었다.
@@ -19,7 +19,7 @@ minimal blockchain ever.
 또한, 상세한 주석 및 문서를 제공하여 누구나 쉽게 학습하고 재사용 가능하도록 하였다.
 전반적으로 수도코드(pseudo-code) 스타일로 구현하여 타 언어 개발자도 이해가 용이하도록 하였다.   
 
-# Details
+## Details
 - [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
 - [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
@@ -33,21 +33,21 @@ minimal blockchain ever.
 ## instructional-blockchain
 - [교육용 블록체인](https://github.com/twodude/instructional-blockchain)   
 
-# Environments
+# How to Start
+
+## Environments
 - Node.js v8.11.3 (>=4.3.2)
 - cURL 7.55.1 *or* Postman v6.4.4
 
-# How to Start
-
-## install packages
+### install packages
 ```
 npm install
 ```
-## start node #1
+### start node #1
 ```
 npm start
 ```
-## start node #2
+### start node #2
 ```
 $env:HTTP_PORT=3002
 $env:P2P_PORT=6002
@@ -76,7 +76,7 @@ export PEERS="ws://127.0.0.1:6001"
 npm start
 ```
 
-## start node #3
+### start node #3
 ```
 $env:HTTP_PORT=3003
 $env:P2P_PORT=6003
@@ -109,43 +109,43 @@ npm start
 [![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
 > 위 이미지를 클릭하면 동영상이 재생됩니다.
 
-## Get blockchain
+### Get blockchain
 ```
 curl http://127.0.0.1:3001/blocks
 ```
 
-## Add new block
+### Add new block
 ```
 curl -X POST http://127.0.0.1:3001/mineBlock
 curl -H "Content-type:application/json" --data "{\"data\" : \"Anything you want\"}" http://127.0.0.1:3001/mineBlock
 ```
 
-## Get connected peers
+### Get connected peers
 ```
 curl http://127.0.0.1:3001/peers
 ```
 
-## Add peer
+### Add peer
 ```
 curl -H "Content-type:application/json" --data "{\"peer\" : \"ws://127.0.0.1:6002\"}" http://127.0.0.1:3001/addPeer
 ```
 
-## Get Address
+### Get Address
 ```
 curl http://127.0.0.1:3001/address
 ```
 
-## Create Wallet
+### Create Wallet
 ```
 curl -X POST http://127.0.0.1:3001/createWallet
 ```
 
-## Delete Wallet
+### Delete Wallet
 ```
 curl -X POST http://127.0.0.1:3001/deleteWallet
 ```
 
-## Stop
+### Stop
 ```
 curl -X POST http://127.0.0.1:3001/stop
 ```
