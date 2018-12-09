@@ -104,6 +104,21 @@ curl http://127.0.0.1:3001/peers
 curl -H "Content-type:application/json" --data "{\"peer\" : \"ws://127.0.0.1:6002\"}" http://127.0.0.1:3001/addPeer
 ```
 
+### Get Address
+```
+curl http://127.0.0.1:3001/address
+```
+
+### Create Wallet
+```
+curl -X POST http://127.0.0.1:3001/createWallet
+```
+
+### Delete Wallet
+```
+curl -X POST http://127.0.0.1:3001/deleteWallet
+```
+
 ### Stop
 ```
 curl -X POST http://127.0.0.1:3001/stop
