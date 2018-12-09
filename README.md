@@ -8,6 +8,8 @@ minimal blockchain ever.
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
+![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
+
 블록체인 기반 서비스가 크게 성장하면서 블록체인 프로토콜 개발을 위한 오픈소스의 필요성이 대두되었다.
 비트코인, 이더리움 등 기(旣)공개된 코드가 있지만 복잡도가 높아 다루기 까다롭고 교육용으로 사용하기에도 어려운 실정이다.   
 
