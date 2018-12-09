@@ -90,7 +90,7 @@ npm start
 
 # How to Use
 [![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
-> 위 이미지를 클릭하면 동영상이 재생됩니다.
+> Click on the image above to play the video.
 
 ### Get blockchain
 ```
