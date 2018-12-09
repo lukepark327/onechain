@@ -50,51 +50,39 @@ npm start
 ```
 
 ### start node #2
-```
-$env:HTTP_PORT=3002
-$env:P2P_PORT=6002
-```
+```$env:HTTP_PORT=3002```
 *or*
-```
-export HTTP_PORT=3002
-export P2P_PORT=6002
-```
+```export HTTP_PORT=3002```
+
+```$env:P2P_PORT=6002```
+*or*
+```export P2P_PORT=6002```
+
+*optionally*
+```$env:PEERS="ws://127.0.0.1:6001"```
+*or*
+```export PEERS="ws://127.0.0.1:6001"```
 
 ```
 npm start
-```
-
-*optionally*
-```
-$env:PEERS="ws://127.0.0.1:6001"
-```
-*or*
-```
-export PEERS="ws://127.0.0.1:6001"
 ```
 
 ### start node #3
-```
-$env:HTTP_PORT=3003
-$env:P2P_PORT=6003
-```
+```$env:HTTP_PORT=3003```
 *or*
-```
-export HTTP_PORT=3003
-export P2P_PORT=6003
-```
+```export HTTP_PORT=3003```
+
+```$env:P2P_PORT=6003```
+*or*
+```export P2P_PORT=6003```
+
+*optionally*
+```$env:PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
+*or*
+```export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
 
 ```
 npm start
-```
-
-*optionally*
-```
-$env:PEERS="ws://127.0.0.1:6003"
-```
-*or*
-```
-export PEERS="ws://127.0.0.1:6003"
 ```
 
 # How to Use
