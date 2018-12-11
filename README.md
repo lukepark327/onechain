@@ -33,7 +33,7 @@ minimal blockchain ever.
 [우수상 수상작](http://decenter.sedaily.com/NewsView/1S639FV540)    
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
-## instructional-blockchain
+## edu-chain :: Instructional Blockchain
 - [교육용 블록체인](https://github.com/twodude/educhain)   
 
 # How to Start
