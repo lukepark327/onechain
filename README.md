@@ -34,7 +34,7 @@ minimal blockchain ever.
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
 ## instructional-blockchain
-- [교육용 블록체인](https://github.com/twodude/instructional-blockchain)   
+- [교육용 블록체인](https://github.com/twodude/educhain)   
 
 # How to Start
 
