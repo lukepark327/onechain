@@ -6,21 +6,22 @@ minimal blockchain ever.
 
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
 
-Assist Developing Blockchain Core with Simple Implementation.
+Assist you to develop blockchain core easily.
 > [2018 OSS Grand Developers Challenge](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
-As Blockchain-based service grew, so need of open source to develope blockchain protocol was drived.
-Although there are some open source projects like Bitcoin, Ethereum, et al., those are difficult to study and use.
+As Blockchain-based service grew, so need of open source which assists developing blockchain core was drived.
+Although there are some open source projects like Bitcoin and Ethereum, those are difficult to learn to use.
 
-You can solve those problems by using simple implementation, 'one-chain'.
-**'one-chain' is core implementation**
-The code of 'one-chain' is modularized by function to make it clearly.
-Also, detail comments and documents are provided for studying and reusing with ease.
-Almost code is style of pseudo-code for giving easy access to different language developers.
+You can gently solve the above problems by using
+**'one-chain'**,
+simple implementation of blockchain core.
+The one-chain is modularized by function-network, core, transaction, wallet, etc.- to achieve clarity.
+Also, detail comments and documents are provided for studying and reusing.
+Most of the code is written in a pseudo-code to provide easy understanding by other language developers.
 
 ## Details
 - [Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
@@ -33,7 +34,7 @@ Almost code is style of pseudo-code for giving easy access to different language
 [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
-## edu-chain :: Instructional Blockchain
+## edu-chain
 - [Instructional Blockchain](https://github.com/twodude/educhain)   
 
 # How to Start
