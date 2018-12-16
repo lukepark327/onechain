@@ -16,14 +16,15 @@ Assist you to develop blockchain core easily.
 As Blockchain-based service grew, so need of open source which assists developing blockchain core was drived.
 Although there are some open source projects like Bitcoin and Ethereum, those are difficult to learn to use.
 
-You can gently solve the above problems by using **```one-chain```**, simple implementation of blockchain core.
+You can gently solve the above problems by using
+**```one-chain```, simple implementation of blockchain core.**
 The one-chain is modularized by function&mdash;network, core, transaction, wallet, etc.&mdash; to achieve clarity.
 Also, detail comments and documents are provided for studying and easy reusing.
 Most of the code is written in a pseudo-code to provide understanding by other language developers.
 
 ## Details
-- [Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
-- [Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
+- [(Korean) Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
+- [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
 # Use-case
 
