@@ -6,35 +6,35 @@ minimal blockchain ever.
 
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
 
-핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
-> [제12회 공개소프트웨어 개발자대회 후원기업상 수상작](https://project.oss.kr)   
+Assist Developing Blockchain Core with Simple Implementation.
+> [2018 OSS Grand Developers Challenge](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
-블록체인 기반 서비스가 크게 성장하면서 블록체인 프로토콜 개발을 위한 오픈소스의 필요성이 대두되었다.
-비트코인, 이더리움 등 기(旣)공개된 코드가 있지만 복잡도가 높아 다루기 까다롭고 교육용으로 사용하기에도 어려운 실정이다.   
+As Blockchain-based service grew, so need of open source to develope blockchain protocol was drived.
+Although there are some open source projects like Bitcoin, Ethereum, et al., those are difficult to study and use.
 
-블록체인의 기본 원칙을 가장 간결한 방법으로 구현한 코어 '원체인(one-chain)'을 이용하면 문제를 해결할 수 있다.
-**원체인은 블록체인 프로토콜 핵심 기능 구현체이다.**
-기능별로 모듈화함으로써 복잡한 코드를 보다 명료하게 전달하고자 하였다.
-또한, 상세한 주석 및 문서를 제공하여 누구나 쉽게 학습하고 재사용 가능하도록 하였다.
-전반적으로 수도코드(pseudo-code) 스타일로 구현하여 타 언어 개발자도 이해가 용이하도록 하였다.   
+You can solve those problems by using simple implementation, 'one-chain'.
+**'one-chain' is core implementation**
+The code of 'one-chain' is modularized by function to make it clearly.
+Also, detail comments and documents are provided for studying and reusing with ease.
+Almost code is style of pseudo-code for giving easy access to different language developers.
 
 ## Details
-- [최소 기능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
-- [동작 가능 블록체인](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
+- [Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
+- [Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
 # Use-case
 
 ## Blockchain Policy Simulator
 - [BBR Hackathon](http://www.breview.kr)
-[우수상 수상작](http://decenter.sedaily.com/NewsView/1S639FV540)    
+[Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
 ## edu-chain :: Instructional Blockchain
-- [교육용 블록체인](https://github.com/twodude/educhain)   
+- [Instructional Blockchain](https://github.com/twodude/educhain)   
 
 # How to Start
 
