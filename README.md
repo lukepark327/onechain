@@ -19,7 +19,7 @@ Although there are some open source projects like Bitcoin and Ethereum, those ar
 You can gently solve the above problems by using
 **'one-chain'**,
 simple implementation of blockchain core.
-The one-chain is modularized by function-network, core, transaction, wallet, etc.- to achieve clarity.
+The one-chain is modularized by function&mdash;network, core, transaction, wallet, etc.&mdash; to achieve clarity.
 Also, detail comments and documents are provided for studying and reusing.
 Most of the code is written in a pseudo-code to provide easy understanding by other language developers.
 
