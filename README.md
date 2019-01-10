@@ -1,4 +1,4 @@
-[[Korean|한국어]](https://github.com/twodude/onechain/tree/Korean)
+[[:kr:|Korean|한국어]](https://github.com/twodude/onechain/tree/Korean)
 
 ---
 
