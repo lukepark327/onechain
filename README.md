@@ -1,3 +1,4 @@
+[[:us:|English|영어]](https://github.com/twodude/onechain/blob/master/README.md)
 [[:kr:|Korean|한국어]](https://github.com/twodude/onechain/tree/Korean)
 
 ---
