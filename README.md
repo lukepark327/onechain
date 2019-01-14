@@ -31,7 +31,7 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - [(Korean) Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
 - [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 
-# Use-case
+# Use-cases
 
 ## Blockchain Policy Simulator
 - [BBR Hackathon](http://www.breview.kr)
