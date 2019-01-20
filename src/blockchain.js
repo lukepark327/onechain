@@ -1,34 +1,55 @@
 "use strict";
 const CryptoJS = require("crypto-js");
+const merkle = require('merkle');
+const random = require('random')
 
-// block structure
-class Block {
-    constructor(index, previousHash, timestamp, data, hash, difficulty, nonce) {
+// block header structure
+class BlockHeader {
+    constructor(index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
         this.index = index;
         this.previousHash = previousHash.toString();
         this.timestamp = timestamp;
-        this.data = data;
-        this.hash = hash.toString();
+        this.merkleRoot = merkleRoot;
         this.difficulty = difficulty;
         this.nonce = nonce;
     }
 }
 
-// WARNING!! if you modify any of the following data,
-// you may need to obtain a new hash(SHA256) value of them.
-// Use this syntax: console.log(calculateHash(0, "", 1535165503, "Genesis block", 0, 0));
+// block structure
+class Block {
+    constructor(header, data) {
+        this.header = header;
+        this.data = data;
+    }
+}
+
+// you can obtain the hash(SHA256) value of them.
+// use this syntax: console.log(calculateHash(...));
 function getGenesisBlock() {
     const index = 0;
     const previousHash = "0000000000000000000000000000000000000000000000000000000000000000";
-    const timestamp = 1535165503;
-    const data = "Genesis block";
+    const timestamp = 1231006505;   // 01/03/2009 @ 6:15pm (UTC)
     const difficulty = 0;
     const nonce = 0;
-    // const hash = calculateHash(index, previousHash, timestamp, data, difficulty, nonce);
-    // console.log(hash);
-    const hash = "997d082838d06e301961597bb2daabb0a16aae046629d65127ddd4fa0539a1c7";
+    const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
+    /**
+     * The sort() method sorts the elements of an array in place
+     * and returns the array.
+     */
+    data.sort();
+    /**
+     * The unshift() method adds one or more elements
+     * to the beginning of an array
+     * and returns the new length of the array.
+     */
+    data.unshift("Coinbase");
 
-    return new Block(index, previousHash, timestamp, data, hash, difficulty, nonce);
+    const merkleTree = merkle('sha256').sync(data);
+    const merkleRoot = merkleTree.root();
+
+    const header = new BlockHeader(index, previousHash, timestamp, merkleRoot, difficulty, nonce);
+
+    return new Block(header, data);
 }
 
 // WARNING!! the current implementation's blockchain is stored in local volatile memory.
@@ -44,51 +65,62 @@ function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
     const difficulty = getDifficulty(getBlockchain());
-    const nextIndex = previousBlock.index + 1;
+    const nextIndex = previousBlock.header.index + 1;
+    const previousHash = calculateHashForBlock(previousBlock);
     const nextTimestamp = Math.round(new Date().getTime() / 1000);
-    const newBlock = findBlock(nextIndex, previousBlock.hash, nextTimestamp, blockData, difficulty);
+
+    blockData.sort();
+    blockData.unshift("Coinbase");
+
+    const merkleTree = merkle('sha256').sync(blockData);
+    const merkleRoot = merkleTree.root();
+
+    const newBlockHeader = findBlock(nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
+    const newBlock = new Block(newBlockHeader, blockData);
 
     return newBlock;
 }
 
 // PoW
-function findBlock(nextIndex, previoushash, nextTimestamp, blockData, difficulty) {
+function findBlock(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
     var nonce = 0;
     while (true) {
-        var hash = calculateHash(nextIndex, previoushash, nextTimestamp, blockData, difficulty, nonce);
+        var hash = calculateHash(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+
         if (hashMatchesDifficulty(hash, difficulty)) {
-            return new Block(nextIndex, previoushash, nextTimestamp, blockData, hash, difficulty, nonce);
+            return new BlockHeader(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
+
         nonce++;
     }
 }
 
-const BLOCK_GENERATION_INTERVAL = 10;  // in seconds
+const BLOCK_GENERATION_INTERVAL = 10;       // in seconds
 const DIFFICULTY_ADJUSTMENT_INTERVAL = 10;  // in blocks
 
 function getDifficulty(aBlockchain) {
-    const latestBlock = aBlockchain[blockchain.length - 1];
-    if (latestBlock.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.index !== 0) {
+    const latestBlock = aBlockchain[aBlockchain.length - 1];
+    if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
         return getAdjustedDifficulty(latestBlock, aBlockchain);
     }
     else {
-        return latestBlock.difficulty;
+        return latestBlock.header.difficulty;
     }
 }
 
 function getAdjustedDifficulty(latestBlock, aBlockchain) {
-    const prevAdjustmentBlock = aBlockchain[blockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
-    const timeTaken = latestBlock.timestamp - prevAdjustmentBlock.timestamp;
+    const prevAdjustmentBlock = aBlockchain[aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
+    const timeTaken = latestBlock.header.timestamp - prevAdjustmentBlock.header.timestamp;
     const timeExpected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
 
     if (timeTaken < timeExpected / 2) {
-        return prevAdjustmentBlock.difficulty + 1;
+        return prevAdjustmentBlock.header.difficulty + 1;
     }
     else if (timeTaken > timeExpected * 2) {
-        return prevAdjustmentBlock.difficulty - 1;
+        return prevAdjustmentBlock.header.difficulty - 1;
     }
     else {
-        return prevAdjustmentBlock.difficulty;
+        return prevAdjustmentBlock.header.difficulty;
     }
 }
 
@@ -102,11 +134,18 @@ function hashMatchesDifficulty(hash, difficulty) {
 
 // get hash
 function calculateHashForBlock(block) {
-    return calculateHash(block.index, block.previousHash, block.timestamp, block.data, block.difficulty, block.nonce);
+    return calculateHash(
+        block.header.index,
+        block.header.previousHash,
+        block.header.timestamp,
+        block.header.merkleRoot,
+        block.header.difficulty,
+        block.header.nonce
+    );
 }
 
-function calculateHash(index, previousHash, timestamp, data, difficulty, nonce) {
-    return CryptoJS.SHA256(index + previousHash + timestamp + data + difficulty + nonce).toString();
+function calculateHash(index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
 }
 
 // add new block
@@ -120,18 +159,21 @@ function addBlock(newBlock) {
 }
 
 // validation test of new block
-function isValidNewBlock(newBlock, previousBlock) {
-    if (previousBlock.index + 1 !== newBlock.index) {
+function isValidNewBlock(newBlock, previousBlock) { 
+    if (previousBlock.header.index + 1 !== newBlock.header.index) {
         console.log("Invalid index");
         return false;
     }
-    else if (previousBlock.hash !== newBlock.previousHash) {
-        console.log("Invalid previoushash");
+    else if (calculateHashForBlock(previousBlock) !== newBlock.header.previousHash) {
+        console.log("Invalid previousHash");
         return false;
     }
-    else if (calculateHashForBlock(newBlock) !== newBlock.hash) {
-        console.log(typeof (newBlock.hash) + " " + typeof calculateHashForBlock(newBlock));
-        console.log("Invalid hash: " + calculateHashForBlock(newBlock) + " " + newBlock.hash);
+    else if (merkle('sha256').sync(newBlock.data).root() !== newBlock.header.merkleRoot) {
+        console.log("Invalid merkleRoot");
+        return false;
+    }
+    else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
+        console.log("Invalid hash: " + calculateHashForBlock(newBlock));
         return false;
     }
     return true;
@@ -157,7 +199,10 @@ function isValidChain(blockchainToValidate) {
 // WARNING!! you can modify the following implementaion according to your own consensus design.
 // current consensus: the longest chain rule
 function replaceChain(newBlocks) {
-    if (isValidChain(newBlocks) && newBlocks.length > blockchain.length) {
+    if (
+        isValidChain(newBlocks)
+        && (newBlocks.length > blockchain.length || (newBlocks.length === blockchain.length) && random.boolean())
+    ) {
         const nw = require("./network");
 
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
@@ -169,6 +214,7 @@ function replaceChain(newBlocks) {
 }
 
 module.exports = {
+    calculateHashForBlock,
     generateNextBlock,
     getLatestBlock,
     getBlockchain,

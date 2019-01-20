@@ -73,9 +73,9 @@ function handleBlockchainResponse(message) {
     const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
     const latestBlockHeld = bc.getLatestBlock();
 
-    if (latestBlockReceived.index > latestBlockHeld.index) {
-        console.log("Blockchain possibly behind. We got: " + latestBlockHeld.index + " Peer got: " + latestBlockReceived.index);
-        if (latestBlockHeld.hash === latestBlockReceived.previousHash) {
+    if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
+        console.log("Blockchain possibly behind. We got: " + latestBlockHeld.header.index + " Peer got: " + latestBlockReceived.header.index);
+        if (bc.calculateHashForBlock(latestBlockHeld) === latestBlockReceived.header.previousHash) {
             console.log("We can append the received block to our chain");
             if (bc.addBlock(latestBlockReceived)) {
                 broadcast(responseLatestMsg());

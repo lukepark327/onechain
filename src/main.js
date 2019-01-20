@@ -20,28 +20,30 @@ function initHttpServer() {
         res.send(bc.getBlockchain());
     });
     app.post("/mineBlock", function (req, res) {
-        const newBlock = bc.generateNextBlock(req.body.data || "");
-        bc.addBlock(newBlock);
-        nw.broadcast(nw.responseLatestMsg());
-        console.log("Block added: " + JSON.stringify(newBlock));
+        const data = req.body.data || [];
+        const newBlock = bc.generateNextBlock(data);
+        if (bc.addBlock(newBlock)) {
+            nw.broadcast(nw.responseLatestMsg());
+            console.log("Block added: " + JSON.stringify(newBlock));
+        }
         res.send();
     });
     app.get("/peers", function (req, res) {
-        /* 
-         *  ref. https://developer.mozilla.org
-         *
-         *  The map() method creates a new array
-         *  with the results of calling a provided function
-         *  on every element in the calling array.
+        /**
+         * ref. https://developer.mozilla.org
+         * 
+         * The map() method creates a new array
+         * with the results of calling a provided function
+         * on every element in the calling array.
          */
         res.send(nw.getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
         }));
-        /*
-         *  Same as the following code.
+        /**
+         * Same as the following code.
          * 
-         *  The forEach() method executes a provided function once
-         *  for each array element.
+         * The forEach() method executes a provided function once
+         * for each array element.
          */
         /*
             var resStrings = [];
