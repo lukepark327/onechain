@@ -3,6 +3,7 @@
 
 ---
 
+[![version](https://img.shields.io/badge/version-v2.0.0-lightgray.svg)](https://github.com/twodude/onechain/blob/master/package.json)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
