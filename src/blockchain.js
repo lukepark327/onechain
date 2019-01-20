@@ -1,7 +1,5 @@
-'use strict';
+"use strict";
 const CryptoJS = require("crypto-js");
-
-const ut = require("./utils");
 
 // block structure
 class Block {
@@ -94,6 +92,8 @@ function getAdjustedDifficulty(latestBlock, aBlockchain) {
 }
 
 function hashMatchesDifficulty(hash, difficulty) {
+    const ut = require("./utils");
+    
     const hashBinary = ut.hexToBinary(hash);
     const requiredPrefix = '0'.repeat(difficulty);
     return hashBinary.startsWith(requiredPrefix);
@@ -121,16 +121,16 @@ function addBlock(newBlock) {
 // validation test of new block
 function isValidNewBlock(newBlock, previousBlock) {
     if (previousBlock.index + 1 !== newBlock.index) {
-        console.log('invalid index');
+        console.log("Invalid index");
         return false;
     }
     else if (previousBlock.hash !== newBlock.previousHash) {
-        console.log('invalid previoushash');
+        console.log("Invalid previoushash");
         return false;
     }
     else if (calculateHashForBlock(newBlock) !== newBlock.hash) {
-        console.log(typeof (newBlock.hash) + ' ' + typeof calculateHashForBlock(newBlock));
-        console.log('invalid hash: ' + calculateHashForBlock(newBlock) + ' ' + newBlock.hash);
+        console.log(typeof (newBlock.hash) + " " + typeof calculateHashForBlock(newBlock));
+        console.log("Invalid hash: " + calculateHashForBlock(newBlock) + " " + newBlock.hash);
         return false;
     }
     return true;
@@ -159,11 +159,11 @@ function replaceChain(newBlocks) {
     if (isValidChain(newBlocks) && newBlocks.length > blockchain.length) {
         const nw = require("./network");
 
-        console.log('Received blockchain is valid. Replacing current blockchain with received blockchain');
+        console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
         blockchain = newBlocks;
         nw.broadcast(nw.responseLatestMsg());
     } else {
-        console.log('Received blockchain invalid');
+        console.log("Received blockchain invalid");
     }
 }
 

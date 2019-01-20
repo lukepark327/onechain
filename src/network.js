@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const WebSocket = require("ws");
 
 const bc = require("./blockchain");
@@ -19,8 +19,8 @@ function getSockets() { return sockets; }
 
 function initP2PServer() {
     const server = new WebSocket.Server({ port: p2p_port });
-    server.on('connection', function (ws) { initConnection(ws) });    
-    console.log('listening websocket p2p port on: ' + p2p_port);
+    server.on("connection", function (ws) { initConnection(ws) });
+    console.log("Listening websocket p2p port on: " + p2p_port);
 }
 
 function initConnection(ws) {
@@ -31,9 +31,9 @@ function initConnection(ws) {
 }
 
 function initMessageHandler(ws) {
-    ws.on('message', function (data) {
+    ws.on("message", function (data) {
         const message = JSON.parse(data);
-        console.log('Received message' + JSON.stringify(message));
+        console.log("Received message" + JSON.stringify(message));
         switch (message.type) {
             case MessageType.QUERY_LATEST:
                 write(ws, responseLatestMsg());
@@ -49,23 +49,25 @@ function initMessageHandler(ws) {
 }
 
 function closeConnection(ws) {
-    console.log('connection failed to peer: ' + ws.url);
+    console.log("Connection failed to peer: " + ws.url);
     sockets.splice(sockets.indexOf(ws), 1);
 }
 
 function initErrorHandler(ws) {
-    ws.on('close', function () { closeConnection(ws) });
-    ws.on('error', function () { closeConnection(ws) });
+    ws.on("close", function () { closeConnection(ws) });
+    ws.on("error", function () { closeConnection(ws) });
 }
 
 function connectToPeers(newPeers) {
-    newPeers.forEach(function (peer) {
-        const ws = new WebSocket(peer);
-        ws.on('open', function () { initConnection(ws) });
-        ws.on('error', function () {
-            console.log('connection failed')
-        });
-    });
+    newPeers.forEach(
+        function (peer) {
+            const ws = new WebSocket(peer);
+            ws.on("open", function () { initConnection(ws) });
+            ws.on("error", function () {
+                console.log("Connection failed");
+            });
+        }
+    );
 }
 
 function handleBlockchainResponse(message) {
@@ -74,7 +76,7 @@ function handleBlockchainResponse(message) {
     const latestBlockHeld = bc.getLatestBlock();
 
     if (latestBlockReceived.index > latestBlockHeld.index) {
-        console.log('blockchain possibly behind. We got: ' + latestBlockHeld.index + ' Peer got: ' + latestBlockReceived.index);
+        console.log("Blockchain possibly behind. We got: " + latestBlockHeld.index + " Peer got: " + latestBlockReceived.index);
         if (latestBlockHeld.hash === latestBlockReceived.previousHash) {
             console.log("We can append the received block to our chain");
             if (bc.addBlock(latestBlockReceived)) {
@@ -91,26 +93,26 @@ function handleBlockchainResponse(message) {
         }
     }
     else {
-        console.log('received blockchain is not longer than current blockchain. Do nothing');
+        console.log("Received blockchain is not longer than current blockchain. Do nothing");
     }
 }
 
-function queryAllMsg() { return ({ 'type': MessageType.QUERY_ALL }) }
-function queryChainLengthMsg() { return ({ 'type': MessageType.QUERY_LATEST }) }
+function queryAllMsg() { return ({ "type": MessageType.QUERY_ALL }); }
+function queryChainLengthMsg() { return ({ "type": MessageType.QUERY_LATEST }); }
 function responseChainMsg() {
     return ({
-        'type': MessageType.RESPONSE_BLOCKCHAIN,
-        'data': JSON.stringify(bc.getBlockchain())
-    })
+        "type": MessageType.RESPONSE_BLOCKCHAIN,
+        "data": JSON.stringify(bc.getBlockchain())
+    });
 }
 function responseLatestMsg() {
     return ({
-        'type': MessageType.RESPONSE_BLOCKCHAIN,
-        'data': JSON.stringify([bc.getLatestBlock()])
-    })
+        "type": MessageType.RESPONSE_BLOCKCHAIN,
+        "data": JSON.stringify([bc.getLatestBlock()])
+    });
 }
 
-function write(ws, message) { ws.send(JSON.stringify(message)) }
-function broadcast(message) { sockets.forEach(socket => write(socket, message)) }
+function write(ws, message) { ws.send(JSON.stringify(message)); }
+function broadcast(message) { sockets.forEach(function (socket) { write(socket, message) }); }
 
 module.exports = { connectToPeers, getSockets, broadcast, responseLatestMsg, initP2PServer };

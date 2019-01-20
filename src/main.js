@@ -12,7 +12,7 @@ const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];   //
 // REST API
 function initHttpServer() {
     const bc = require("./blockchain");
-    
+
     const app = express();
     app.use(bodyParser.json());
 
@@ -27,7 +27,29 @@ function initHttpServer() {
         res.send();
     });
     app.get("/peers", function (req, res) {
-        res.send(nw.getSockets().map(s => s._socket.remoteAddress + ":" + s._socket.remotePort));
+        /* 
+         * The map() method creates a new array
+         * with the results of calling a provided function
+         * on every element in the calling array.
+         * 
+         * ref. https://developer.mozilla.org
+         */
+        res.send(nw.getSockets().map(function (s) {
+            return s._socket.remoteAddress + ':' + s._socket.remotePort;
+        }));
+        /*
+         * Same as the following code.
+         * 
+         * The forEach() method executes a provided function once
+         * for each array element.
+         */
+        /*
+            var resStrings = [];
+            nw.getSockets().forEach(function(s){
+                resStrings.push(s._socket.remoteAddress + ':' + s._socket.remotePort);
+            });
+            res.send(resStrings);
+        */
     });
     app.post("/addPeer", function (req, res) {
         nw.connectToPeers([req.body.peer]);
@@ -35,7 +57,7 @@ function initHttpServer() {
     });
     app.get("/address", function (req, res) {
         const address = wl.getPublicFromWallet().toString();
-        if(address != ""){ res.send({ "address": address }); }
+        if (address != "") { res.send({ "address": address }); }
         else { res.send(); }
     });
     app.post("/createWallet", function (req, res) {
