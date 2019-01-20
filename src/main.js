@@ -51,8 +51,8 @@ function initHttpServer() {
             res.send(resStrings);
         */
     });
-    app.post("/addPeer", function (req, res) {
-        nw.connectToPeers([req.body.peer]);
+    app.post("/addPeers", function (req, res) {
+        nw.connectToPeers(req.body.peers.split(',') || []);
         res.send();
     });
     app.get("/address", function (req, res) {
