@@ -52,7 +52,8 @@ function initHttpServer() {
         */
     });
     app.post("/addPeers", function (req, res) {
-        nw.connectToPeers(req.body.peers.split(',') || []);
+        const peers = req.body.peers || [];
+        nw.connectToPeers(peers);
         res.send();
     });
     app.get("/address", function (req, res) {
