@@ -111,7 +111,7 @@ Python >= 2.6 required.
 ### Add new block
 ```bash
 curl -X POST http://127.0.0.1:3001/mineBlock
-curl -H "Content-type:application/json" --data "{\"data\" : \"Anything you want\"}" http://127.0.0.1:3001/mineBlock
+curl -H "Content-type:application/json" --data "{\"data\" : [\"Anything you want\", \"Anything you need\"]}" http://127.0.0.1:3001/mineBlock
 ```
 
 ### Get connected peers
