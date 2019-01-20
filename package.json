@@ -1,6 +1,12 @@
 {
   "name": "onechain",
   "version": "1.0.0",
+  "description": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twodude/onechain.git"
+  },
   "scripts": {
     "start": "node src/main.js"
   },
@@ -13,6 +19,5 @@
   },
   "engines": {
     "node": ">=4.3.2"
-  },
-  "description": ""
+  }
 }
