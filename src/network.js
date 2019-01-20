@@ -19,7 +19,7 @@ function getSockets() { return sockets; }
 
 function initP2PServer() {
     const server = new WebSocket.Server({ port: p2p_port });
-    server.on("connection", function (ws) { initConnection(ws) });
+    server.on("connection", function (ws) { initConnection(ws); });
     console.log("Listening websocket p2p port on: " + p2p_port);
 }
 
@@ -54,18 +54,16 @@ function closeConnection(ws) {
 }
 
 function initErrorHandler(ws) {
-    ws.on("close", function () { closeConnection(ws) });
-    ws.on("error", function () { closeConnection(ws) });
+    ws.on("close", function () { closeConnection(ws); });
+    ws.on("error", function () { closeConnection(ws); });
 }
 
 function connectToPeers(newPeers) {
     newPeers.forEach(
         function (peer) {
             const ws = new WebSocket(peer);
-            ws.on("open", function () { initConnection(ws) });
-            ws.on("error", function () {
-                console.log("Connection failed");
-            });
+            ws.on("open", function () { initConnection(ws); });
+            ws.on("error", function () { console.log("Connection failed"); });
         }
     );
 }
@@ -115,4 +113,24 @@ function responseLatestMsg() {
 function write(ws, message) { ws.send(JSON.stringify(message)); }
 function broadcast(message) { sockets.forEach(function (socket) { write(socket, message) }); }
 
-module.exports = { connectToPeers, getSockets, broadcast, responseLatestMsg, initP2PServer };
+/*
+    function multicast(peers, message) {
+        peers.forEach(function (peer) {
+            const ws = new WebSocket(peer);
+            ws.on("open", function () {
+                write(ws, message);
+            });
+            ws.on("error", function () {
+                console.log("Connection failed");
+            });
+        });
+    }
+*/
+
+module.exports = {
+    connectToPeers,
+    getSockets,
+    broadcast,
+    responseLatestMsg,
+    initP2PServer
+};
