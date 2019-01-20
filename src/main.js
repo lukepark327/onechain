@@ -9,7 +9,7 @@ const wl = require("./wallet");
 const http_port = process.env.HTTP_PORT || 3001;                              // > $env:HTTP_PORT=3003 (windows) || export HTTP_PORT=3003 (mac)
 const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];   // > $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
 
-// REST API
+// RESTful
 function initHttpServer() {
     const bc = require("./blockchain");
 
@@ -28,20 +28,20 @@ function initHttpServer() {
     });
     app.get("/peers", function (req, res) {
         /* 
-         * The map() method creates a new array
-         * with the results of calling a provided function
-         * on every element in the calling array.
-         * 
-         * ref. https://developer.mozilla.org
+         *  ref. https://developer.mozilla.org
+         *
+         *  The map() method creates a new array
+         *  with the results of calling a provided function
+         *  on every element in the calling array.
          */
         res.send(nw.getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
         }));
         /*
-         * Same as the following code.
+         *  Same as the following code.
          * 
-         * The forEach() method executes a provided function once
-         * for each array element.
+         *  The forEach() method executes a provided function once
+         *  for each array element.
          */
         /*
             var resStrings = [];

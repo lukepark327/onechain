@@ -92,4 +92,9 @@ function deleteWallet() {
     console.log("Wallet with private key removed to: %s", privateKeyFile);
 }
 
-module.exports = { initWallet, getPublicFromWallet, createWallet, deleteWallet };
+module.exports = {
+    initWallet,
+    getPublicFromWallet,
+    createWallet,
+    deleteWallet
+};

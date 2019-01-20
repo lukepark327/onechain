@@ -15,8 +15,8 @@ class Block {
 }
 
 // WARNING!! if you modify any of the following data,
-// you might need to obtain a new hash(SHA256) value
-// Use this syntax: console.log(calculateHash(0, "", 1535165503, "Genesis block",0,0));
+// you may need to obtain a new hash(SHA256) value of them.
+// Use this syntax: console.log(calculateHash(0, "", 1535165503, "Genesis block", 0, 0));
 function getGenesisBlock() {
     const index = 0;
     const previousHash = "0000000000000000000000000000000000000000000000000000000000000000";
@@ -31,7 +31,7 @@ function getGenesisBlock() {
     return new Block(index, previousHash, timestamp, data, hash, difficulty, nonce);
 }
 
-// WARNING!! the current implementation is stored in local volatile memory.
+// WARNING!! the current implementation's blockchain is stored in local volatile memory.
 // you may need a database to store the data permanently.
 var blockchain = [getGenesisBlock()];
 
@@ -40,6 +40,7 @@ function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
 // get new block
 // blockData can be anything; transactions, strings, values, etc.
+// sometime you may need to implement encoding-decoding methods.
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
     const difficulty = getDifficulty(getBlockchain());
@@ -50,6 +51,7 @@ function generateNextBlock(blockData) {
     return newBlock;
 }
 
+// PoW
 function findBlock(nextIndex, previoushash, nextTimestamp, blockData, difficulty) {
     var nonce = 0;
     while (true) {
@@ -61,9 +63,8 @@ function findBlock(nextIndex, previoushash, nextTimestamp, blockData, difficulty
     }
 }
 
-// PoW
-const BLOCK_GENERATION_INTERVAL = 10;  //in seconds
-const DIFFICULTY_ADJUSTMENT_INTERVAL = 10;  //in blocks
+const BLOCK_GENERATION_INTERVAL = 10;  // in seconds
+const DIFFICULTY_ADJUSTMENT_INTERVAL = 10;  // in blocks
 
 function getDifficulty(aBlockchain) {
     const latestBlock = aBlockchain[blockchain.length - 1];
@@ -93,7 +94,7 @@ function getAdjustedDifficulty(latestBlock, aBlockchain) {
 
 function hashMatchesDifficulty(hash, difficulty) {
     const ut = require("./utils");
-    
+
     const hashBinary = ut.hexToBinary(hash);
     const requiredPrefix = '0'.repeat(difficulty);
     return hashBinary.startsWith(requiredPrefix);
@@ -154,7 +155,7 @@ function isValidChain(blockchainToValidate) {
 }
 
 // WARNING!! you can modify the following implementaion according to your own consensus design.
-// current consensus: the longest chain rule.
+// current consensus: the longest chain rule
 function replaceChain(newBlocks) {
     if (isValidChain(newBlocks) && newBlocks.length > blockchain.length) {
         const nw = require("./network");
@@ -167,4 +168,10 @@ function replaceChain(newBlocks) {
     }
 }
 
-module.exports = { generateNextBlock, getLatestBlock, getBlockchain, addBlock, replaceChain };
+module.exports = {
+    generateNextBlock,
+    getLatestBlock,
+    getBlockchain,
+    addBlock,
+    replaceChain
+};
