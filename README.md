@@ -121,7 +121,7 @@ curl http://127.0.0.1:3001/peers
 
 ### Add peer
 ```bash
-curl -H "Content-type:application/json" --data "{\"peers\" : \"ws://127.0.0.1:6002\"}" http://127.0.0.1:3001/addPeers
+curl -H "Content-type:application/json" --data "{\"peers\" : \"ws://127.0.0.1:6002, ws://127.0.0.1:6003\"}" http://127.0.0.1:3001/addPeers
 ```
 
 ### Get Address
