@@ -48,12 +48,12 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - cURL 7.55.1 *or* Postman v6.4.4
 
 ### install packages
-```
+```bash
 npm install
 ```
 
 ### start node #1
-```
+```bash
 npm start
 ```
 
@@ -71,7 +71,7 @@ npm start
 *or*
 ```export PEERS="ws://127.0.0.1:6001"```
 
-```
+```bash
 npm start
 ```
 
@@ -89,7 +89,7 @@ npm start
 *or*
 ```export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
 
-```
+```bash
 npm start
 ```
 
@@ -98,43 +98,49 @@ npm start
 > Click on the image above to play the video.
 
 ### Get blockchain
-```
+```bash
 curl http://127.0.0.1:3001/blocks
 ```
 
-### Add new block
+You can pretty-print JSON with:
+```bash
+curl http://127.0.0.1:3001/blocks | python -m json.tool
 ```
+Python >= 2.6 required.
+
+### Add new block
+```bash
 curl -X POST http://127.0.0.1:3001/mineBlock
 curl -H "Content-type:application/json" --data "{\"data\" : \"Anything you want\"}" http://127.0.0.1:3001/mineBlock
 ```
 
 ### Get connected peers
-```
+```bash
 curl http://127.0.0.1:3001/peers
 ```
 
 ### Add peer
-```
+```bash
 curl -H "Content-type:application/json" --data "{\"peer\" : \"ws://127.0.0.1:6002\"}" http://127.0.0.1:3001/addPeer
 ```
 
 ### Get Address
-```
+```bash
 curl http://127.0.0.1:3001/address
 ```
 
 ### Create Wallet
-```
+```bash
 curl -X POST http://127.0.0.1:3001/createWallet
 ```
 
 ### Delete Wallet
-```
+```bash
 curl -X POST http://127.0.0.1:3001/deleteWallet
 ```
 
 ### Stop
-```
+```bash
 curl -X POST http://127.0.0.1:3001/stop
 ```
 
