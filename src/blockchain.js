@@ -159,7 +159,7 @@ function addBlock(newBlock) {
 }
 
 // validation test of new block
-function isValidNewBlock(newBlock, previousBlock) { 
+function isValidNewBlock(newBlock, previousBlock) {
     if (previousBlock.header.index + 1 !== newBlock.header.index) {
         console.log("Invalid index");
         return false;
