@@ -111,7 +111,12 @@ function responseLatestMsg() {
 }
 
 function write(ws, message) { ws.send(JSON.stringify(message)); }
-function broadcast(message) { sockets.forEach(function (socket) { write(socket, message) }); }
+
+function broadcast(message) {
+    sockets.forEach(function (socket) {
+        write(socket, message);
+    });
+}
 
 /*
     function multicast(peers, message) {
