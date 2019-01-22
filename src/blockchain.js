@@ -32,6 +32,7 @@ function getGenesisBlock() {
     const difficulty = 0;
     const nonce = 0;
     const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
+    
     /**
      * The sort() method sorts the elements of an array in place
      * and returns the array.
@@ -166,6 +167,10 @@ function isValidNewBlock(newBlock, previousBlock) {
     }
     else if (calculateHashForBlock(previousBlock) !== newBlock.header.previousHash) {
         console.log("Invalid previousHash");
+        return false;
+    }
+    else if (newBlock.data[0] !== "Coinbase") {
+        console.log("Invalid data");
         return false;
     }
     else if (merkle('sha256').sync(newBlock.data).root() !== newBlock.header.merkleRoot) {
