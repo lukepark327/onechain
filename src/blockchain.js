@@ -5,6 +5,8 @@ const random = require('random')
 
 const currentVersion = "2.0.0"
 
+function getCurrentVersion() { return currentVersion; }
+
 // block header structure
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
@@ -224,11 +226,17 @@ function replaceChain(newBlocks) {
     }
 }
 
+function getBlockVersion(index) {
+    return blockchain[index].header.version;
+}
+
 module.exports = {
     calculateHashForBlock,
     generateNextBlock,
     getLatestBlock,
     getBlockchain,
     addBlock,
-    replaceChain
+    replaceChain,
+    getCurrentVersion,
+    getBlockVersion
 };

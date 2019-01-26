@@ -28,6 +28,13 @@ function initHttpServer() {
         }
         res.send();
     });
+    app.get("/version", function (req, res) {
+        res.send(bc.getCurrentVersion());
+    });
+    app.post("/blockVersion", function (req, res) {
+        const index = req.body.index;
+        res.send(bc.getBlockVersion(index));
+    });
     app.get("/peers", function (req, res) {
         /**
          * ref. https://developer.mozilla.org
