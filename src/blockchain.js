@@ -3,9 +3,12 @@ const CryptoJS = require("crypto-js");
 const merkle = require('merkle');
 const random = require('random')
 
+const currentVersion = "2.0.0"
+
 // block header structure
 class BlockHeader {
-    constructor(index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+        this.version = version;
         this.index = index;
         this.previousHash = previousHash.toString();
         this.timestamp = timestamp;
@@ -32,12 +35,13 @@ function getGenesisBlock() {
     const difficulty = 0;
     const nonce = 0;
     const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
-    
+
     /**
      * The sort() method sorts the elements of an array in place
      * and returns the array.
      */
     data.sort();
+
     /**
      * The unshift() method adds one or more elements
      * to the beginning of an array
@@ -45,11 +49,11 @@ function getGenesisBlock() {
      */
     data.unshift("Coinbase");
 
+    // get merkleRoot
     const merkleTree = merkle('sha256').sync(data);
     const merkleRoot = merkleTree.root();
 
-    const header = new BlockHeader(index, previousHash, timestamp, merkleRoot, difficulty, nonce);
-
+    const header = new BlockHeader(currentVersion, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
     return new Block(header, data);
 }
 
@@ -76,20 +80,21 @@ function generateNextBlock(blockData) {
     const merkleTree = merkle('sha256').sync(blockData);
     const merkleRoot = merkleTree.root();
 
-    const newBlockHeader = findBlock(nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
+    const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
     const newBlock = new Block(newBlockHeader, blockData);
 
     return newBlock;
 }
 
 // PoW
-function findBlock(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
+// WARNING!! this PoW implementation doesn't stop until finding matching block.
+function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
     var nonce = 0;
     while (true) {
-        var hash = calculateHash(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
 
         if (hashMatchesDifficulty(hash, difficulty)) {
-            return new BlockHeader(nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
 
         nonce++;
@@ -136,6 +141,7 @@ function hashMatchesDifficulty(hash, difficulty) {
 // get hash
 function calculateHashForBlock(block) {
     return calculateHash(
+        block.currentVersion,
         block.header.index,
         block.header.previousHash,
         block.header.timestamp,
@@ -145,8 +151,8 @@ function calculateHashForBlock(block) {
     );
 }
 
-function calculateHash(index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
-    return CryptoJS.SHA256(index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
+function calculateHash(currentVersion, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(currentVersion + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
 }
 
 // add new block
