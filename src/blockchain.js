@@ -1,11 +1,17 @@
 "use strict";
 const CryptoJS = require("crypto-js");
-const merkle = require('merkle');
-const random = require('random')
+const merkle = require("merkle");
+const random = require("random")
 
-const currentVersion = "2.0.0"
+const currentVersion = getCurrentVersion();
 
-function getCurrentVersion() { return currentVersion; }
+function getCurrentVersion() {
+    const fs = require("fs");
+
+    const packageJson = fs.readFileSync("./package.json");
+    const currentVersion = JSON.parse(packageJson).version;
+    return currentVersion;
+}
 
 // block header structure
 class BlockHeader {
@@ -52,7 +58,7 @@ function getGenesisBlock() {
     data.unshift("Coinbase");
 
     // get merkleRoot
-    const merkleTree = merkle('sha256').sync(data);
+    const merkleTree = merkle("sha256").sync(data);
     const merkleRoot = merkleTree.root();
 
     const header = new BlockHeader(currentVersion, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
@@ -79,7 +85,7 @@ function generateNextBlock(blockData) {
     blockData.sort();
     blockData.unshift("Coinbase");
 
-    const merkleTree = merkle('sha256').sync(blockData);
+    const merkleTree = merkle("sha256").sync(blockData);
     const merkleRoot = merkleTree.root();
 
     const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
@@ -181,7 +187,7 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log("Invalid data");
         return false;
     }
-    else if (merkle('sha256').sync(newBlock.data).root() !== newBlock.header.merkleRoot) {
+    else if (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot) {
         console.log("Invalid merkleRoot");
         return false;
     }
