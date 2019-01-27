@@ -1,7 +1,7 @@
 "use strict";
 const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
-const random = require("random")
+const random = require("random");
 
 const currentVersion = getCurrentVersion();
 
