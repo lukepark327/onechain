@@ -100,11 +100,9 @@ function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkl
     var nonce = 0;
     while (true) {
         var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
-
         if (hashMatchesDifficulty(hash, difficulty)) {
             return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
-
         nonce++;
     }
 }

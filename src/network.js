@@ -18,6 +18,8 @@ var sockets = [];
 function getSockets() { return sockets; }
 
 function initP2PServer() {
+    // websocket server
+    // P2P's peer works both server side and client side.
     const server = new WebSocket.Server({ port: p2p_port });
     server.on("connection", function (ws) { initConnection(ws); });
     console.log("Listening websocket p2p port on: " + p2p_port);
@@ -76,16 +78,24 @@ function handleBlockchainResponse(message) {
     if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
         console.log("Blockchain possibly behind. We got: " + latestBlockHeld.header.index + " Peer got: " + latestBlockReceived.header.index);
         if (bc.calculateHashForBlock(latestBlockHeld) === latestBlockReceived.header.previousHash) {
+            // a received block is the latest block of my ledger.
+            // append blockchain
             console.log("We can append the received block to our chain");
             if (bc.addBlock(latestBlockReceived)) {
                 broadcast(responseLatestMsg());
             }
         }
         else if (receivedBlocks.length === 1) {
+            // fork
+            /**
+             * query all blocks
+             * -> compare my_blockchain and received_blockchain at (else) part.
+             */
             console.log("We have to query the chain from our peer");
             broadcast(queryAllMsg());
         }
         else {
+            // chain replace
             console.log("Received blockchain is longer than current blockchain");
             bc.replaceChain(receivedBlocks);
         }
