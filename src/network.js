@@ -70,6 +70,10 @@ function connectToPeers(newPeers) {
     );
 }
 
+/**
+ * Current implementation treats the full block which includes header and body fields.
+ * ToDo: Use block header fields only if you just need to comparison.
+ */
 function handleBlockchainResponse(message) {
     const receivedBlocks = JSON.parse(message.data);
     const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
