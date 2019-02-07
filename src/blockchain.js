@@ -37,6 +37,7 @@ class Block {
 // you can obtain the hash(SHA256) value of them.
 // use this syntax: console.log(calculateHash(...));
 function getGenesisBlock() {
+    const version = "1.0.0";
     const index = 0;
     const previousHash = "0000000000000000000000000000000000000000000000000000000000000000";
     const timestamp = 1231006505;   // 01/03/2009 @ 6:15pm (UTC)
@@ -61,7 +62,7 @@ function getGenesisBlock() {
     const merkleTree = merkle("sha256").sync(data);
     const merkleRoot = merkleTree.root();
 
-    const header = new BlockHeader(currentVersion, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
+    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
     return new Block(header, data);
 }
 
@@ -101,6 +102,9 @@ function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkl
     while (true) {
         var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         if (hashMatchesDifficulty(hash, difficulty)) {
+            const ut = require("./utils");
+            const hashBinary = ut.hexToBinary(hash);
+            
             return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
         nonce++;
@@ -147,7 +151,7 @@ function hashMatchesDifficulty(hash, difficulty) {
 // get hash
 function calculateHashForBlock(block) {
     return calculateHash(
-        block.currentVersion,
+        block.header.version,
         block.header.index,
         block.header.previousHash,
         block.header.timestamp,
@@ -157,8 +161,8 @@ function calculateHashForBlock(block) {
     );
 }
 
-function calculateHash(currentVersion, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
-    return CryptoJS.SHA256(currentVersion + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
+function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
 }
 
 // add new block
