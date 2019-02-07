@@ -42,6 +42,9 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 ## edu-chain
 - [Instructional Blockchain](https://github.com/twodude/educhain)   
 
+## Plasma DAG
+- [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
+
 # How to Start
 
 ## Environments
