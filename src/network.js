@@ -35,6 +35,8 @@ function initConnection(ws) {
 function initMessageHandler(ws) {
     ws.on("message", function (data) {
         const message = JSON.parse(data);
+
+        // console.log(ws._socket.remoteAddress + ':' + ws._socket.remotePort);
         console.log("Received message" + JSON.stringify(message));
         switch (message.type) {
             case MessageType.QUERY_LATEST:
