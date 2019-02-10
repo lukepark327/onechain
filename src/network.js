@@ -134,20 +134,6 @@ function broadcast(message) {
     });
 }
 
-/*
-    function multicast(peers, message) {
-        peers.forEach(function (peer) {
-            const ws = new WebSocket(peer);
-            ws.on("open", function () {
-                write(ws, message);
-            });
-            ws.on("error", function () {
-                console.log("Connection failed");
-            });
-        });
-    }
-*/
-
 module.exports = {
     connectToPeers,
     getSockets,

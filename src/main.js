@@ -65,14 +65,6 @@ function initHttpServer() {
         nw.connectToPeers(peers);
         res.send();
     });
-    /*
-        app.post("/multicast", function (req, res) {
-            var peers = req.body.peers.split(',') || [];
-            var message = req.body.message || "";
-            nw.multicast(peers, message);
-            res.send();
-        });
-    */
     app.get("/address", function (req, res) {
         const address = wl.getPublicFromWallet().toString();
         if (address != "") { res.send({ "address": address }); }
