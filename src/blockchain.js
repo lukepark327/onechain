@@ -18,7 +18,7 @@ class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
         this.version = version;
         this.index = index;
-        this.previousHash = previousHash.toString();
+        this.previousHash = previousHash.toString().toUpperCase();
         this.timestamp = timestamp;
         this.merkleRoot = merkleRoot;
         this.difficulty = difficulty;
@@ -103,7 +103,7 @@ function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkl
         var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         if (hashMatchesDifficulty(hash, difficulty)) {
             const ut = require("./utils");
-            const hashBinary = ut.hexToBinary(hash);
+            const hashBinary = ut.hexToBinary(hash.toUpperCase());
 
             return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
@@ -166,7 +166,7 @@ function calculateHashForBlock(block) {
 }
 
 function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
-    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString();
+    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
 }
 
 // Add new block
