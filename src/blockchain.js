@@ -259,7 +259,8 @@ function replaceChain(newBlocks) {
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
         blockchain = newBlocks;
         nw.broadcast(nw.responseLatestMsg());
-    } else {
+    }
+    else {
         console.log("Received blockchain invalid");
     }
 }
