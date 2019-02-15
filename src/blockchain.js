@@ -95,16 +95,13 @@ function generateNextBlock(blockData) {
     return newBlock;
 }
 
-// PoW
+// Mining
 // WARNING!! The current implementation doesn't stop until finding matching block.
 function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
     var nonce = 0;
     while (true) {
         var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         if (hashMatchesDifficulty(hash, difficulty)) {
-            const ut = require("./utils");
-            const hashBinary = ut.hexToBinary(hash.toUpperCase());
-
             return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
         }
         nonce++;

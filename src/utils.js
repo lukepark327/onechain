@@ -10,12 +10,8 @@ function hexToBinary(s) {
 
     var ret = "";
     for (var i = 0; i < s.length; i++) {
-        if (lookupTable[s[i]]) {
-            ret += lookupTable[s[i]];
-        }
-        else {
-            return null;
-        }
+        if (lookupTable[s[i]]) { ret += lookupTable[s[i]]; }
+        else { return null; }
     }
     return ret;
 }
