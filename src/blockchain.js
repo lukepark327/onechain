@@ -13,7 +13,6 @@ function getCurrentVersion() {
     return currentVersion;
 }
 
-// block header structure
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
         this.version = version;
@@ -26,7 +25,6 @@ class BlockHeader {
     }
 }
 
-// block structure
 class Block {
     constructor(header, data) {
         this.header = header;
@@ -34,13 +32,11 @@ class Block {
     }
 }
 
-// You can obtain the hash(SHA256) value of them.
-// Use this syntax: console.log(calculateHash(...));
 function getGenesisBlock() {
     const version = "1.0.0";
     const index = 0;
     const previousHash = '0'.repeat(64);
-    const timestamp = 1231006505;  // 01/03/2009 @ 6:15pm (UTC)
+    const timestamp = 1231006505; // 01/03/2009 @ 6:15pm (UTC)
     const difficulty = 0;
     const nonce = 0;
     const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
@@ -57,8 +53,6 @@ function getGenesisBlock() {
      * and returns the new length of the array.
      */
     data.unshift("Coinbase");
-
-    // Get merkleRoot
     const merkleTree = merkle("sha256").sync(data);
     const merkleRoot = merkleTree.root();
 
@@ -66,16 +60,15 @@ function getGenesisBlock() {
     return new Block(header, data);
 }
 
-// WARNING!! Now the blockchain is stored in local volatile memory.
-// You have to use some database to store the data permanently.
+/**
+ * TODO: Use database to store the data permanently.
+ * A current implemetation stores blockchain in local volatile memory.
+ */
 var blockchain = [getGenesisBlock()];
 
 function getBlockchain() { return blockchain; }
 function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
-// Get new block
-// blockData can be anything; transactions, strings, values, etc.
-// You may need to implement encoding-decoding methods.
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
     const difficulty = getDifficulty(getBlockchain());
@@ -85,18 +78,18 @@ function generateNextBlock(blockData) {
 
     blockData.sort();
     blockData.unshift("Coinbase");
-
     const merkleTree = merkle("sha256").sync(blockData);
     const merkleRoot = merkleTree.root();
 
     const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
     const newBlock = new Block(newBlockHeader, blockData);
-
     return newBlock;
 }
 
-// Mining
-// WARNING!! The current implementation doesn't stop until finding matching block.
+/**
+ * TODO: Implement a stop mechanism.
+ * A current implementation doesn't stop until finding matching block.
+ */
 function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
     var nonce = 0;
     while (true) {
@@ -112,17 +105,15 @@ function getCurrentTimestamp() {
     return Math.round(new Date().getTime() / 1000);
 }
 
-const BLOCK_GENERATION_INTERVAL = 10;       // in seconds
-const DIFFICULTY_ADJUSTMENT_INTERVAL = 10;  // in blocks
+const BLOCK_GENERATION_INTERVAL = 10; // in seconds
+const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // in blocks
 
 function getDifficulty(aBlockchain) {
     const latestBlock = aBlockchain[aBlockchain.length - 1];
     if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
         return getAdjustedDifficulty(latestBlock, aBlockchain);
     }
-    else {
-        return latestBlock.header.difficulty;
-    }
+    return latestBlock.header.difficulty;
 }
 
 function getAdjustedDifficulty(latestBlock, aBlockchain) {
@@ -149,7 +140,6 @@ function hashMatchesDifficulty(hash, difficulty) {
     return hashBinary.startsWith(requiredPrefix);
 }
 
-// Get hash
 function calculateHashForBlock(block) {
     return calculateHash(
         block.header.version,
@@ -166,7 +156,6 @@ function calculateHash(version, index, previousHash, timestamp, merkleRoot, diff
     return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
 }
 
-// Add new block
 function addBlock(newBlock) {
     if (isValidNewBlock(newBlock, getLatestBlock())) {
         blockchain.push(newBlock);
@@ -175,7 +164,6 @@ function addBlock(newBlock) {
     return false;
 }
 
-// Validation test of block structure
 function isValidBlockStructure(block) {
     return typeof(block.header.version) === 'string'
         && typeof(block.header.index) === 'number'
@@ -187,15 +175,11 @@ function isValidBlockStructure(block) {
         && typeof(block.data) === 'object';
 }
 
-// Validation test of timestamp
-// The timestamp is at most 60 secs in the past of the previous block.
-// The timestamp is at most 60 secs in the future from the current time.
 function isValidTimestamp(newBlock, previousBlock) {
     return (previousBlock.header.timestamp - 60 < newBlock.header.timestamp)
         && newBlock.header.timestamp - 60 < getCurrentTimestamp();
 }
 
-// Validation test of new block
 function isValidNewBlock(newBlock, previousBlock) {
     if (!isValidBlockStructure(newBlock)) {
         console.log('invalid block structure: %s', JSON.stringify(newBlock));
@@ -228,7 +212,6 @@ function isValidNewBlock(newBlock, previousBlock) {
     return true;
 }
 
-// Validation test of blockchain
 function isValidChain(blockchainToValidate) {
     if (JSON.stringify(blockchainToValidate[0]) !== JSON.stringify(getGenesisBlock())) {
         return false;
@@ -238,14 +221,11 @@ function isValidChain(blockchainToValidate) {
         if (isValidNewBlock(blockchainToValidate[i], tempBlocks[i - 1])) {
             tempBlocks.push(blockchainToValidate[i]);
         }
-        else {
-            return false;
-        }
+        else { return false; }
     }
     return true;
 }
 
-// WARNING!! Current consensus is the longest chain rule.
 function replaceChain(newBlocks) {
     if (
         isValidChain(newBlocks)
@@ -257,9 +237,7 @@ function replaceChain(newBlocks) {
         blockchain = newBlocks;
         nw.broadcast(nw.responseLatestMsg());
     }
-    else {
-        console.log("Received blockchain invalid");
-    }
+    else { console.log("Received blockchain invalid"); }
 }
 
 function getBlockVersion(index) {

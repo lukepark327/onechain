@@ -5,11 +5,9 @@ const bodyParser = require("body-parser");
 const nw = require("./network");
 const wl = require("./wallet");
 
-// set environment variable
-const http_port = process.env.HTTP_PORT || 3001;                              // > $env:HTTP_PORT=3003 (windows) || export HTTP_PORT=3003 (mac)
-const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];   // > $env:PEERS = "ws://127.0.0.1:6001, ws://127.0.0.1:6002"
+const http_port = process.env.HTTP_PORT || 3001;
+const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
-// RESTful
 function initHttpServer() {
     const bc = require("./blockchain");
 
@@ -37,7 +35,7 @@ function initHttpServer() {
     });
     app.get("/peers", function (req, res) {
         /**
-         * ref. https://developer.mozilla.org
+         * https://developer.mozilla.org
          * 
          * The map() method creates a new array
          * with the results of calling a provided function
@@ -46,19 +44,12 @@ function initHttpServer() {
         res.send(nw.getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
         }));
-        /**
-         * Same as the following code.
-         * 
-         * The forEach() method executes a provided function once
-         * for each array element.
-         */
-        /*
-            var resStrings = [];
-            nw.getSockets().forEach(function(s){
-                resStrings.push(s._socket.remoteAddress + ':' + s._socket.remotePort);
-            });
-            res.send(resStrings);
-        */
+
+        // var resStrings = [];
+        // nw.getSockets().forEach(function(s){
+        //     resStrings.push(s._socket.remoteAddress + ':' + s._socket.remotePort);
+        // });
+        // res.send(resStrings);
     });
     app.post("/addPeers", function (req, res) {
         const peers = req.body.peers || [];
@@ -67,16 +58,7 @@ function initHttpServer() {
     });
     app.get("/address", function (req, res) {
         const address = wl.getPublicFromWallet().toString();
-        if (address != "") { res.send({ "address": address }); }
-        else { res.send(); }
-    });
-    app.post("/createWallet", function (req, res) {
-        wl.createWallet();
-        res.send();
-    });
-    app.post("/deleteWallet", function (req, res) {
-        wl.deleteWallet();
-        res.send();
+        res.send({ "address": address });
     });
     app.post("/stop", function (req, res) {
         res.send({ "msg": "Stopping server" });
