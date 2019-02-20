@@ -101,13 +101,15 @@ function handleBlockchainResponse(message) {
 
 function queryAllMsg() {
     return ({
-        "type": MessageType.QUERY_ALL
+        "type": MessageType.QUERY_ALL,
+        "data": null
     });
 }
 
 function queryChainLengthMsg() {
     return ({
-        "type": MessageType.QUERY_LATEST
+        "type": MessageType.QUERY_LATEST,
+        "data": null
     });
 }
 
