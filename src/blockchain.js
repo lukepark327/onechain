@@ -83,7 +83,16 @@ function generateNextBlock(blockData) {
 
     const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
     const newBlock = new Block(newBlockHeader, blockData);
-    return newBlock;
+
+    if (addBlock(newBlock)) {
+        const nw = require("./network");
+
+        nw.broadcast(nw.responseLatestMsg());
+        return newBlock;
+    }
+    else {
+        return null;
+    }
 }
 
 /**

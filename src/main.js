@@ -20,11 +20,12 @@ function initHttpServer() {
     app.post("/mineBlock", function (req, res) {
         const data = req.body.data || [];
         const newBlock = bc.generateNextBlock(data);
-        if (bc.addBlock(newBlock)) {
-            nw.broadcast(nw.responseLatestMsg());
-            console.log("Block added: " + JSON.stringify(newBlock));
+        if (newBlock === null) {
+            res.status(400).send('Bad Request');
         }
-        res.send();
+        else {
+            res.send(newBlock);
+        }
     });
     app.get("/version", function (req, res) {
         res.send(bc.getCurrentVersion());

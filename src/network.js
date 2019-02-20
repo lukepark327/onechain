@@ -31,7 +31,7 @@ function initConnection(ws) {
 function initMessageHandler(ws) {
     ws.on("message", function (data) {
         const message = JSON.parse(data);
-        console.log("Received message" + JSON.stringify(message));
+        // console.log("Received message" + JSON.stringify(message));
 
         switch (message.type) {
             case MessageType.QUERY_LATEST:
@@ -75,7 +75,7 @@ function handleBlockchainResponse(message) {
     if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
         console.log(
             "Blockchain possibly behind."
-            + " We got: " + latestBlockHeld.header.index
+            + " We got: " + latestBlockHeld.header.index + ", "
             + " Peer got: " + latestBlockReceived.header.index
         );
         if (bc.calculateHashForBlock(latestBlockHeld) === latestBlockReceived.header.previousHash) {
