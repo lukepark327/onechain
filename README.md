@@ -34,6 +34,9 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 
 # Use-cases
 
+## Governance Simulator on Blockchain : Based on Smart City Cases
+- [DBpia](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
+
 ## Blockchain Policy Simulator
 - [BBR Hackathon](http://www.breview.kr)
 [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
