@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const nw = require("./network");
 const wl = require("./wallet");
+const ut = require("./utils");
 
 const http_port = process.env.HTTP_PORT || 3001;
 const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];
@@ -19,7 +20,7 @@ function initHttpServer() {
     });
     app.post("/mineBlock", function (req, res) {
         const data = req.body.data || [];
-        const newBlock = bc.generateNextBlock(data);
+        const newBlock = bc.mineBlock(data);
         if (newBlock === null) {
             res.status(400).send('Bad Request');
         }
@@ -28,7 +29,7 @@ function initHttpServer() {
         }
     });
     app.get("/version", function (req, res) {
-        res.send(bc.getCurrentVersion());
+        res.send(ut.getCurrentVersion());
     });
     app.post("/blockVersion", function (req, res) {
         const index = req.body.index;

@@ -3,15 +3,7 @@ const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
 const random = require("random");
 
-const currentVersion = getCurrentVersion();
-
-function getCurrentVersion() {
-    const fs = require("fs");
-
-    const packageJson = fs.readFileSync("./package.json");
-    const currentVersion = JSON.parse(packageJson).version;
-    return currentVersion;
-}
+const ut = require("./utils");
 
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
@@ -32,34 +24,6 @@ class Block {
     }
 }
 
-function getGenesisBlock() {
-    const version = "1.0.0";
-    const index = 0;
-    const previousHash = '0'.repeat(64);
-    const timestamp = 1231006505; // 01/03/2009 @ 6:15pm (UTC)
-    const difficulty = 0;
-    const nonce = 0;
-    const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
-
-    /**
-     * The sort() method sorts the elements of an array in place
-     * and returns the array.
-     */
-    data.sort();
-
-    /**
-     * The unshift() method adds one or more elements
-     * to the beginning of an array
-     * and returns the new length of the array.
-     */
-    data.unshift("Coinbase");
-    const merkleTree = merkle("sha256").sync(data);
-    const merkleRoot = merkleTree.root();
-
-    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
-    return new Block(header, data);
-}
-
 /**
  * TODO: Use database to store the data permanently.
  * A current implemetation stores blockchain in local volatile memory.
@@ -69,20 +33,48 @@ var blockchain = [getGenesisBlock()];
 function getBlockchain() { return blockchain; }
 function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
+const currentVersion = ut.getCurrentVersion();
+
+function getGenesisBlock() {
+    const version = "1.0.0";
+    const index = 0;
+    const previousHash = '0'.repeat(64);
+    const timestamp = 1231006505; // 01/03/2009 @ 6:15pm (UTC)
+    const difficulty = 0;
+    const nonce = 0;
+    const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
+
+    const merkleTree = merkle("sha256").sync(data);
+    const merkleRoot = merkleTree.root() || '0'.repeat(64);
+
+    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
+    return new Block(header, data);
+}
+
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
     const difficulty = getDifficulty(getBlockchain());
     const nextIndex = previousBlock.header.index + 1;
     const previousHash = calculateHashForBlock(previousBlock);
-    const nextTimestamp = getCurrentTimestamp();
+    const nextTimestamp = ut.getCurrentTimestamp();
 
-    blockData.sort();
-    blockData.unshift("Coinbase");
     const merkleTree = merkle("sha256").sync(blockData);
-    const merkleRoot = merkleTree.root();
+    const merkleRoot = merkleTree.root() || '0'.repeat(64);
 
     const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
-    const newBlock = new Block(newBlockHeader, blockData);
+    return new Block(newBlockHeader, blockData);
+}
+
+function addBlock(newBlock) {
+    if (isValidNewBlock(newBlock, getLatestBlock())) {
+        blockchain.push(newBlock);
+        return true;
+    }
+    return false;
+}
+
+function mineBlock(blockData) {
+    const newBlock = generateNextBlock(blockData);
 
     if (addBlock(newBlock)) {
         const nw = require("./network");
@@ -110,8 +102,26 @@ function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkl
     }
 }
 
-function getCurrentTimestamp() {
-    return Math.round(new Date().getTime() / 1000);
+function hashMatchesDifficulty(hash, difficulty) {
+    const hashBinary = ut.hexToBinary(hash);
+    const requiredPrefix = '0'.repeat(difficulty);
+    return hashBinary.startsWith(requiredPrefix);
+}
+
+function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
+}
+
+function calculateHashForBlock(block) {
+    return calculateHash(
+        block.header.version,
+        block.header.index,
+        block.header.previousHash,
+        block.header.timestamp,
+        block.header.merkleRoot,
+        block.header.difficulty,
+        block.header.nonce
+    );
 }
 
 const BLOCK_GENERATION_INTERVAL = 10; // in seconds
@@ -141,38 +151,6 @@ function getAdjustedDifficulty(latestBlock, aBlockchain) {
     }
 }
 
-function hashMatchesDifficulty(hash, difficulty) {
-    const ut = require("./utils");
-
-    const hashBinary = ut.hexToBinary(hash);
-    const requiredPrefix = '0'.repeat(difficulty);
-    return hashBinary.startsWith(requiredPrefix);
-}
-
-function calculateHashForBlock(block) {
-    return calculateHash(
-        block.header.version,
-        block.header.index,
-        block.header.previousHash,
-        block.header.timestamp,
-        block.header.merkleRoot,
-        block.header.difficulty,
-        block.header.nonce
-    );
-}
-
-function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
-    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
-}
-
-function addBlock(newBlock) {
-    if (isValidNewBlock(newBlock, getLatestBlock())) {
-        blockchain.push(newBlock);
-        return true;
-    }
-    return false;
-}
-
 function isValidBlockStructure(block) {
     return typeof(block.header.version) === 'string'
         && typeof(block.header.index) === 'number'
@@ -186,7 +164,7 @@ function isValidBlockStructure(block) {
 
 function isValidTimestamp(newBlock, previousBlock) {
     return (previousBlock.header.timestamp - 60 < newBlock.header.timestamp)
-        && newBlock.header.timestamp - 60 < getCurrentTimestamp();
+        && newBlock.header.timestamp - 60 < ut.getCurrentTimestamp();
 }
 
 function isValidNewBlock(newBlock, previousBlock) {
@@ -206,11 +184,13 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log('invalid timestamp');
         return false;
     }
-    else if (newBlock.data[0] !== "Coinbase") {
-        console.log("Invalid data");
-        return false;
-    }
-    else if (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot) {
+    else if ((
+        newBlock.data.length === 0
+        && ('0'.repeat(64) !== newBlock.header.merkleRoot)
+    ) || (
+        newBlock.data.length !== 0
+        && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot)
+    )) {
         console.log("Invalid merkleRoot");
         return false;
     }
@@ -254,12 +234,11 @@ function getBlockVersion(index) {
 }
 
 module.exports = {
-    calculateHashForBlock,
-    generateNextBlock,
-    getLatestBlock,
     getBlockchain,
+    getLatestBlock,
     addBlock,
+    mineBlock,
+    calculateHashForBlock,
     replaceChain,
-    getCurrentVersion,
     getBlockVersion
 };
