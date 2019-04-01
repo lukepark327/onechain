@@ -101,7 +101,7 @@ npm start
 ```
 
 # How to Use
-[![video](http://img.youtube.com/vi/NgkADMy8j6Y/0.jpg)](https://www.youtube.com/watch?v=NgkADMy8j6Y)   
+[![video](https://user-images.githubusercontent.com/24687378/55283674-5d346400-53a3-11e9-9e85-baaca23cac78.jpg)](https://youtu.be/ZRbr3VIUHuA)   
 > Click on the image above to play the video.
 
 ### Get blockchain
