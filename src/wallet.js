@@ -3,8 +3,7 @@ const fs = require("fs");
 const ecdsa = require("elliptic");
 const ec = new ecdsa.ec("secp256k1");
 
-const http_port = process.env.HTTP_PORT || 3001;
-const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || http_port.toString());
+const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || "default");
 const privateKeyFile = privateKeyLocation + "/private_key";
 
 function getPrivateFromWallet() {
