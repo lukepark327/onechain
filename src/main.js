@@ -19,7 +19,7 @@ class Block {
     }
 }
 
-var blockchain = [];
+var blockchain = [getGenesisBlock()];
 
 function getBlockchain() { return blockchain; }
 function getLatestBlock() { return blockchain[blockchain.length - 1]; }
