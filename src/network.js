@@ -47,14 +47,14 @@ function initMessageHandler(ws) {
     });
 }
 
-function closeConnection(ws) {
-    console.log("Connection failed to peer: " + ws.url);
-    sockets.splice(sockets.indexOf(ws), 1);
-}
-
 function initErrorHandler(ws) {
     ws.on("close", function () { closeConnection(ws); });
     ws.on("error", function () { closeConnection(ws); });
+}
+
+function closeConnection(ws) {
+    console.log("Connection failed to peer: " + ws.url);
+    sockets.splice(sockets.indexOf(ws), 1);
 }
 
 function connectToPeers(newPeers) {
