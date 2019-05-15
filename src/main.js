@@ -151,7 +151,7 @@ function isValidChain(blockchainToValidate) {
     return true;
 }
 
-// Chapter-2
+// Chapter-2 & Chapter-4
 const express = require("express");
 const bodyParser = require("body-parser");
 const WebSocket = require("ws");
