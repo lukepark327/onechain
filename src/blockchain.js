@@ -180,15 +180,15 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log("Invalid previousHash");
         return false;
     }
-    else if (!isValidTimestamp(newBlock, previousBlock)) {
-        console.log('invalid timestamp');
-        return false;
-    }
     else if (
         (newBlock.data.length !== 0 && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot))
         || (newBlock.data.length === 0 && ('0'.repeat(64) !== newBlock.header.merkleRoot))
     ) {
         console.log("Invalid merkleRoot");
+        return false;
+    }
+    else if (!isValidTimestamp(newBlock, previousBlock)) {
+        console.log('invalid timestamp');
         return false;
     }
     else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
