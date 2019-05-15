@@ -112,13 +112,10 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log('invalid timestamp');
         return false;
     }
-    else if ((
-        newBlock.data.length === 0
-        && ('0'.repeat(64) !== newBlock.header.merkleRoot)
-    ) || (
-            newBlock.data.length !== 0
-            && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot)
-        )) {
+    else if (
+        (newBlock.data.length !== 0 && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot))
+        || (newBlock.data.length === 0 && ('0'.repeat(64) !== newBlock.header.merkleRoot))
+    ) {
         console.log("Invalid merkleRoot");
         return false;
     }
