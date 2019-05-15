@@ -27,8 +27,6 @@ var blockchain = [getGenesisBlock()];
 function getBlockchain() { return blockchain; }
 function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
-const currentVersion = getCurrentVersion();
-
 function getGenesisBlock() {
     const version = "1.0.0";
     const index = 0;
