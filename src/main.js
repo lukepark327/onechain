@@ -66,6 +66,7 @@ function initHttpServer() {
         res.send({ "msg": "Stopping server" });
         process.exit();
     });
+    
     app.listen(http_port, function () { console.log("Listening http port on: " + http_port) });
 }
 
