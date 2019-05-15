@@ -1,15 +1,17 @@
-// Chapter-1
+// Chapter-1 & Chapter-3
 "use strict";
 const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
 
 class BlockHeader {
-    constructor(version, index, previousHash, timestamp, merkleRoot) {
+    constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
         this.version = version;
         this.index = index;
         this.previousHash = previousHash.toString().toUpperCase();
         this.timestamp = timestamp;
         this.merkleRoot = merkleRoot;
+        this.difficulty = difficulty;
+        this.nonce = nonce;
     }
 }
 
@@ -30,18 +32,20 @@ function getGenesisBlock() {
     const index = 0;
     const previousHash = '0'.repeat(64);
     const timestamp = 1231006505; // 01/03/2009 @ 6:15pm (UTC)
+    const difficulty = 0;
+    const nonce = 0;
     const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
 
     const merkleTree = merkle("sha256").sync(data);
     const merkleRoot = merkleTree.root() || '0'.repeat(64);
 
-    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot);
+    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
     return new Block(header, data);
 }
 
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
-    const currentVersion = getCurrentVersion();
+    const difficulty = getDifficulty(getBlockchain());
     const nextIndex = previousBlock.header.index + 1;
     const previousHash = calculateHashForBlock(previousBlock);
     const nextTimestamp = getCurrentTimestamp();
@@ -49,7 +53,7 @@ function generateNextBlock(blockData) {
     const merkleTree = merkle("sha256").sync(blockData);
     const merkleRoot = merkleTree.root() || '0'.repeat(64);
 
-    const newBlockHeader = new BlockHeader(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot);
+    const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
     return new Block(newBlockHeader, blockData);
 }
 
@@ -73,8 +77,8 @@ function addBlock(newBlock) {
     return false;
 }
 
-function calculateHash(version, index, previousHash, timestamp, merkleRoot) {
-    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot).toString().toUpperCase();
+function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
 }
 
 function calculateHashForBlock(block) {
@@ -83,7 +87,9 @@ function calculateHashForBlock(block) {
         block.header.index,
         block.header.previousHash,
         block.header.timestamp,
-        block.header.merkleRoot
+        block.header.merkleRoot,
+        block.header.difficulty,
+        block.header.nonce
     );
 }
 
@@ -100,6 +106,10 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log("Invalid previousHash");
         return false;
     }
+    else if (!isValidTimestamp(newBlock, previousBlock)) {
+        console.log('invalid timestamp');
+        return false;
+    }
     else if ((
         newBlock.data.length === 0
         && ('0'.repeat(64) !== newBlock.header.merkleRoot)
@@ -108,6 +118,10 @@ function isValidNewBlock(newBlock, previousBlock) {
             && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot)
         )) {
         console.log("Invalid merkleRoot");
+        return false;
+    }
+    else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
+        console.log("Invalid hash: " + calculateHashForBlock(newBlock));
         return false;
     }
     return true;
@@ -119,6 +133,8 @@ function isValidBlockStructure(block) {
         && typeof(block.header.previousHash) === 'string'
         && typeof(block.header.timestamp) === 'number'
         && typeof(block.header.merkleRoot) === 'string'
+        && typeof(block.header.difficulty) === 'number'
+        && typeof(block.header.nonce) === 'number'
         && typeof(block.data) === 'object';
 }
 
@@ -172,6 +188,9 @@ function initHttpServer() {
             res.send(newBlock);
         }
     });
+    app.get("/version", function (req, res) {
+        res.send(getCurrentVersion());
+    });
     app.get("/peers", function (req, res) {
         res.send(getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
@@ -181,6 +200,10 @@ function initHttpServer() {
         const peers = req.body.peers || [];
         connectToPeers(peers);
         res.send();
+    });
+    app.post("/stop", function (req, res) {
+        res.send({ "msg": "Stopping server" });
+        process.exit();
     });
 
     app.listen(http_port, function () { console.log("Listening http port on: " + http_port) });
@@ -327,6 +350,72 @@ function replaceChain(newBlocks) {
         broadcast(responseLatestMsg());
     }
     else { console.log("Received blockchain invalid"); }
+}
+
+// Chapter-3
+const BLOCK_GENERATION_INTERVAL = 10; // in seconds
+const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // in blocks
+
+function getDifficulty(aBlockchain) {
+    const latestBlock = aBlockchain[aBlockchain.length - 1];
+    if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
+        return getAdjustedDifficulty(latestBlock, aBlockchain);
+    }
+    return latestBlock.header.difficulty;
+}
+
+function getAdjustedDifficulty(latestBlock, aBlockchain) {
+    const prevAdjustmentBlock = aBlockchain[aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
+    const timeTaken = latestBlock.header.timestamp - prevAdjustmentBlock.header.timestamp;
+    const timeExpected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
+
+    if (timeTaken < timeExpected / 2) {
+        return prevAdjustmentBlock.header.difficulty + 1;
+    }
+    else if (timeTaken > timeExpected * 2) {
+        return prevAdjustmentBlock.header.difficulty - 1;
+    }
+    else {
+        return prevAdjustmentBlock.header.difficulty;
+    }
+}
+
+function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
+    var nonce = 0;
+    while (true) {
+        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        if (hashMatchesDifficulty(hash, difficulty)) {
+            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        }
+        nonce++;
+    }
+}
+
+function hashMatchesDifficulty(hash, difficulty) {
+    const hashBinary = hexToBinary(hash.toUpperCase());
+    const requiredPrefix = '0'.repeat(difficulty);
+    return hashBinary.startsWith(requiredPrefix);
+}
+
+function hexToBinary(s) {
+    const lookupTable = {
+        '0': '0000', '1': '0001', '2': '0010', '3': '0011',
+        '4': '0100', '5': '0101', '6': '0110', '7': '0111',
+        '8': '1000', '9': '1001', 'A': '1010', 'B': '1011',
+        'C': '1100', 'D': '1101', 'E': '1110', 'F': '1111'
+    };
+
+    var ret = "";
+    for (var i = 0; i < s.length; i++) {
+        if (lookupTable[s[i]]) { ret += lookupTable[s[i]]; }
+        else { return null; }
+    }
+    return ret;
+}
+
+function isValidTimestamp(newBlock, previousBlock) {
+    return (previousBlock.header.timestamp - 60 < newBlock.header.timestamp)
+        && newBlock.header.timestamp - 60 < getCurrentTimestamp();
 }
 
 // main
