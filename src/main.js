@@ -200,6 +200,11 @@ function initHttpServer() {
         connectToPeers(peers);
         res.send();
     });
+    app.get("/address", function (req, res) {
+        const address = getPublicFromWallet().toString();
+        if (address != "") { res.send({ "address": address }); }
+        else { res.send(); }
+    });
     app.post("/stop", function (req, res) {
         res.send({ "msg": "Stopping server" });
         process.exit();
@@ -445,7 +450,6 @@ function initWallet() {
     console.log("Create new wallet with private key to: %s", privateKeyFile);
 }
 
-
 function getPrivateFromWallet() {
     const buffer = fs.readFileSync(privateKeyFile, "utf8");
     return buffer.toString();
@@ -457,10 +461,7 @@ function getPublicFromWallet() {
     return key.getPublic().encode("hex");
 }
 
-
-
-
-
 // main
 initHttpServer();
 initP2PServer();
+initWallet();
