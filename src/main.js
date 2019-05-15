@@ -27,8 +27,6 @@ var blockchain = [getGenesisBlock()];
 function getBlockchain() { return blockchain; }
 function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
-const currentVersion = getCurrentVersion();
-
 function getGenesisBlock() {
     const version = "1.0.0";
     const index = 0;
@@ -47,10 +45,11 @@ function getGenesisBlock() {
 
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
-    const difficulty = getDifficulty(getBlockchain());
+    const currentVersion = getCurrentVersion();
     const nextIndex = previousBlock.header.index + 1;
     const previousHash = calculateHashForBlock(previousBlock);
     const nextTimestamp = getCurrentTimestamp();
+    const difficulty = getDifficulty(getBlockchain());
 
     const merkleTree = merkle("sha256").sync(blockData);
     const merkleRoot = merkleTree.root() || '0'.repeat(64);
