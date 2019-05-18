@@ -1,5 +1,6 @@
 // Chapter-1
 "use strict";
+const fs = require("fs");
 const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
 
@@ -7,7 +8,7 @@ class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot) {
         this.version = version;
         this.index = index;
-        this.previousHash = previousHash.toString().toUpperCase();
+        this.previousHash = previousHash;
         this.timestamp = timestamp;
         this.merkleRoot = merkleRoot;
     }
@@ -54,8 +55,6 @@ function generateNextBlock(blockData) {
 }
 
 function getCurrentVersion() {
-    const fs = require("fs");
-
     const packageJson = fs.readFileSync("./package.json");
     const currentVersion = JSON.parse(packageJson).version;
     return currentVersion;
