@@ -171,6 +171,10 @@ function initHttpServer() {
     app.get("/version", function (req, res) {
         res.send(getCurrentVersion());
     });
+    app.post("/stop", function (req, res) {
+        res.send({ "msg": "Stopping server" });
+        process.exit();
+    });
     app.get("/peers", function (req, res) {
         res.send(getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
@@ -180,10 +184,6 @@ function initHttpServer() {
         const peers = req.body.peers || [];
         connectToPeers(peers);
         res.send();
-    });
-    app.post("/stop", function (req, res) {
-        res.send({ "msg": "Stopping server" });
-        process.exit();
     });
 
     app.listen(http_port, function () { console.log("Listening http port on: " + http_port) });
