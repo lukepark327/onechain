@@ -6,15 +6,10 @@ const ec = new ecdsa.ec("secp256k1");
 const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || "default");
 const privateKeyFile = privateKeyLocation + "/private_key";
 
-function getPrivateFromWallet() {
-    const buffer = fs.readFileSync(privateKeyFile, "utf8");
-    return buffer.toString();
-}
-
-function getPublicFromWallet() {
-    const privateKey = getPrivateFromWallet();
-    const key = ec.keyFromPrivate(privateKey, "hex");
-    return key.getPublic().encode("hex");
+function generatePrivateKey() {
+    const keyPair = ec.genKeyPair();
+    const privateKey = keyPair.getPrivate();
+    return privateKey.toString(16);
 }
 
 function initWallet() {
@@ -31,10 +26,15 @@ function initWallet() {
     console.log("Create new wallet with private key to: %s", privateKeyFile);
 }
 
-function generatePrivateKey() {
-    const keyPair = ec.genKeyPair();
-    const privateKey = keyPair.getPrivate();
-    return privateKey.toString(16);
+function getPrivateFromWallet() {
+    const buffer = fs.readFileSync(privateKeyFile, "utf8");
+    return buffer.toString();
+}
+
+function getPublicFromWallet() {
+    const privateKey = getPrivateFromWallet();
+    const key = ec.keyFromPrivate(privateKey, "hex");
+    return key.getPublic().encode("hex");
 }
 
 module.exports = {
