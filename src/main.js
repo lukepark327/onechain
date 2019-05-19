@@ -116,7 +116,7 @@ function isValidNewBlock(newBlock, previousBlock) {
     else if (!isValidTimestamp(newBlock, previousBlock)) {
         console.log('invalid timestamp');
         return false;
-    }    
+    }
     else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
         console.log("Invalid hash: " + calculateHashForBlock(newBlock));
         return false;
@@ -377,6 +377,17 @@ function getAdjustedDifficulty(latestBlock, aBlockchain) {
     }
 }
 
+function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
+    var nonce = 0;
+    while (true) {
+        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        if (hashMatchesDifficulty(hash, difficulty)) {
+            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        }
+        nonce++;
+    }
+}
+
 function hashMatchesDifficulty(hash, difficulty) {
     const hashBinary = hexToBinary(hash.toUpperCase());
     const requiredPrefix = '0'.repeat(difficulty);
@@ -397,17 +408,6 @@ function hexToBinary(s) {
         else { return null; }
     }
     return ret;
-}
-
-function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
-    var nonce = 0;
-    while (true) {
-        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
-        if (hashMatchesDifficulty(hash, difficulty)) {
-            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
-        }
-        nonce++;
-    }
 }
 
 function isValidTimestamp(newBlock, previousBlock) {
