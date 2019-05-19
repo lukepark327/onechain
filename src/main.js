@@ -36,22 +36,9 @@ function initHttpServer() {
         res.send(bc.getBlockVersion(index));
     });
     app.get("/peers", function (req, res) {
-        /**
-         * https://developer.mozilla.org
-         * 
-         * The map() method creates a new array
-         * with the results of calling a provided function
-         * on every element in the calling array.
-         */
         res.send(nw.getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
         }));
-
-        // var resStrings = [];
-        // nw.getSockets().forEach(function(s){
-        //     resStrings.push(s._socket.remoteAddress + ':' + s._socket.remotePort);
-        // });
-        // res.send(resStrings);
     });
     app.post("/addPeers", function (req, res) {
         const peers = req.body.peers || [];
