@@ -1,5 +1,6 @@
 // Chapter-1 & Chapter-3
 "use strict";
+const fs = require("fs");
 const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
 
@@ -59,8 +60,6 @@ function generateNextBlock(blockData) {
 }
 
 function getCurrentVersion() {
-    const fs = require("fs");
-
     const packageJson = fs.readFileSync("./package.json");
     const currentVersion = JSON.parse(packageJson).version;
     return currentVersion;
@@ -117,7 +116,7 @@ function isValidNewBlock(newBlock, previousBlock) {
     else if (!isValidTimestamp(newBlock, previousBlock)) {
         console.log('invalid timestamp');
         return false;
-    }
+    }    
     else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
         console.log("Invalid hash: " + calculateHashForBlock(newBlock));
         return false;
@@ -189,6 +188,10 @@ function initHttpServer() {
     app.get("/version", function (req, res) {
         res.send(getCurrentVersion());
     });
+    app.post("/stop", function (req, res) {
+        res.send({ "msg": "Stopping server" });
+        process.exit();
+    });
     app.get("/peers", function (req, res) {
         res.send(getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
@@ -198,10 +201,6 @@ function initHttpServer() {
         const peers = req.body.peers || [];
         connectToPeers(peers);
         res.send();
-    });
-    app.post("/stop", function (req, res) {
-        res.send({ "msg": "Stopping server" });
-        process.exit();
     });
 
     app.listen(http_port, function () { console.log("Listening http port on: " + http_port) });
@@ -378,17 +377,6 @@ function getAdjustedDifficulty(latestBlock, aBlockchain) {
     }
 }
 
-function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
-    var nonce = 0;
-    while (true) {
-        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
-        if (hashMatchesDifficulty(hash, difficulty)) {
-            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
-        }
-        nonce++;
-    }
-}
-
 function hashMatchesDifficulty(hash, difficulty) {
     const hashBinary = hexToBinary(hash.toUpperCase());
     const requiredPrefix = '0'.repeat(difficulty);
@@ -409,6 +397,17 @@ function hexToBinary(s) {
         else { return null; }
     }
     return ret;
+}
+
+function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
+    var nonce = 0;
+    while (true) {
+        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        if (hashMatchesDifficulty(hash, difficulty)) {
+            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        }
+        nonce++;
+    }
 }
 
 function isValidTimestamp(newBlock, previousBlock) {
