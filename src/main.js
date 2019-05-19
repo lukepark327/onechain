@@ -1,5 +1,6 @@
 // Chapter-1 & Chapter-3
 "use strict";
+const fs = require("fs");
 const CryptoJS = require("crypto-js");
 const merkle = require("merkle");
 
@@ -45,10 +46,11 @@ function getGenesisBlock() {
 
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
-    const difficulty = getDifficulty(getBlockchain());
+    const currentVersion = getCurrentVersion();
     const nextIndex = previousBlock.header.index + 1;
     const previousHash = calculateHashForBlock(previousBlock);
     const nextTimestamp = getCurrentTimestamp();
+    const difficulty = getDifficulty(getBlockchain());
 
     const merkleTree = merkle("sha256").sync(blockData);
     const merkleRoot = merkleTree.root() || '0'.repeat(64);
@@ -58,8 +60,6 @@ function generateNextBlock(blockData) {
 }
 
 function getCurrentVersion() {
-    const fs = require("fs");
-
     const packageJson = fs.readFileSync("./package.json");
     const currentVersion = JSON.parse(packageJson).version;
     return currentVersion;
@@ -149,7 +149,7 @@ function isValidChain(blockchainToValidate) {
     return true;
 }
 
-// Chapter-2 & Chapter-4
+// Chapter-2
 const express = require("express");
 const bodyParser = require("body-parser");
 const WebSocket = require("ws");
@@ -188,6 +188,10 @@ function initHttpServer() {
     app.get("/version", function (req, res) {
         res.send(getCurrentVersion());
     });
+    app.post("/stop", function (req, res) {
+        res.send({ "msg": "Stopping server" });
+        process.exit();
+    });
     app.get("/peers", function (req, res) {
         res.send(getSockets().map(function (s) {
             return s._socket.remoteAddress + ':' + s._socket.remotePort;
@@ -202,10 +206,6 @@ function initHttpServer() {
         const address = getPublicFromWallet().toString();
         if (address != "") { res.send({ "address": address }); }
         else { res.send(); }
-    });
-    app.post("/stop", function (req, res) {
-        res.send({ "msg": "Stopping server" });
-        process.exit();
     });
 
     app.listen(http_port, function () { console.log("Listening http port on: " + http_port) });
@@ -423,7 +423,6 @@ function isValidTimestamp(newBlock, previousBlock) {
 // Chapter-4
 const ecdsa = require("elliptic");
 const ec = new ecdsa.ec("secp256k1");
-const fs = require("fs");
 
 const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || "default");
 const privateKeyFile = privateKeyLocation + "/private_key";
