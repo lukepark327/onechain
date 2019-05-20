@@ -1,82 +1,240 @@
 "use strict";
-let fs = require("fs");
-let Web3 = require('web3'); // npm install web3@0.19
+const CryptoJS = require("crypto-js");
+const merkle = require("merkle");
+const random = require("random");
 
-// Create a web3 connection to a running geth node over JSON-RPC running at
-// http://localhost:8545
-let web3 = new Web3();
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+const ut = require("./utils");
 
-// const PRIVATE_KEY = "75F8343E57BD410673A4A770C25EA7651CB8CD6BC3068DDF915945BDA320A134";
-// let privateKey = new Buffer(PRIVATE_KEY, 'hex')
-function unlockAccount(address, password) {
-  // Unlock the coinbase account to make transactions out of it
-  console.log("Unlocking coinbase account");
-  try {
-    web3.personal.unlockAccount(address, password);
-  } catch (e) {
-    console.log(e);
-    return;
-  }
-}
-
-function createContract(jsonFileLoca, jsonFileName, solidityName, contractName) {
-  // Read the compiled contract code
-  // Compile with
-  // build/solc/solc realEthash.sol --combined-json abi,asm,ast,bin,bin-runtime,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc > contracts.json
-  let source = fs.readFileSync(jsonFileLoca);
-  let contracts = JSON.parse(source)[jsonFileName];
-
-  const key = solidityName + ':' + contractName;
-
-  let abi = JSON.parse(contracts[key].abi); // ABI description as JSON structure
-  let code = '0x' + contracts[key].bin; // Smart contract EVM bytecode as hex
-
-  // Create Contract proxy class
-  let SampleContract = web3.eth.contract(abi);
-
-  console.log("Deploying the contract");
-  let contract = SampleContract.new({
-    from: web3.eth.coinbase,
-    gas: 1000000,
-    data: code
-  });
-
-  // Transaction has entered to geth memory pool
-  console.log("Transaction Hash: \"" + contract.transactionHash + "\"");
-
-  return contract;
-}
-
-// We need to wait until any miner has included the transaction
-// in a block to get the address of the contract
-async function waitBlock(contract, sleepTime) {
-  while (true) {
-    let receipt = web3.eth.getTransactionReceipt(contract.transactionHash);
-    if (receipt && receipt.contractAddress) {
-      console.log("Contract Address: \"" + receipt.contractAddress + "\"");
-      break;
+class BlockHeader {
+    constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+        this.version = version;
+        this.index = index;
+        this.previousHash = previousHash;
+        this.timestamp = timestamp;
+        this.merkleRoot = merkleRoot;
+        this.difficulty = difficulty;
+        this.nonce = nonce;
     }
-    console.log("Waiting a mined block to include your contract... latest block is " + web3.eth.blockNumber);
-    await sleep(sleepTime);
-  }
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+class Block {
+    constructor(header, data) {
+        this.header = header;
+        this.data = data;
+    }
 }
 
-// main
-unlockAccount(
-  "0x6282ad5f86c03726722ec397844d2f87ced3af89", // address
-  "12341234" // password
-);
+/**
+ * TODO: Use database to store the data permanently.
+ * A current implemetation stores blockchain in local volatile memory.
+ */
+var blockchain = [getGenesisBlock()];
 
-var contract = createContract(
-  "./solexam/contracts.json", // jsonFileLoca
-  "contracts", // jsonFileName
-  "realEthash.sol", // solidityName
-  "realEthash" // contractName
-);
+function getBlockchain() { return blockchain; }
+function getLatestBlock() { return blockchain[blockchain.length - 1]; }
 
-waitBlock(contract, 4000);
+function getGenesisBlock() {
+    const version = "1.0.0";
+    const index = 0;
+    const previousHash = '0'.repeat(64);
+    const timestamp = 1231006505; // 01/03/2009 @ 6:15pm (UTC)
+    const difficulty = 0;
+    const nonce = 0;
+    const data = ["The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"];
+
+    const merkleTree = merkle("sha256").sync(data);
+    const merkleRoot = merkleTree.root() || '0'.repeat(64);
+
+    const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
+    return new Block(header, data);
+}
+
+function generateNextBlock(blockData) {
+    const previousBlock = getLatestBlock();
+    const currentVersion = ut.getCurrentVersion();
+    const nextIndex = previousBlock.header.index + 1;
+    const previousHash = calculateHashForBlock(previousBlock);
+    const nextTimestamp = ut.getCurrentTimestamp();
+    const difficulty = getDifficulty(getBlockchain());
+
+    const merkleTree = merkle("sha256").sync(blockData);
+    const merkleRoot = merkleTree.root() || '0'.repeat(64);
+
+    const newBlockHeader = findBlock(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
+    return new Block(newBlockHeader, blockData);
+}
+
+function addBlock(newBlock) {
+    if (isValidNewBlock(newBlock, getLatestBlock())) {
+        blockchain.push(newBlock);
+        return true;
+    }
+    return false;
+}
+
+function mineBlock(blockData) {
+    const newBlock = generateNextBlock(blockData);
+
+    if (addBlock(newBlock)) {
+        const nw = require("./network");
+
+        nw.broadcast(nw.responseLatestMsg());
+        return newBlock;
+    }
+    else {
+        return null;
+    }
+}
+
+/**
+ * TODO: Implement a stop mechanism.
+ * A current implementation doesn't stop until finding matching block.
+ */
+function findBlock(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty) {
+    var nonce = 0;
+    while (true) {
+        var hash = calculateHash(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        if (hashMatchesDifficulty(hash, difficulty)) {
+            return new BlockHeader(currentVersion, nextIndex, previoushash, nextTimestamp, merkleRoot, difficulty, nonce);
+        }
+        nonce++;
+    }
+}
+
+function hashMatchesDifficulty(hash, difficulty) {
+    const hashBinary = ut.hexToBinary(hash);
+    const requiredPrefix = '0'.repeat(difficulty);
+    return hashBinary.startsWith(requiredPrefix);
+}
+
+function calculateHash(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
+    return CryptoJS.SHA256(version + index + previousHash + timestamp + merkleRoot + difficulty + nonce).toString().toUpperCase();
+}
+
+function calculateHashForBlock(block) {
+    return calculateHash(
+        block.header.version,
+        block.header.index,
+        block.header.previousHash,
+        block.header.timestamp,
+        block.header.merkleRoot,
+        block.header.difficulty,
+        block.header.nonce
+    );
+}
+
+const BLOCK_GENERATION_INTERVAL = 10; // in seconds
+const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // in blocks
+
+function getDifficulty(aBlockchain) {
+    const latestBlock = aBlockchain[aBlockchain.length - 1];
+    if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
+        return getAdjustedDifficulty(latestBlock, aBlockchain);
+    }
+    return latestBlock.header.difficulty;
+}
+
+function getAdjustedDifficulty(latestBlock, aBlockchain) {
+    const prevAdjustmentBlock = aBlockchain[aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
+    const timeTaken = latestBlock.header.timestamp - prevAdjustmentBlock.header.timestamp;
+    const timeExpected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
+
+    if (timeTaken < timeExpected / 2) {
+        return prevAdjustmentBlock.header.difficulty + 1;
+    }
+    else if (timeTaken > timeExpected * 2) {
+        return prevAdjustmentBlock.header.difficulty - 1;
+    }
+    else {
+        return prevAdjustmentBlock.header.difficulty;
+    }
+}
+
+function isValidBlockStructure(block) {
+    return typeof(block.header.version) === 'string'
+        && typeof(block.header.index) === 'number'
+        && typeof(block.header.previousHash) === 'string'
+        && typeof(block.header.timestamp) === 'number'
+        && typeof(block.header.merkleRoot) === 'string'
+        && typeof(block.header.difficulty) === 'number'
+        && typeof(block.header.nonce) === 'number'
+        && typeof(block.data) === 'object';
+}
+
+function isValidTimestamp(newBlock, previousBlock) {
+    return (previousBlock.header.timestamp - 60 < newBlock.header.timestamp)
+        && newBlock.header.timestamp - 60 < ut.getCurrentTimestamp();
+}
+
+function isValidNewBlock(newBlock, previousBlock) {
+    if (!isValidBlockStructure(newBlock)) {
+        console.log('invalid block structure: %s', JSON.stringify(newBlock));
+        return false;
+    }
+    else if (previousBlock.header.index + 1 !== newBlock.header.index) {
+        console.log("Invalid index");
+        return false;
+    }
+    else if (calculateHashForBlock(previousBlock) !== newBlock.header.previousHash) {
+        console.log("Invalid previousHash");
+        return false;
+    }
+    else if (
+        (newBlock.data.length !== 0 && (merkle("sha256").sync(newBlock.data).root() !== newBlock.header.merkleRoot))
+        || (newBlock.data.length === 0 && ('0'.repeat(64) !== newBlock.header.merkleRoot))
+    ) {
+        console.log("Invalid merkleRoot");
+        return false;
+    }
+    else if (!isValidTimestamp(newBlock, previousBlock)) {
+        console.log('invalid timestamp');
+        return false;
+    }
+    else if (!hashMatchesDifficulty(calculateHashForBlock(newBlock), newBlock.header.difficulty)) {
+        console.log("Invalid hash: " + calculateHashForBlock(newBlock));
+        return false;
+    }
+    return true;
+}
+
+function isValidChain(blockchainToValidate) {
+    if (JSON.stringify(blockchainToValidate[0]) !== JSON.stringify(getGenesisBlock())) {
+        return false;
+    }
+    var tempBlocks = [blockchainToValidate[0]];
+    for (var i = 1; i < blockchainToValidate.length; i++) {
+        if (isValidNewBlock(blockchainToValidate[i], tempBlocks[i - 1])) {
+            tempBlocks.push(blockchainToValidate[i]);
+        }
+        else { return false; }
+    }
+    return true;
+}
+
+function replaceChain(newBlocks) {
+    if (
+        isValidChain(newBlocks)
+        && (newBlocks.length > blockchain.length || (newBlocks.length === blockchain.length) && random.boolean())
+    ) {
+        const nw = require("./network");
+
+        console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
+        blockchain = newBlocks;
+        nw.broadcast(nw.responseLatestMsg());
+    }
+    else { console.log("Received blockchain invalid"); }
+}
+
+function getBlockVersion(index) {
+    return blockchain[index].header.version;
+}
+
+module.exports = {
+    getBlockchain,
+    getLatestBlock,
+    addBlock,
+    mineBlock,
+    calculateHashForBlock,
+    replaceChain,
+    getBlockVersion
+};
