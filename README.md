@@ -1,7 +1,8 @@
+<!--
 [[:us:|English|영어]](https://github.com/twodude/onechain)
 [[:kr:|Korean|한국어]](https://github.com/twodude/onechain/tree/korean)
-
 ---
+-->
 
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![version](https://img.shields.io/badge/version-v2.1.0-orange.svg)](https://github.com/twodude/onechain/blob/master/package.json)
@@ -10,7 +11,9 @@
 # one-chain
 minimal blockchain ever.   
 
+<!--
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
+-->
 
 Assist you to develop blockchain core easily.
 > [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
@@ -25,12 +28,14 @@ Although there are some open source projects like Bitcoin and Ethereum, those ar
 You can gently solve the above problems by using
 **```one-chain```, simple implementation of blockchain core.**
 The one-chain is modularized by function&mdash;network, core, transaction, wallet, etc.&mdash; to achieve clarity.
-Also, detail comments and documents are provided for studying and easy reusing.
+Also, detail comments and documents(TBA) are provided for studying and easy reusing.
 Most of the code is written in a pseudo-code style to provide understanding by other language developers.
 
+<!--
 ## Details
 - [(Korean) Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
 - [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
+-->
 
 # Use-cases
 
@@ -48,13 +53,16 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 ## Plasma DAG
 - [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
 
+## Noonsatae
+- [Avalanche Implementation](https://github.com/noonsatae)
+
 # How to Start
 
 ## Environments
-- Node.js v8.11.3 (>=4.3.2)
+- Node.js v8.11.3
 - cURL 7.55.1 *or* Postman v6.4.4
 
-### install packages
+### install dependencies
 ```bash
 npm install
 ```
