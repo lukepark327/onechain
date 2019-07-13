@@ -39,22 +39,26 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 
 # Use-cases
 
-## Governance Simulator on Blockchain : Based on Smart City Cases
-- [DBpia](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
+* 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
+[![book-cover](https://github.com/twodude/onechain/blob/master/images/book-cover.png)](http://www.yes24.com/Product/Goods/75235536)
 
-## Blockchain Policy Simulator
-- [BBR Hackathon](http://www.breview.kr)
-[Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
-- [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
+> Click on the image above to go to the shopping mall where you can buy it.
 
-## edu-chain
-- [Instructional Blockchain](https://github.com/twodude/educhain)   
+* Governance Simulator on Blockchain : Based on Smart City Cases
+  - [DBpia](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
 
-## Plasma DAG
-- [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
+* Blockchain Policy Simulator
+  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
+  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
 
-## Noonsatae
-- [Avalanche Implementation](https://github.com/noonsatae)
+* edu-chain
+  - [Instructional Blockchain](https://github.com/twodude/educhain)   
+
+* Plasma DAG
+  - [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
+
+* Noonsatae
+  - [Avalanche Implementation](https://github.com/noonsatae)
 
 # How to Start
 
