@@ -37,9 +37,14 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
 -->
 
-# Use-cases
+## Use-cases
 
 * 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
+  - [Chapter-1](https://github.com/twodude/onechain/tree/chapter-1)
+  - [Chapter-2](https://github.com/twodude/onechain/tree/chapter-2)
+  - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
+  - [Chapter-4](https://github.com/twodude/onechain/tree/chapter-4)
+
 [![book-cover](https://github.com/twodude/onechain/blob/master/images/book-cover.png)](http://www.yes24.com/Product/Goods/75235536)
 
 > Click on the image above to go to the shopping mall where you can buy it.
@@ -66,10 +71,11 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - Node.js v8.11.3
 - cURL 7.55.1 *or* Postman v6.4.4
 
-### install dependencies
+## install dependencies
 ```bash
 npm install
 ```
+## Running Nodes
 
 ### start node #1
 ```bash
