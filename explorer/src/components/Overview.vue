@@ -42,12 +42,17 @@
       >
         <v-card>
           <v-card-title>
-            <v-btn
-              text
+            <router-link
+              :to="{
+                name: 'Block',
+                params: { number: block.header.index }
+              }"
+              tag='v-btn'
             >
-              <!-- TODO: @click="event" -->
-              Block #{{block.header.index}}
-            </v-btn>
+              <v-btn text>
+                Block #{{block.header.index}}
+              </v-btn>
+            </router-link>
           </v-card-title>
           <v-card-text>
             <v-simple-table dense>
