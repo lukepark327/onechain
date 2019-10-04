@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     isHash: function (key) {
-      return key === "previousHash" || key === "merkleRoot";
+      return (key === "previousHash" || key === "merkleRoot");
     },
     getLatestBlocks: function (n) {
       n = n | 0;
@@ -101,11 +101,11 @@ export default {
           })
           .catch((error) => {
             alert(error);
-          })
-        }, 2000)
+          });
+        }, 2000);
       }
-      else if (this.inter1 != undefined){
-        clearInterval(this.inter1)
+      else if (this.inter1 != undefined) {
+        clearInterval(this.inter1);
       }
     },    
     getLatestBlocksOnce: function (n) {
@@ -117,7 +117,7 @@ export default {
       })
       .catch((error) => {
         alert(error);
-      })
+      });
     },
     gotoBlockPage: function (n) {
       this.$router.push({ name: 'block', params: {number: n} });
