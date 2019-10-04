@@ -76,7 +76,6 @@
 
 <script>
 export default {
-  name: 'app',
   data: function () {
     return {
       blocks: [],
@@ -121,7 +120,7 @@ export default {
       })
     },
     gotoBlockPage: function (n) {
-      this.$router.push('/block/' + n)
+      this.$router.push({ name: 'block', params: {number: n} });
     }
   }
 }
