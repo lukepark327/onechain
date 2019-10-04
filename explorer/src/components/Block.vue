@@ -44,9 +44,7 @@
               Block #{{block.header.index}}
             </v-btn>
           </v-card-title>
-
-
-
+          <!-- header -->
           <v-card-text>
             <v-simple-table dense>
               <tbody>
@@ -64,7 +62,7 @@
               </tbody>
             </v-simple-table>
           </v-card-text>
-       
+          <!-- data -->
           <v-card-text>
             <v-simple-table dense>
               <tbody>
@@ -91,11 +89,11 @@ export default {
     }
   },
   created: function () {
-    this.block = this.getBlock(this.$route.params.number)
+    this.block = this.getBlock(this.$route.params.number);
   },
   methods: {
     isHash: function (key) {
-      return key === "previousHash" || key === "merkleRoot";
+      return (key === "previousHash" || key === "merkleRoot");
     },
     getBlock: function (n) {
       const baseURI = 'http://localhost:3001';
@@ -105,7 +103,7 @@ export default {
       })
       .catch((error) => {
         alert(error);
-      })
+      });
     },
     reloadBlockPage: function (n) {
       this.$router.push({ name: 'block', params: {number: n} });
