@@ -23,8 +23,10 @@
                 solo
                 flat
                 hide-details
+                v-model="blockNumber"
+                @keyup.enter="gotoBlockPage(blockNumber)"
+                @click:append="gotoBlockPage(blockNumber)"
               >
-              <!-- TODO: search -->
               </v-text-field>
             </v-col>
           </v-row>
@@ -42,17 +44,12 @@
       >
         <v-card>
           <v-card-title>
-            <router-link
-              :to="{
-                name: 'Block',
-                params: { number: block.header.index }
-              }"
-              tag='v-btn'
+            <v-btn
+              text
+              @click="gotoBlockPage(block.header.index)"
             >
-              <v-btn text>
-                Block #{{block.header.index}}
-              </v-btn>
-            </router-link>
+              Block #{{block.header.index}}
+            </v-btn>
           </v-card-title>
           <v-card-text>
             <v-simple-table dense>
@@ -122,6 +119,9 @@ export default {
       .catch((error) => {
         alert(error);
       })
+    },
+    gotoBlockPage: function (n) {
+      this.$router.push('/block/' + n)
     }
   }
 }
