@@ -1,4 +1,5 @@
 "use strict";
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -13,10 +14,17 @@ function initHttpServer() {
     const bc = require("./blockchain");
 
     const app = express();
+    app.use(cors());
     app.use(bodyParser.json());
 
     app.get("/blocks", function (req, res) {
         res.send(bc.getBlockchain());
+    });
+    app.get('/block/:number', function (req, res) {
+        const targetBlock = bc.getBlockchain().find(function (block) {
+            return block.header.index == req.params.number;
+        });
+        res.send(targetBlock);
     });
     app.post("/mineBlock", function (req, res) {
         const data = req.body.data || [];
