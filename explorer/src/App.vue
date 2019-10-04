@@ -2,8 +2,17 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>onechain</span>
-        <span class="font-weight-light"> explorer</span>
+        <router-link
+          :to="{
+            name: 'home',
+          }"
+          tag='v-btn'
+        >
+          <v-btn text>
+            <span>onechain</span>
+            <span class="font-weight-light"> explorer</span>
+          </v-btn>
+        </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
