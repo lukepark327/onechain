@@ -23,19 +23,13 @@ Assist you to develop blockchain core easily.
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
 As Blockchain-based service grew, so need of open source which assists developing blockchain core was drived.
-Although there are some open source projects like Bitcoin and Ethereum, those are difficult to learn to use.
+Although there are some open source projects like Bitcoin and Ethereum, those are too difficult to learn and to use.
 
-You can gently solve the above problems by using
+You can solve the above problems by using
 **```one-chain```, simple implementation of blockchain core.**
-The one-chain is modularized by function&mdash;network, core, transaction, wallet, etc.&mdash; to achieve clarity.
-Also, detail comments and documents(TBA) are provided for studying and easy reusing.
+The one-chain is modularized by function: network, core, transaction, wallet, etc. to achieve clarity.
+Also, detail comments and documents are provided for studying and easy reusing.
 Most of the code is written in a pseudo-code style to provide understanding by other language developers.
-
-<!--
-## Details
-- [(Korean) Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
-- [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
--->
 
 ## Use-cases
 
@@ -53,17 +47,20 @@ Most of the code is written in a pseudo-code style to provide understanding by o
   - [DBpia](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
 
 * Blockchain Policy Simulator
-  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
-  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
-
+  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
+  - [Blockchain Simulator](https://github.com/twodude/blockchain-simulator)
+  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
+  
 * edu-chain
   - [Instructional Blockchain](https://github.com/twodude/educhain)   
 
 * Plasma DAG
   - [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
 
+<!--
 * Noonsatae
   - [Avalanche Implementation](https://github.com/noonsatae)
+-->
 
 # How to Start
 
