@@ -176,5 +176,9 @@ npm run serve
 
 **Note that** there is at least one running node whose `HTTP_PORT` is `3001`.
 
+# How to Use
+
+You can search a specific block by block number. Use search bar or click the `BLOCK #N` button.
+
 # License
 The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
