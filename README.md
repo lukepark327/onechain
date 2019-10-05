@@ -35,7 +35,11 @@
   - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
   - [Chapter-4](https://github.com/twodude/onechain/tree/chapter-4)
 
-[![book-cover](https://github.com/twodude/onechain/blob/master/images/book-cover.png)](http://www.yes24.com/Product/Goods/75235536)
+<p align="center">
+  <a href="http://www.yes24.com/Product/Goods/75235536">
+    <img width="480" src="https://github.com/twodude/onechain/blob/master/images/book.jpeg">
+  </a>
+</p>
 
 > 책 구매 페이지로 이동하고자 한다면 위 이미지를 클릭하시오.
 
@@ -108,7 +112,13 @@ npm start
 ```
 
 # 사용하기
-[![video](https://user-images.githubusercontent.com/24687378/55283674-5d346400-53a3-11e9-9e85-baaca23cac78.jpg)](https://youtu.be/ZRbr3VIUHuA)   
+
+<p align="center">
+  <a href="https://youtu.be/uBeUTRtgGxI">
+    <img width="480" src="https://img.youtube.com/vi/uBeUTRtgGxI/0.jpg">
+  </a>
+</p>
+
 > 동영상 페이지로 이동하고자 한다면 위 이미지를 클릭하시오.
 
 ### 블록체인 요청
