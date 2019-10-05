@@ -176,6 +176,8 @@ npm run serve
 
 **Note that** there is at least one running node whose `HTTP_PORT` is `3001`.
 
+Now app is running at http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
+
 # How to Use
 
 You can search a specific block by block number. Use search bar or click the `BLOCK #N` button.
