@@ -16,7 +16,7 @@ minimal blockchain ever.
 -->
 
 Assist you to develop blockchain core easily.
-> [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)
+> [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
