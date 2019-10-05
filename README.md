@@ -159,7 +159,7 @@ curl -X POST http://127.0.0.1:3001/stop
 # one-chain explorer
 ![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
 
-**`one-chain explorer`** is the front-end for the blockchain explorer which is used to visualize the state of the blockchain. Via blockchain explorer, you can see the latest blocks and details about specific block.
+**`one-chain explorer`** is the front-end for the blockchain explorer which is used to visualize the state of the blockchain. Via blockchain explorer, you can see the latest blocks and details about a specific block.
 
 `one-chain` already has multiple functions with HTTP (RESTful API) endpoints, so a web page just calls those endpoints and visualizes the results. The whole UI codes are located in `./explorer`. `Vue.js` and `Vuetify` are used to implement.
 
