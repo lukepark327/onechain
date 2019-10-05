@@ -1,6 +1,7 @@
 <!--
 [[:us:|English|영어]](https://github.com/twodude/onechain)
 [[:kr:|Korean|한국어]](https://github.com/twodude/onechain/tree/korean)
+
 ---
 -->
 
@@ -15,8 +16,8 @@ minimal blockchain ever.
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
 -->
 
-Assist you to develop blockchain core easily.
-> [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
+핵심 기능을 담은 구현체로부터, 블록체인 코어 개발을 보조한다.   
+> [제12회 공개소프트웨어 개발자대회 후원기업상 수상작](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
