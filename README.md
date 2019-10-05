@@ -39,7 +39,11 @@ Both front-end and back-end of one-chain is written in Javascript (Node.js and V
   - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
   - [Chapter-4](https://github.com/twodude/onechain/tree/chapter-4)
 
-[![book-cover](https://github.com/twodude/onechain/blob/master/images/book-cover.png)](http://www.yes24.com/Product/Goods/75235536)
+<p align="center">
+  <a href="http://www.yes24.com/Product/Goods/75235536">
+    <img width="480" src="https://github.com/twodude/onechain/blob/master/images/book.jpeg">
+  </a>
+</p>
 
 > Click on the image above to go to the shopping mall where you can buy it.
 
@@ -112,7 +116,13 @@ npm start
 ```
 
 # How to Use
-[![video](https://user-images.githubusercontent.com/24687378/55283674-5d346400-53a3-11e9-9e85-baaca23cac78.jpg)](https://youtu.be/ZRbr3VIUHuA)   
+
+<p align="center">
+  <a href="https://youtu.be/uBeUTRtgGxI">
+    <img width="480" src="https://img.youtube.com/vi/uBeUTRtgGxI/0.jpg">
+  </a>
+</p>
+
 > Click on the image above to play the video.
 
 ### Get blockchain
