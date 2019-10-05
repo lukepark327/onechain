@@ -68,18 +68,18 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - Node.js v8.11.3
 - cURL 7.55.1 *or* Postman v6.4.4
 
-## install dependencies
+## Install dependencies
 ```bash
 npm install
 ```
-## Running Nodes
+## Run Nodes
 
-### start node #1
+### Start node #1
 ```bash
 npm start
 ```
 
-### start node #2
+### Start node #2
 ```$env:HTTP_PORT=3002```
 *or*
 ```export HTTP_PORT=3002```
@@ -92,24 +92,6 @@ npm start
 ```$env:PEERS="ws://127.0.0.1:6001"```
 *or*
 ```export PEERS="ws://127.0.0.1:6001"```
-
-```bash
-npm start
-```
-
-### start node #3
-```$env:HTTP_PORT=3003```
-*or*
-```export HTTP_PORT=3003```
-
-```$env:P2P_PORT=6003```
-*or*
-```export P2P_PORT=6003```
-
-*optionally*
-```$env:PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
-*or*
-```export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
 
 ```bash
 npm start
@@ -129,6 +111,14 @@ You can pretty-print JSON with:
 curl http://127.0.0.1:3001/blocks | python -m json.tool
 ```
 Python >= 2.6 required.
+
+### Get a specific block
+
+Get a block whose number (index) is 3:
+
+```bash
+curl http://localhost:3001/block/3
+```
 
 ### Add new block
 ```bash
@@ -165,6 +155,26 @@ curl -X POST http://127.0.0.1:3001/deleteWallet
 ```bash
 curl -X POST http://127.0.0.1:3001/stop
 ```
+
+# one-chain explorer
+![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
+
+**`one-chain explorer`** is the front-end for the blockchain explorer which is used to visualize the state of the blockchain. Via blockchain explorer, you can see the latest blocks and details about specific block.
+
+`one-chain` already has multiple functions with HTTP (RESTful API) endpoints, so a web page just calls those endpoints and visualizes the results. The whole UI codes are located in `./explorer`. `Vue.js` and `Vuetify` are used to implement.
+
+# How to Start
+```bash
+cd explorer
+npm install
+```
+
+## Run
+```bash
+npm run serve
+```
+
+**Note that** there is at least one running node whose `HTTP_PORT` is `3001`.
 
 # License
 The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
