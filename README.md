@@ -1,11 +1,10 @@
-<!--
-[[:us:|English|영어]](https://github.com/twodude/onechain)
-[[:kr:|Korean|한국어]](https://github.com/twodude/onechain/tree/korean)
+[[:us: | English | 영어]](https://github.com/twodude/onechain)
+[[:kr: | Korean | 한국어]](https://github.com/twodude/onechain/tree/korean)
+
 ---
--->
 
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![version](https://img.shields.io/badge/version-v2.1.0-orange.svg)](https://github.com/twodude/onechain/blob/master/package.json)
+[![version](https://img.shields.io/badge/version-v2.2.0-orange.svg)](https://github.com/twodude/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
 # one-chain
@@ -23,19 +22,14 @@ Assist you to develop blockchain core easily.
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
 As Blockchain-based service grew, so need of open source which assists developing blockchain core was drived.
-Although there are some open source projects like Bitcoin and Ethereum, those are difficult to learn to use.
+Although there are some open source projects like Bitcoin and Ethereum, those are too difficult to learn and to use.
 
-You can gently solve the above problems by using
+You can solve the above problems by using
 **```one-chain```, simple implementation of blockchain core.**
-The one-chain is modularized by function&mdash;network, core, transaction, wallet, etc.&mdash; to achieve clarity.
-Also, detail comments and documents(TBA) are provided for studying and easy reusing.
-Most of the code is written in a pseudo-code style to provide understanding by other language developers.
+The one-chain adopts modularization design: Dividing layers into blockchain, network, APIs, and wallet to achieve clarity.
+Also, detail comments and documents are provided for studying and easy reusing.
 
-<!--
-## Details
-- [(Korean) Minimal Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/1_minimal/README.md)   
-- [(Korean) Drivable Blockchain](https://github.com/JOYUJEONG/onechain/blob/master/2_drivable/README.md)   
--->
+Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but also written in a pseudo-code style to provide understanding by other language developers.
 
 ## Use-cases
 
@@ -50,20 +44,23 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 > Click on the image above to go to the shopping mall where you can buy it.
 
 * Governance Simulator on Blockchain : Based on Smart City Cases
-  - [DBpia](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
+  - [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
 
 * Blockchain Policy Simulator
-  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)    
-  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)    
-
+  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
+  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
+  - [Code](https://github.com/twodude/blockchain-simulator)
+  
 * edu-chain
-  - [Instructional Blockchain](https://github.com/twodude/educhain)   
+  - [Code](https://github.com/twodude/educhain)   
 
 * Plasma DAG
-  - [Ethereum Plasma Chain](https://github.com/plasma-dag/plasma-client)
+  - [Code](https://github.com/plasma-dag/plasma-client)
 
+<!--
 * Noonsatae
   - [Avalanche Implementation](https://github.com/noonsatae)
+-->
 
 # How to Start
 
@@ -71,48 +68,44 @@ Most of the code is written in a pseudo-code style to provide understanding by o
 - Node.js v8.11.3
 - cURL 7.55.1 *or* Postman v6.4.4
 
-## install dependencies
+## Install dependencies
 ```bash
 npm install
 ```
-## Running Nodes
+## Run Nodes
 
-### start node #1
+### Start node #1
 ```bash
 npm start
 ```
 
-### start node #2
-```$env:HTTP_PORT=3002```
-*or*
-```export HTTP_PORT=3002```
+### Start node #2
 
-```$env:P2P_PORT=6002```
-*or*
-```export P2P_PORT=6002```
+* Set HTTP_PORT for HTTP communication
 
-*optionally*
-```$env:PEERS="ws://127.0.0.1:6001"```
-*or*
-```export PEERS="ws://127.0.0.1:6001"```
+  ```$env:HTTP_PORT=3002```
+  *or*
+  ```export HTTP_PORT=3002```
 
-```bash
-npm start
-```
+* Set P2P_PORT for P2P communication among peers
 
-### start node #3
-```$env:HTTP_PORT=3003```
-*or*
-```export HTTP_PORT=3003```
+  ```$env:P2P_PORT=6002```
+  *or*
+  ```export P2P_PORT=6002```
 
-```$env:P2P_PORT=6003```
-*or*
-```export P2P_PORT=6003```
+* (*option*) Set pre-connected PEERS before running
 
-*optionally*
-```$env:PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
-*or*
-```export PEERS="ws://127.0.0.1:6001, ws://127.0.0.1:6002"```
+  ```$env:PEERS="ws://127.0.0.1:6001[, ws://127.0.0.1:6003, ...]"```
+  *or*
+  ```export PEERS="ws://127.0.0.1:6001[, ws://127.0.0.1:6003, ...]"```
+
+* (*option*) Set PRIVATE_KEY where private_key is located
+
+  ```$env:PRIVATE_KEY="second"```
+  *or*
+  ```export PRIVATE_KEY="second"```
+
+  Now private_key is located in `./wallet/second/` instead of default location `./wallet/default/`.
 
 ```bash
 npm start
@@ -127,11 +120,23 @@ npm start
 curl http://127.0.0.1:3001/blocks
 ```
 
-You can pretty-print JSON with:
+You can use 'pretty-print JSON' for better readability:
 ```bash
 curl http://127.0.0.1:3001/blocks | python -m json.tool
 ```
-Python >= 2.6 required.
+Python >= 2.6 is required.
+
+### Get a specific block
+
+```bash
+curl http://127.0.0.1:3001/block/:number
+```
+
+For example, let's get a block whose number (index) is 3:
+
+```bash
+curl http://127.0.0.1:3001/block/3
+```
 
 ### Add new block
 ```bash
@@ -169,5 +174,37 @@ curl -X POST http://127.0.0.1:3001/deleteWallet
 curl -X POST http://127.0.0.1:3001/stop
 ```
 
+# one-chain explorer
+![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
+
+**`one-chain explorer`** is the front-end for the blockchain explorer which is used to visualize the state of the blockchain. You can see the latest blocks and details about a specific block via blockchain explorer.
+
+As you know, one-chain already has multiple functions with HTTP (RESTful API) endpoints. So a web page just calls those endpoints and visualizes the results.
+
+The whole UI codes are located in `./explorer/`. Vue.js and Vuetify are used to implement.
+
+# How to Start
+```bash
+cd explorer
+npm install
+```
+
+## Run
+
+**Requirements:** there must be at least one running node whose `HTTP_PORT` is `3001`.
+
+```bash
+npm run serve
+```
+
+Now app is running at http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
+
+# How to Use
+
+* You can search a specific block by block number. Type in the search bar or click the `BLOCK #N` button.
+
+* Turn on the 'Realtime Updates' switch at the top of page if you want to get blockchain in real-time. It will send `/blocks` GET requests to full-node to get blockchain in every 2 seconds.
+
 # License
 The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
+
