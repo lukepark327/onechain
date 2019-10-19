@@ -39,9 +39,11 @@ function initHttpServer() {
     app.get("/version", function (req, res) {
         res.send(ut.getCurrentVersion());
     });
-    app.post("/blockVersion", function (req, res) {
-        const index = req.body.index;
-        res.send(bc.getBlockVersion(index));
+    app.get("/blockVersion/:number", function (req, res) {
+        const targetBlock = bc.getBlockchain().find(function (block) {
+            return block.header.index == req.params.number;
+        });
+        res.send(targetBlock.header.version);
     });
     app.get("/peers", function (req, res) {
         res.send(nw.getSockets().map(function (s) {

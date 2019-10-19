@@ -225,16 +225,11 @@ function replaceChain(newBlocks) {
     else { console.log("Received blockchain invalid"); }
 }
 
-function getBlockVersion(index) {
-    return blockchain[index].header.version;
-}
-
 module.exports = {
     getBlockchain,
     getLatestBlock,
     addBlock,
     mineBlock,
     calculateHashForBlock,
-    replaceChain,
-    getBlockVersion
+    replaceChain
 };

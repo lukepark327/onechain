@@ -137,7 +137,6 @@ curl http://127.0.0.1:3001/blocks | python -m json.tool
 Python >= 2.6 is required.
 
 ### Get a specific block
-
 ```bash
 curl http://127.0.0.1:3001/block/:number
 ```
@@ -154,12 +153,28 @@ curl -X POST http://127.0.0.1:3001/mineBlock
 curl -H "Content-type:application/json" --data "{\"data\" : [\"Anything you want\", \"Anything you need\"]}" http://127.0.0.1:3001/mineBlock
 ```
 
-### Get connected peers
+### Get current version
+```bash
+curl http://127.0.0.1:3001/version
+```
+
+### Get the version of specific block
+```bash
+curl http://127.0.0.1:3001/blockVersion/:number
+```
+
+For example, let's get the version of block whose number (index) is 3:
+
+```bash
+curl http://127.0.0.1:3001/blockVersion/3
+```
+
+### Get connected peer(s)
 ```bash
 curl http://127.0.0.1:3001/peers
 ```
 
-### Add peer
+### Add peer(s)
 ```bash
 curl -H "Content-type:application/json" --data "{\"peers\" : [\"ws://127.0.0.1:6002\", \"ws://127.0.0.1:6003\"]}" http://127.0.0.1:3001/addPeers
 ```
@@ -167,16 +182,6 @@ curl -H "Content-type:application/json" --data "{\"peers\" : [\"ws://127.0.0.1:6
 ### Get Address
 ```bash
 curl http://127.0.0.1:3001/address
-```
-
-### Create Wallet
-```bash
-curl -X POST http://127.0.0.1:3001/createWallet
-```
-
-### Delete Wallet
-```bash
-curl -X POST http://127.0.0.1:3001/deleteWallet
 ```
 
 ### Stop
