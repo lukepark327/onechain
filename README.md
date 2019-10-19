@@ -14,22 +14,22 @@ minimal blockchain ever.
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
 -->
 
-Assist you to develop blockchain core easily.
+Assist you to easily develop blockchain core.
 > [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
-As Blockchain-based service grew, so need of open source which assists developing blockchain core was drived.
-Although there are some open source projects like Bitcoin and Ethereum, those are too difficult to learn and to use.
+As Blockchain-based services grew, so open source that assists developing blockchain core was needed.
+There are open source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
 
-You can solve the above problems by using
+You can solve the above problems with
 **```one-chain```, simple implementation of blockchain core.**
-The one-chain adopts modularization design: Dividing layers into blockchain, network, APIs, and wallet to achieve clarity.
-Also, detail comments and documents are provided for studying and easy reusing.
+The one-chain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity.
+In addition, detailed comments and documents are provided to facilitate learning and reusing.
 
-Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but also written in a pseudo-code style to provide understanding by other language developers.
+Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but written in simple (without async, etc.) so that other language developers can understand them.
 
 ## Use-cases
 
@@ -45,7 +45,7 @@ Both front-end and back-end of one-chain is written in Javascript (Node.js and V
   </a>
 </p>
 
-> Click on the image above to go to the shopping mall where you can buy it.
+> Click on the image above to go to the mall where you can buy.
 
 * Governance Simulator on Blockchain : Based on Smart City Cases
   - [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
@@ -85,25 +85,25 @@ npm start
 
 ### Start node #2
 
-* Set HTTP_PORT for HTTP communication
+* Set `HTTP_PORT` for HTTP communication
 
   ```$env:HTTP_PORT=3002```
   *or*
   ```export HTTP_PORT=3002```
 
-* Set P2P_PORT for P2P communication among peers
+* Set `P2P_PORT` for P2P communication among peers
 
   ```$env:P2P_PORT=6002```
   *or*
   ```export P2P_PORT=6002```
 
-* (*option*) Set pre-connected PEERS before running
+* (*option*) Set pre-connected `PEERS` before running
 
   ```$env:PEERS="ws://127.0.0.1:6001[, ws://127.0.0.1:6003, ...]"```
   *or*
   ```export PEERS="ws://127.0.0.1:6001[, ws://127.0.0.1:6003, ...]"```
 
-* (*option*) Set PRIVATE_KEY where private_key is located
+* (*option*) Set `PRIVATE_KEY` where private_key is located
 
   ```$env:PRIVATE_KEY="second"```
   *or*
@@ -136,7 +136,7 @@ curl http://127.0.0.1:3001/blocks | python -m json.tool
 ```
 Python >= 2.6 is required.
 
-### Get a specific block
+### Get a particular block
 ```bash
 curl http://127.0.0.1:3001/block/:number
 ```
@@ -158,12 +158,12 @@ curl -H "Content-type:application/json" --data "{\"data\" : [\"Anything you want
 curl http://127.0.0.1:3001/version
 ```
 
-### Get the version of specific block
+### Get the version of particular block
 ```bash
 curl http://127.0.0.1:3001/blockVersion/:number
 ```
 
-For example, let's get the version of block whose number (index) is 3:
+For example, let's get a version of a block whose number (index) is 3:
 
 ```bash
 curl http://127.0.0.1:3001/blockVersion/3
@@ -192,11 +192,11 @@ curl -X POST http://127.0.0.1:3001/stop
 # one-chain explorer
 ![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
 
-**`one-chain explorer`** is the front-end for the blockchain explorer which is used to visualize the state of the blockchain. You can see the latest blocks and details about a specific block via blockchain explorer.
+**`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explore allows you to see the latest blocks and details about a particular block.
 
-As you know, one-chain already has multiple functions with HTTP (RESTful API) endpoints. So a web page just calls those endpoints and visualizes the results.
+As you know, one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
-The whole UI codes are located in `./explorer/`. Vue.js and Vuetify are used to implement.
+The full UI code is located in `./explorer/`. Vue.js and Vuetify are used.
 
 # How to Start
 ```bash
@@ -212,14 +212,13 @@ npm install
 npm run serve
 ```
 
-Now app is running at http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
+The app now runs on http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
 
 # How to Use
 
-* You can search a specific block by block number. Type in the search bar or click the `BLOCK #N` button.
+* You can search a particular block by block number. Type in the search bar or click the `BLOCK #N` button.
 
-* Turn on the 'Realtime Updates' switch at the top of page if you want to get blockchain in real-time. It will send `/blocks` GET requests to full-node to get blockchain in every 2 seconds.
+* Turn on the 'Realtime Updates' switch at the top of page to get the blockchain in real-time. It will send a `/blocks` GET request to the full-node to get a blockchain in every 2 seconds.
 
 # License
 The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
-
