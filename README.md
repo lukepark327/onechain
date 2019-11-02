@@ -8,28 +8,23 @@
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
 # one-chain
-minimal blockchain ever.   
 
 <!--
 ![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
 -->
 
-Assist you to easily develop blockchain core.
+Assist in developing blockchain core efficiently.
 > [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
 > Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
 
 ## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
 
-As Blockchain-based services grew, so open source that assists developing blockchain core was needed.
-There are open source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
+As Blockchain-based services grew, so open-source that assists in developing blockchain core was needed. There are open-source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
 
-You can solve the above problems with
+We solve the above problems with a
 **```one-chain```, simple implementation of blockchain core.**
-The one-chain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity.
-In addition, detailed comments and documents are provided to facilitate learning and reusing.
-
-Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but written in simple (without async, etc.) so that other language developers can understand them.
+The one-chain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
 
 ## Use-cases
 
@@ -45,7 +40,7 @@ Both front-end and back-end of one-chain is written in Javascript (Node.js and V
   </a>
 </p>
 
-> Click on the image above to go to the mall where you can buy.
+> Click on the image above to go to the bookstore.
 
 * Governance Simulator on Blockchain : Based on Smart City Cases
   - [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
@@ -130,7 +125,7 @@ npm start
 curl http://127.0.0.1:3001/blocks
 ```
 
-You can use 'pretty-print JSON' for better readability:
+Use 'pretty-print JSON' for better readability:
 ```bash
 curl http://127.0.0.1:3001/blocks | python -m json.tool
 ```
@@ -141,7 +136,7 @@ Python >= 2.6 is required.
 curl http://127.0.0.1:3001/block/:number
 ```
 
-For example, let's get a block whose number (index) is 3:
+For example, let us get a block whose number (index) is 3:
 
 ```bash
 curl http://127.0.0.1:3001/block/3
@@ -192,9 +187,7 @@ curl -X POST http://127.0.0.1:3001/stop
 # one-chain explorer
 ![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
 
-**`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explore allows you to see the latest blocks and details about a particular block.
-
-As you know, one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
+A **`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
 The full UI code is located in `./explorer/`. Vue.js and Vuetify are used.
 
@@ -216,9 +209,9 @@ The app now runs on http://localhost:8080/ by default. Using 'Chrome browser' is
 
 # How to Use
 
-* You can search a particular block by block number. Type in the search bar or click the `BLOCK #N` button.
+* Users can search for a particular block by block number. Type in the search bar or click the `BLOCK #N` button.
 
-* Turn on the 'Realtime Updates' switch at the top of page to get the blockchain in real-time. It will send a `/blocks` GET request to the full-node to get a blockchain in every 2 seconds.
+* Turn on the 'Realtime Updates' switch at the top of the page to get the blockchain in real-time. It will send a `/blocks` GET request to the full-node to get a blockchain in every 2 seconds.
 
 # License
 The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
