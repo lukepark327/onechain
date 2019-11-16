@@ -14,8 +14,10 @@
 -->
 
 Assist in developing blockchain core efficiently.
-> [2018 OSS Grand Developers Challenge Award](https://project.oss.kr)   
-> Based on the following code: [lhartikk/naivechain](https://github.com/lhartikk/naivechain)   
+> [2018 OSS Grand Developers Challenge Award](https://www.oss.kr)   
+> [2019 OSS Grand Developers Challenge Award](https://www.oss.kr)   
+
+Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).   
 
 ## Abstract
 ![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
@@ -28,7 +30,7 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 
 ## Use-cases
 
-* 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
+### 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
   - [Chapter-1](https://github.com/twodude/onechain/tree/chapter-1)
   - [Chapter-2](https://github.com/twodude/onechain/tree/chapter-2)
   - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
@@ -42,19 +44,19 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 
 > Click on the image above to go to the bookstore.
 
-* Governance Simulator on Blockchain : Based on Smart City Cases
-  - [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
+### Governance Simulator on Blockchain : Based on Smart City Cases
+- [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
 
-* Blockchain Policy Simulator
-  - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
-  - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
-  - [Code](https://github.com/twodude/blockchain-simulator)
+### Blockchain Policy Simulator
+- [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
+- [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
+- [Code](https://github.com/twodude/blockchain-simulator)
   
-* edu-chain
-  - [Code](https://github.com/twodude/educhain)   
+### edu-chain
+- [Code](https://github.com/twodude/educhain)   
 
-* Plasma DAG
-  - [Code](https://github.com/plasma-dag/plasma-client)
+### Plasma DAG
+- [Code](https://github.com/plasma-dag/plasma-client)
 
 <!--
 * Noonsatae
