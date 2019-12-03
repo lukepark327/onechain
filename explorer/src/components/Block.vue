@@ -11,6 +11,17 @@
         disabled
       >
       </v-switch>
+      <v-spacer></v-spacer>
+      <v-switch
+        class="ma-4"
+        label="Dark Theme"
+        v-model=goDark
+        color=blue
+        hide-details
+        inset
+        @change="setTheme()"
+      >
+      </v-switch>
       <v-flex xs12 sm12>
         <v-card color=blue>      
           <v-row>
@@ -85,7 +96,8 @@
 export default {
   data: function () {
     return {
-      block: {}
+      block: {},
+      goDark: this.$vuetify.theme.dark
     }
   },
   created: function () {
@@ -108,6 +120,14 @@ export default {
     reloadBlockPage: function (n) {
       this.$router.push({ name: 'block', params: {number: n} });
       this.block = this.getBlock(this.$route.params.number);
+    },
+    setTheme() {
+      if (this.goDark == true) {
+        return (this.$vuetify.theme.dark = true);
+      }
+      else {
+        return (this.$vuetify.theme.dark = false);
+      }
     }
   }
 };

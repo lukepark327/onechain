@@ -11,6 +11,17 @@
         @change="getLatestBlocks(12)"
       >
       </v-switch>
+      <v-spacer></v-spacer>
+      <v-switch
+        class="ma-4"
+        label="Dark Theme"
+        v-model=goDark
+        color=blue
+        hide-details
+        inset
+        @change="setTheme()"
+      >
+      </v-switch>
       <v-flex xs12 sm12>
         <v-card color=blue>      
           <v-row>
@@ -80,7 +91,8 @@ export default {
     return {
       blocks: [],
       switch1: false,
-      inter1: undefined
+      inter1: undefined,
+      goDark: this.$vuetify.theme.dark
     }
   },
   created: function () {
@@ -121,6 +133,14 @@ export default {
     },
     gotoBlockPage: function (n) {
       this.$router.push({ name: 'block', params: {number: n} });
+    },
+    setTheme() {
+      if (this.goDark == true) {
+        return (this.$vuetify.theme.dark = true);
+      }
+      else {
+        return (this.$vuetify.theme.dark = false);
+      }
     }
   }
 }
