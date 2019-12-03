@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Block from './views/Block.vue'
+import Send from './views/Send.vue'
 import Page404 from './views/404.vue'
 
 Vue.use(Router)
@@ -27,6 +28,11 @@ export default new Router({
       path: '/block/:number',
       name: 'block',
       component: Block
+    },
+    {
+      path: '/send',
+      name: 'send',
+      component: Send
     },
     {
       path: '*',

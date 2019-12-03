@@ -2,10 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <router-link
-          :to="{
-            name: 'home',
-          }"
+        <router-link :to="{name: 'home',}"
           tag='v-btn'
         >
           <v-btn text>
@@ -15,6 +12,13 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- -->
+      <router-link :to="{name: 'send',}"
+        tag='v-btn'
+      >
+        <v-btn text>SEND</v-btn>
+      </router-link>
+      <!-- -->
       <v-btn
         text
         href="https://github.com/twodude/onechain/releases/latest"
