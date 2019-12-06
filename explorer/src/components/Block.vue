@@ -30,7 +30,6 @@
                 class="ma-4"
                 label="Search by Block Number"
                 append-icon="search"
-                background-color=white
                 solo
                 flat
                 hide-details
@@ -74,13 +73,13 @@
             </v-simple-table>
           </v-card-text>
           <!-- data -->
-          <v-card-text>
+          <v-card-text v-if="block.data.length > 0">
             <v-simple-table dense>
               <tbody>
                 <tr v-for="(value, index) in block.data" :key="index">
                   <td>
-                    <span v-if=isHash(name)>{{"0x"}}</span>
-                    <span>{{ value | truncate(36) }}</span>
+                    <!-- <span>{{ value | truncate(36) }}</span> -->
+                    <span>{{value}}</span>
                   </td>
                 </tr>
               </tbody>
@@ -121,7 +120,7 @@ export default {
       this.$router.push({ name: 'block', params: {number: n} });
       this.block = this.getBlock(this.$route.params.number);
     },
-    setTheme() {
+    setTheme: function () {
       if (this.goDark == true) {
         return (this.$vuetify.theme.dark = true);
       }
