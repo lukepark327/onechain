@@ -30,7 +30,6 @@
                 class="ma-4"
                 label="Search by Block Number"
                 append-icon="search"
-                background-color=white
                 solo
                 flat
                 hide-details
@@ -134,7 +133,7 @@ export default {
     gotoBlockPage: function (n) {
       this.$router.push({ name: 'block', params: {number: n} });
     },
-    setTheme() {
+    setTheme: function () {
       if (this.goDark == true) {
         return (this.$vuetify.theme.dark = true);
       }
