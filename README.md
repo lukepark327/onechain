@@ -21,12 +21,10 @@ Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).
 
 ## Live Demo
 
+[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://endpoint.ainize.ai/lukepark327/onechain/blocks)
+
 Run onechain on **Ainize**! You can access the *live* onechain with the [endpoint](https://endpoint.ainize.ai/lukepark327/onechain) provided by Ainize, a serverless platform for open-source projects.
 For example, you can see all blocks in blockchain with a `/blocks` GET request (i.e. [HERE](https://endpoint.ainize.ai/lukepark327/onechain/blocks)).
-
-Click the below icon to see details.
-
-[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/lukepark327/onechain)
 
 ## Abstract
 ![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
