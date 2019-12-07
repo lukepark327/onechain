@@ -26,7 +26,7 @@ Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).
 Run onechain on **Ainize**! You can access the *live* onechain with the [endpoint](https://endpoint.ainize.ai/lukepark327/onechain) provided by Ainize, a serverless platform for open-source projects.
 For example, you can see all blocks in blockchain with a `/blocks` GET request (i.e. [HERE](https://endpoint.ainize.ai/lukepark327/onechain/blocks)).
 
-## Explorer
+## onechain-explorer
 
 [![explorer](https://github.com/lukepark327/onechain/blob/master/images/comparison.png)](https://github.com/lukepark327/onechain-explorer)
 
