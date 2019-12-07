@@ -28,10 +28,13 @@ For example, you can see all blocks in blockchain with a `/blocks` GET request (
 
 ## Explorer
 
-![compare](https://github.com/lukepark327/onechain/blob/master/images/compare.png)
+[![explorer](https://github.com/lukepark327/onechain/blob/master/images/comparison.png)](https://github.com/lukepark327/onechain-explorer)
 
-See the following chapter: **[onechain-explorer](https://github.com/lukepark327/onechain#onechain-explorer-1)**.
+> Click on the above image to go to the `onechain-explorer` repo.
 
+A **`onechain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. onechain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
+
+The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
 ## Abstract
 ![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
@@ -76,9 +79,6 @@ The onechain adopts modular design: Dividing layers into blockchain, network, AP
 * Noonsatae
   - [Avalanche Implementation](https://github.com/noonsatae)
 -->
-
-### onechain-explorer
-- [Code](https://github.com/lukepark327/onechain-explorer)
 
 # Docker Quick Start
 
@@ -208,15 +208,6 @@ curl http://127.0.0.1:3001/address
 ```bash
 curl -X POST http://127.0.0.1:3001/stop
 ```
-
-# onechain explorer
-[![explorer](https://github.com/lukepark327/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
-
-> Click on the above image to go to the `onechain-explorer` repo.
-
-A **`onechain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. onechain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
-
-The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
 # License
 The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/lukepark327/onechain/blob/master/LICENSE) file.
