@@ -36,7 +36,7 @@ A **`onechain explorer`** is the front-end used to visualize the state of the bl
 
 The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
-## Abstract
+# Abstract
 ![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
 
 As Blockchain-based services grew, so open-source that assists in developing blockchain core was needed. There are open-source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
@@ -45,7 +45,7 @@ We solve the above problems with a
 **```onechain```, simple implementation of blockchain core.**
 The onechain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of onechain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
 
-## Use-cases
+# Use-cases
 
 ### 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
   - [Chapter-1](https://github.com/lukepark327/onechain/tree/chapter-1)
