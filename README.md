@@ -1,16 +1,16 @@
-[[:us: | English | 영어]](https://github.com/twodude/onechain)
-[[:kr: | Korean | 한국어]](https://github.com/twodude/onechain/tree/korean)
+[[:us: | English | 영어]](https://github.com/lukepark327/onechain)
+[[:kr: | Korean | 한국어]](https://github.com/lukepark327/onechain/tree/korean)
 
 ---
 
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/twodude/onechain/blob/master/package.json)
+[![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
-# one-chain
+# onechain
 
 <!--
-![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
+![onechain](https://github.com/lukepark327/onechain/blob/master/images/icon.png)
 -->
 
 Assist in developing blockchain core efficiently.
@@ -20,25 +20,25 @@ Assist in developing blockchain core efficiently.
 Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).   
 
 ## Abstract
-![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
+![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
 
 As Blockchain-based services grew, so open-source that assists in developing blockchain core was needed. There are open-source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
 
 We solve the above problems with a
-**```one-chain```, simple implementation of blockchain core.**
-The one-chain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
+**```onechain```, simple implementation of blockchain core.**
+The onechain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of onechain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
 
 ## Use-cases
 
 ### 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
-  - [Chapter-1](https://github.com/twodude/onechain/tree/chapter-1)
-  - [Chapter-2](https://github.com/twodude/onechain/tree/chapter-2)
-  - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
-  - [Chapter-4](https://github.com/twodude/onechain/tree/chapter-4)
+  - [Chapter-1](https://github.com/lukepark327/onechain/tree/chapter-1)
+  - [Chapter-2](https://github.com/lukepark327/onechain/tree/chapter-2)
+  - [Chapter-3](https://github.com/lukepark327/onechain/tree/chapter-3)
+  - [Chapter-4](https://github.com/lukepark327/onechain/tree/chapter-4)
 
 <p align="center">
   <a href="http://www.yes24.com/Product/Goods/75235536">
-    <img width="480" src="https://github.com/twodude/onechain/blob/master/images/book.jpeg">
+    <img width="480" src="https://github.com/lukepark327/onechain/blob/master/images/book.jpeg">
   </a>
 </p>
 
@@ -50,10 +50,10 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 ### Blockchain Policy Simulator
 - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
-- [Code](https://github.com/twodude/blockchain-simulator)
+- [Code](https://github.com/lukepark327/blockchain-simulator)
   
 ### edu-chain
-- [Code](https://github.com/twodude/educhain)   
+- [Code](https://github.com/lukepark327/educhain)   
 
 ### Plasma DAG
 - [Code](https://github.com/plasma-dag/plasma-client)
@@ -62,6 +62,9 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 * Noonsatae
   - [Avalanche Implementation](https://github.com/noonsatae)
 -->
+
+### onechain-explorer
+- [Code](https://github.com/lukepark327/onechain-explorer)
 
 # Docker Quick Start
 
@@ -192,34 +195,14 @@ curl http://127.0.0.1:3001/address
 curl -X POST http://127.0.0.1:3001/stop
 ```
 
-# one-chain explorer
-![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
+# onechain explorer
+[![explorer](https://github.com/lukepark327/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
 
-A **`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
+> Click on the image above to go to the `onechain-explorer` repo.
 
-The full UI code is located in `./explorer/`. Vue.js and Vuetify are used.
+A **`onechain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. onechain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
-# How to Start
-```bash
-cd explorer
-npm install
-```
-
-## Run
-
-**Requirements:** there must be at least one running node whose `HTTP_PORT` is `3001`.
-
-```bash
-npm run serve
-```
-
-The app now runs on http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
-
-# How to Use
-
-* Users can search for a particular block by block number. Type in the search bar or click the `BLOCK #N` button.
-
-* Turn on the 'Realtime Updates' switch at the top of the page to get the blockchain in real-time. It will send a `/blocks` GET request to the full-node to get a blockchain in every 2 seconds.
+The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
 # License
-The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
+The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/lukepark327/onechain/blob/master/LICENSE) file.
