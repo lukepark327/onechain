@@ -19,6 +19,15 @@ Assist in developing blockchain core efficiently.
 
 Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).   
 
+## Live Demo
+
+Run onechain on **Ainize**! You can access the *live* onechain with the [endpoint](https://endpoint.ainize.ai/lukepark327/onechain) provided by Ainize, a serverless platform for open-source projects.
+For example, you can see all blocks in blockchain with a `/blocks` GET request (i.e. [HERE](https://endpoint.ainize.ai/lukepark327/onechain/blocks)).
+
+Click the below icon to see details.
+
+[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/lukepark327/onechain)
+
 ## Abstract
 ![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
 
@@ -42,7 +51,7 @@ The onechain adopts modular design: Dividing layers into blockchain, network, AP
   </a>
 </p>
 
-> Click on the image above to go to the bookstore.
+> Click on the above image to go to the bookstore.
 
 ### Governance Simulator on Blockchain : Based on Smart City Cases
 - [Paper](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07614082)
@@ -129,7 +138,7 @@ npm start
   </a>
 </p>
 
-> Click on the image above to play the video.
+> Click on the above image to play the video.
 
 ### Get blockchain
 ```bash
@@ -198,7 +207,7 @@ curl -X POST http://127.0.0.1:3001/stop
 # onechain explorer
 [![explorer](https://github.com/lukepark327/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
 
-> Click on the image above to go to the `onechain-explorer` repo.
+> Click on the above image to go to the `onechain-explorer` repo.
 
 A **`onechain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. onechain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
