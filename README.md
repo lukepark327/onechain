@@ -63,6 +63,9 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
   - [Avalanche Implementation](https://github.com/noonsatae)
 -->
 
+### onechain-explorer
+- [Code](https://github.com/lukepark327/onechain-explorer)
+
 # Docker Quick Start
 
 ```bash
@@ -193,33 +196,13 @@ curl -X POST http://127.0.0.1:3001/stop
 ```
 
 # one-chain explorer
-![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)
+[![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
+
+> Click on the image above to go to the `onechain-explorer` repo.
 
 A **`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
-The full UI code is located in `./explorer/`. Vue.js and Vuetify are used.
-
-# How to Start
-```bash
-cd explorer
-npm install
-```
-
-## Run
-
-**Requirements:** there must be at least one running node whose `HTTP_PORT` is `3001`.
-
-```bash
-npm run serve
-```
-
-The app now runs on http://localhost:8080/ by default. Using 'Chrome browser' is recommended.
-
-# How to Use
-
-* Users can search for a particular block by block number. Type in the search bar or click the `BLOCK #N` button.
-
-* Turn on the 'Realtime Updates' switch at the top of the page to get the blockchain in real-time. It will send a `/blocks` GET request to the full-node to get a blockchain in every 2 seconds.
+The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
 # License
-The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/twodude/onechain/blob/master/LICENSE) file.
+The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/lukepark327/onechain/blob/master/LICENSE) file.
