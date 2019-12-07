@@ -1,16 +1,16 @@
-[[:us: | English | 영어]](https://github.com/twodude/onechain)
-[[:kr: | Korean | 한국어]](https://github.com/twodude/onechain/tree/korean)
+[[:us: | English | 영어]](https://github.com/lukepark327/onechain)
+[[:kr: | Korean | 한국어]](https://github.com/lukepark327/onechain/tree/korean)
 
 ---
 
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/twodude/onechain/blob/master/package.json)
+[![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
 # one-chain
 
 <!--
-![onechain](https://github.com/twodude/onechain/blob/master/images/icon.png)
+![onechain](https://github.com/lukepark327/onechain/blob/master/images/icon.png)
 -->
 
 Assist in developing blockchain core efficiently.
@@ -20,7 +20,7 @@ Assist in developing blockchain core efficiently.
 Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).   
 
 ## Abstract
-![structure](https://github.com/twodude/onechain/blob/master/images/structure.png)
+![structure](https://github.com/lukepark327/onechain/blob/master/images/structure.png)
 
 As Blockchain-based services grew, so open-source that assists in developing blockchain core was needed. There are open-source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
 
@@ -31,14 +31,14 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 ## Use-cases
 
 ### 📖 컴퓨터과학으로 배우는 블록체인 원리와 구현
-  - [Chapter-1](https://github.com/twodude/onechain/tree/chapter-1)
-  - [Chapter-2](https://github.com/twodude/onechain/tree/chapter-2)
-  - [Chapter-3](https://github.com/twodude/onechain/tree/chapter-3)
-  - [Chapter-4](https://github.com/twodude/onechain/tree/chapter-4)
+  - [Chapter-1](https://github.com/lukepark327/onechain/tree/chapter-1)
+  - [Chapter-2](https://github.com/lukepark327/onechain/tree/chapter-2)
+  - [Chapter-3](https://github.com/lukepark327/onechain/tree/chapter-3)
+  - [Chapter-4](https://github.com/lukepark327/onechain/tree/chapter-4)
 
 <p align="center">
   <a href="http://www.yes24.com/Product/Goods/75235536">
-    <img width="480" src="https://github.com/twodude/onechain/blob/master/images/book.jpeg">
+    <img width="480" src="https://github.com/lukepark327/onechain/blob/master/images/book.jpeg">
   </a>
 </p>
 
@@ -50,10 +50,10 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
 ### Blockchain Policy Simulator
 - [BBR Hackathon](http://www.breview.kr) [Excellence Award](http://decenter.sedaily.com/NewsView/1S639FV540)
 - [Video Demonstration](https://www.youtube.com/watch?v=aFcnPziT4FE)
-- [Code](https://github.com/twodude/blockchain-simulator)
+- [Code](https://github.com/lukepark327/blockchain-simulator)
   
 ### edu-chain
-- [Code](https://github.com/twodude/educhain)   
+- [Code](https://github.com/lukepark327/educhain)   
 
 ### Plasma DAG
 - [Code](https://github.com/plasma-dag/plasma-client)
@@ -196,7 +196,7 @@ curl -X POST http://127.0.0.1:3001/stop
 ```
 
 # one-chain explorer
-[![explorer](https://github.com/twodude/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
+[![explorer](https://github.com/lukepark327/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
 
 > Click on the image above to go to the `onechain-explorer` repo.
 
