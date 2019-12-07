@@ -63,6 +63,12 @@ The one-chain adopts modular design: Dividing layers into blockchain, network, A
   - [Avalanche Implementation](https://github.com/noonsatae)
 -->
 
+# Docker Quick Start
+
+```bash
+docker run -it -p 3001:3001 -p 6001:6001 lukepark327/onechain
+```
+
 # How to Start
 
 ## Environments
