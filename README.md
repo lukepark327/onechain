@@ -7,7 +7,7 @@
 [![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
-# one-chain
+# onechain
 
 <!--
 ![onechain](https://github.com/lukepark327/onechain/blob/master/images/icon.png)
@@ -25,8 +25,8 @@ Inspired by [lhartikk/naivechain](https://github.com/lhartikk/naivechain).
 As Blockchain-based services grew, so open-source that assists in developing blockchain core was needed. There are open-source projects like Bitcoin and Ethereum, but those are too hard to learn and to use.
 
 We solve the above problems with a
-**```one-chain```, simple implementation of blockchain core.**
-The one-chain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of one-chain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
+**```onechain```, simple implementation of blockchain core.**
+The onechain adopts modular design: Dividing layers into blockchain, network, APIs, and wallet for clarity. Also, detailed comments and documents are provided to facilitate learning and reusing. Both front-end and back-end of onechain is written in Javascript (Node.js and Vue.js) but written in simple (without async, et al.) so that other language developers can understand them.
 
 ## Use-cases
 
@@ -195,14 +195,14 @@ curl http://127.0.0.1:3001/address
 curl -X POST http://127.0.0.1:3001/stop
 ```
 
-# one-chain explorer
+# onechain explorer
 [![explorer](https://github.com/lukepark327/onechain/blob/master/images/explorer.png)](https://github.com/lukepark327/onechain-explorer)
 
 > Click on the image above to go to the `onechain-explorer` repo.
 
-A **`one-chain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. one-chain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
+A **`onechain explorer`** is the front-end used to visualize the state of the blockchain. This blockchain explorer allows users to see the latest blocks and details about a particular block. onechain already has multiple functions with HTTP (RESTful API) endpoints. So the web page calls those endpoints and visualizes the results.
 
 The full UI code is located in [lukepark327/onechain-explorer](https://github.com/lukepark327/onechain-explorer) repo. Vue.js and Vuetify are used.
 
 # License
-The one-chain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/lukepark327/onechain/blob/master/LICENSE) file.
+The onechain project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0), also included in our repository in the [LICENSE](https://github.com/lukepark327/onechain/blob/master/LICENSE) file.
