@@ -1,6 +1,6 @@
 {
   "name": "onechain",
-  "version": "2.2.2",
+  "version": "3.0.0",
   "description": "",
   "license": "Apache-2.0",
   "repository": {
@@ -16,6 +16,8 @@
     "crypto-js": "^3.1.6",
     "elliptic": "^6.4.0",
     "express": "^4.16.4",
+    "level": "^6.0.0",
+    "lodash": "^4.17.15",
     "merkle": "^0.6.0",
     "random": "^2.0.13",
     "ws": "^3.3.1"

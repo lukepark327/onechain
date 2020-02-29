@@ -14,7 +14,7 @@ function generatePrivateKey() {
 
 function initWallet() {
     if (fs.existsSync(privateKeyFile)) {
-        console.log("Load wallet with private key from: %s", privateKeyFile);
+        console.log("Load wallet with private key from: " + privateKeyFile);
         return;
     }
 
@@ -23,7 +23,7 @@ function initWallet() {
 
     const newPrivateKey = generatePrivateKey();
     fs.writeFileSync(privateKeyFile, newPrivateKey);
-    console.log("Create new wallet with private key to: %s", privateKeyFile);
+    console.log("Create new wallet with private key to: " + privateKeyFile);
 }
 
 function getPrivateFromWallet() {

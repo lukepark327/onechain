@@ -17,31 +17,31 @@ function getSockets() { return sockets; }
 
 function initP2PServer() {
     const server = new WebSocket.Server({ port: p2p_port });
-    server.on("connection", function (ws) { initConnection(ws); });
+    server.on("connection", async function (ws) { await initConnection(ws); });
     console.log("Listening websocket p2p port on: " + p2p_port);
 }
 
-function initConnection(ws) {
+async function initConnection(ws) {
     sockets.push(ws);
-    initMessageHandler(ws);
+    await initMessageHandler(ws);
     initErrorHandler(ws);
     write(ws, queryChainLengthMsg());
 }
 
 function initMessageHandler(ws) {
-    ws.on("message", function (data) {
+    ws.on("message", async function (data) {
         const message = JSON.parse(data);
         // console.log("Received message" + JSON.stringify(message));
 
         switch (message.type) {
             case MessageType.QUERY_LATEST:
-                write(ws, responseLatestMsg());
+                write(ws, await responseLatestMsg());
                 break;
             case MessageType.QUERY_ALL:
-                write(ws, responseChainMsg());
+                write(ws, await responseChainMsg());
                 break;
             case MessageType.RESPONSE_BLOCKCHAIN:
-                handleBlockchainResponse(message);
+                await handleBlockchainResponse(message);
                 break;
         }
     });
@@ -61,16 +61,16 @@ function connectToPeers(newPeers) {
     newPeers.forEach(
         function (peer) {
             const ws = new WebSocket(peer);
-            ws.on("open", function () { initConnection(ws); });
+            ws.on("open", async function () { await initConnection(ws); });
             ws.on("error", function () { console.log("Connection failed"); });
         }
     );
 }
 
-function handleBlockchainResponse(message) {
+async function handleBlockchainResponse(message) {
     const receivedBlocks = JSON.parse(message.data);
     const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
-    const latestBlockHeld = bc.getLatestBlock();
+    const latestBlockHeld = await bc.getLatestBlock();
 
     if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
         console.log(
@@ -78,11 +78,11 @@ function handleBlockchainResponse(message) {
             + " We got: " + latestBlockHeld.header.index + ", "
             + " Peer got: " + latestBlockReceived.header.index
         );
-        if (bc.calculateHashForBlock(latestBlockHeld) === latestBlockReceived.header.previousHash) {
+        if (latestBlockHeld.hash() === latestBlockReceived.header.previousHash) {
             // A received block refers the latest block of my ledger.
             console.log("We can append the received block to our chain");
-            if (bc.addBlock(latestBlockReceived)) {
-                broadcast(responseLatestMsg());
+            if (await bc.addBlock(latestBlockReceived)) {
+                broadcast(await responseLatestMsg());
             }
         }
         else if (receivedBlocks.length === 1) {
@@ -93,7 +93,7 @@ function handleBlockchainResponse(message) {
         else {
             // Replace chain.
             console.log("Received blockchain is longer than current blockchain");
-            bc.replaceChain(receivedBlocks);
+            await bc.replaceChain(receivedBlocks);
         }
     }
     else { console.log("Received blockchain is not longer than current blockchain. Do nothing"); }
@@ -113,17 +113,17 @@ function queryChainLengthMsg() {
     });
 }
 
-function responseChainMsg() {
+async function responseChainMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify(bc.getBlockchain())
+        "data": JSON.stringify(await bc.getBlockchain())
     });
 }
 
-function responseLatestMsg() {
+async function responseLatestMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify([bc.getLatestBlock()])
+        "data": JSON.stringify([await bc.getLatestBlock()])
     });
 }
 

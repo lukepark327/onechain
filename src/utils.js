@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
+const _ = require("lodash");
+const cryptoJS = require("crypto-js");
 
-function getCurrentTimestamp() {
-    return Math.round(new Date().getTime() / 1000);
+function deepCopy(src) {
+    return _.cloneDeep(src);
 }
 
-function getCurrentVersion() {
-    const fs = require("fs");
-
-    const packageJson = fs.readFileSync("./package.json");
-    const currentVersion = JSON.parse(packageJson).version;
-    return currentVersion;
+function SHA256(elems) {
+    return cryptoJS.SHA256(elems.reduce(function (acc, elem) {
+        return acc + elem;
+    })).toString().toUpperCase();
 }
 
 function hexToBinary(s) {
@@ -28,8 +28,22 @@ function hexToBinary(s) {
     return ret;
 }
 
+function getCurrentTimestamp() {
+    return Math.round(new Date().getTime() / 1000);
+}
+
+function getCurrentVersion() {
+    const fs = require("fs");
+
+    const packageJson = fs.readFileSync("./package.json");
+    const currentVersion = JSON.parse(packageJson).version;
+    return currentVersion;
+}
+
 module.exports = {
+    deepCopy,
+    SHA256,
+    hexToBinary,
     getCurrentTimestamp,
-    getCurrentVersion,
-    hexToBinary
+    getCurrentVersion
 };
