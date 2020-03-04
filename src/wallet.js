@@ -1,7 +1,7 @@
 "use strict";
-const fs = require("fs");
-const ecdsa = require("elliptic");
-const ec = new ecdsa.ec("secp256k1");
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
+import { ec as _ec } from "elliptic";
+const ec = new _ec("secp256k1");
 
 const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || "default");
 const privateKeyFile = privateKeyLocation + "/private_key";
@@ -13,21 +13,21 @@ function generatePrivateKey() {
 }
 
 function initWallet() {
-    if (fs.existsSync(privateKeyFile)) {
+    if (existsSync(privateKeyFile)) {
         console.log("Load wallet with private key from: " + privateKeyFile);
         return;
     }
 
-    if (!fs.existsSync("wallet/")) { fs.mkdirSync("wallet/"); }
-    if (!fs.existsSync(privateKeyLocation)) { fs.mkdirSync(privateKeyLocation); }
+    if (!existsSync("wallet/")) { mkdirSync("wallet/"); }
+    if (!existsSync(privateKeyLocation)) { mkdirSync(privateKeyLocation); }
 
     const newPrivateKey = generatePrivateKey();
-    fs.writeFileSync(privateKeyFile, newPrivateKey);
+    writeFileSync(privateKeyFile, newPrivateKey);
     console.log("Create new wallet with private key to: " + privateKeyFile);
 }
 
 function getPrivateFromWallet() {
-    const buffer = fs.readFileSync(privateKeyFile, "utf8");
+    const buffer = readFileSync(privateKeyFile, "utf8");
     return buffer.toString();
 }
 
@@ -37,7 +37,7 @@ function getPublicFromWallet() {
     return key.getPublic().encode("hex");
 }
 
-module.exports = {
+export default {
     initWallet,
     getPublicFromWallet
 };

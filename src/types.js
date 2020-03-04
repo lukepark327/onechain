@@ -1,4 +1,7 @@
-const ut = require("./utils");
+"use strict";
+import { SHA256, deepCopy } from "./modules"; // utils
+
+// import { db } from "./database";
 
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
@@ -23,7 +26,7 @@ class BlockHeader {
     }
 
     hash() {
-        return ut.SHA256([
+        return SHA256([
             this.version,
             this.index,
             this.previousHash,
@@ -33,16 +36,32 @@ class BlockHeader {
             this.nonce
         ]);
     }
+
+    /**
+     * TODO
+     */
+    // print()
 }
 
 class Block {
     constructor(header, data) {
-        this.header = ut.deepCopy(header);
-        this.data = ut.deepCopy(data);
+        this.header = deepCopy(header);
+        this.data = deepCopy(data);
     }
 
     hash() {
         return this.header.hash();
+    }
+
+    encode() {
+        return JSON.stringify(this);
+    }
+
+    decode(encodedBlock) {
+        decodedBlock = JSON.parse(encodedBlock);
+        objectifiedBlock = Object.assign(new Block(), decodedBlock);
+        objectifiedBlock.header = Object.assign(new BlockHeader(), objectifiedBlock.header);
+        return objectifiedBlock;
     }
 
     /**
@@ -50,11 +69,10 @@ class Block {
      */
     // save()
     // load()
-    // encode()
-    // decode()
+    // print()
 }
 
-module.exports = {
+export default {
     BlockHeader,
     Block
 };

@@ -1,19 +1,20 @@
 'use strict';
-const _ = require("lodash");
-const cryptoJS = require("crypto-js");
-const merkle = require("merkle");
+import { cloneDeep } from "lodash";
+import { SHA256 as _SHA256 } from "crypto-js";
+import merkle from "merkle";
+import { readFileSync } from "fs";
 
 function deepCopy(src) {
-    return _.cloneDeep(src);
+    return cloneDeep(src);
 }
 
-function isEqual(value, other) {
+function deepEqual(value, other) {
     // return _.isEqual(value, other); // Can not get rid of functions.
     return JSON.stringify(value) === JSON.stringify(other);
 }
 
 function SHA256(elems) {
-    return cryptoJS.SHA256(elems.reduce(function (acc, elem) {
+    return _SHA256(elems.reduce(function (acc, elem) {
         return acc + elem;
     })).toString().toUpperCase();
 }
@@ -49,16 +50,14 @@ function getCurrentTimestamp() {
 }
 
 function getCurrentVersion() {
-    const fs = require("fs");
-
-    const packageJson = fs.readFileSync("./package.json");
+    const packageJson = readFileSync("./package.json");
     const currentVersion = JSON.parse(packageJson).version;
     return currentVersion;
 }
 
-module.exports = {
+export default {
     deepCopy,
-    isEqual,
+    deepEqual,
     SHA256,
     calculateMerkleTree,
     calculateMerkleRoot,
