@@ -1,6 +1,8 @@
 "use strict";
 const WebSocket = require("ws");
 
+const BlockHeader = require("./types").BlockHeader;
+const Block = require("./types").Block;
 const bc = require("./blockchain");
 
 const p2p_port = process.env.P2P_PORT || 6001;
@@ -17,31 +19,31 @@ function getSockets() { return sockets; }
 
 function initP2PServer() {
     const server = new WebSocket.Server({ port: p2p_port });
-    server.on("connection", async function (ws) { await initConnection(ws); });
+    server.on("connection", function (ws) { initConnection(ws); });
     console.log("Listening websocket p2p port on: " + p2p_port);
 }
 
-async function initConnection(ws) {
+function initConnection(ws) {
     sockets.push(ws);
-    await initMessageHandler(ws);
+    initMessageHandler(ws);
     initErrorHandler(ws);
     write(ws, queryChainLengthMsg());
 }
 
 function initMessageHandler(ws) {
-    ws.on("message", async function (data) {
+    ws.on("message", function (data) {
         const message = JSON.parse(data);
         // console.log("Received message" + JSON.stringify(message));
 
         switch (message.type) {
             case MessageType.QUERY_LATEST:
-                write(ws, await responseLatestMsg());
+                write(ws, responseLatestMsg());
                 break;
             case MessageType.QUERY_ALL:
-                write(ws, await responseChainMsg());
+                write(ws, responseChainMsg());
                 break;
             case MessageType.RESPONSE_BLOCKCHAIN:
-                await handleBlockchainResponse(message);
+                handleBlockchainResponse(message);
                 break;
         }
     });
@@ -61,16 +63,22 @@ function connectToPeers(newPeers) {
     newPeers.forEach(
         function (peer) {
             const ws = new WebSocket(peer);
-            ws.on("open", async function () { await initConnection(ws); });
+            ws.on("open", function () { initConnection(ws); });
             ws.on("error", function () { console.log("Connection failed"); });
         }
     );
 }
 
-async function handleBlockchainResponse(message) {
-    const receivedBlocks = JSON.parse(message.data);
-    const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
-    const latestBlockHeld = await bc.getLatestBlock();
+function handleBlockchainResponse(message) {
+    const receivedBlockchain = JSON.parse(message.data);
+    // TODO: optimization
+    for (var i = 0; i < receivedBlockchain.length; i++) {
+        receivedBlockchain[i] = Object.assign(new Block(), receivedBlockchain[i]);
+        receivedBlockchain[i].header = Object.assign(new BlockHeader(), receivedBlockchain[i].header);
+    }
+
+    const latestBlockReceived = receivedBlockchain[receivedBlockchain.length - 1];
+    const latestBlockHeld = bc.getLatestBlock();
 
     if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
         console.log(
@@ -81,11 +89,11 @@ async function handleBlockchainResponse(message) {
         if (latestBlockHeld.hash() === latestBlockReceived.header.previousHash) {
             // A received block refers the latest block of my ledger.
             console.log("We can append the received block to our chain");
-            if (await bc.addBlock(latestBlockReceived)) {
-                broadcast(await responseLatestMsg());
+            if (bc.addBlock(latestBlockReceived)) {
+                broadcast(responseLatestMsg());
             }
         }
-        else if (receivedBlocks.length === 1) {
+        else if (receivedBlockchain.length === 1) {
             // Need to reorganize.
             console.log("We have to query the chain from our peer");
             broadcast(queryAllMsg());
@@ -93,7 +101,7 @@ async function handleBlockchainResponse(message) {
         else {
             // Replace chain.
             console.log("Received blockchain is longer than current blockchain");
-            await bc.replaceChain(receivedBlocks);
+            bc.replaceChain(receivedBlockchain);
         }
     }
     else { console.log("Received blockchain is not longer than current blockchain. Do nothing"); }
@@ -113,17 +121,17 @@ function queryChainLengthMsg() {
     });
 }
 
-async function responseChainMsg() {
+function responseChainMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify(await bc.getBlockchain())
+        "data": JSON.stringify(bc.getBlockchain())
     });
 }
 
-async function responseLatestMsg() {
+function responseLatestMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify([await bc.getLatestBlock()])
+        "data": JSON.stringify([bc.getLatestBlock()])
     });
 }
 

@@ -7,10 +7,6 @@
 [![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
-# WARNING
-
-Do NOT refer the code of master branch. It will still be in development. Use [the latest release](https://github.com/lukepark327/onechain/releases/latest).
-
 # onechain
 
 <!--
