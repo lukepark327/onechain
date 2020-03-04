@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
 wallet/
-src/test.js
+db/
+src/test*
