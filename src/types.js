@@ -1,7 +1,6 @@
 "use strict";
 import { SHA256, deepCopy } from "./modules"; // utils
-
-// import { db } from "./database";
+// import { db } from "./modules"; // database
 
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
@@ -72,7 +71,34 @@ class Block {
     // print()
 }
 
+class Blockchain {
+    constructor(latestBlock) {
+        this.latestBlock = ut.deepCopy(latestBlock);
+    }
+
+    update(newLatestBlock) {
+        this.latestBlock = ut.deepCopy(newLatestBlock);
+    }
+
+    latestBlockHash() {
+        return this.latestBlock.hash();
+    }
+
+    length() {
+        if (this.latestBlock === undefined) { return 0; }
+        return this.latestBlock.header.index + 1; // block index starts from '0'.
+    }
+
+    /**
+     * TODO
+     */
+    // save()
+    // load()
+    // print()
+}
+
 export default {
     BlockHeader,
-    Block
+    Block,
+    Blockchain
 };

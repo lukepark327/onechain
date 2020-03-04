@@ -180,13 +180,20 @@ function isValidChain(blockchainToValidate) {
     return true;
 }
 
-function replaceChain(newBlocks) {
-    if (
-        isValidChain(newBlocks)
-        && (newBlocks.length > blockchain.length || (newBlocks.length === blockchain.length) && boolean())
-    ) {
+function isReplaceNeeded(originalBlockchain, newBlockchain) {
+    /**
+     * TODO: the haviest chain rule.
+     * The current implementation is the longest chain rule.
+     */
+    if (originalBlockchain.length < newBlockchain.length) { return true; }
+    else if (originalBlockchain.length > newBlockchain.length) { return false; }
+    else { return boolean(); }
+}
+
+function replaceChain(newBlockchain) {
+    if (isReplaceNeeded(blockchain, newBlockchain) && isValidChain(newBlockchain)) {
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
-        blockchain = newBlocks;
+        blockchain = newBlockchain;
         broadcast(responseLatestMsg());
     }
     else { console.log("Received blockchain invalid"); }

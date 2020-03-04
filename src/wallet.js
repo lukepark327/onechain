@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { ec as _ec } from "elliptic";
 const ec = new _ec("secp256k1");
 
-const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || "default");
+const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || process.env.P2P_PORT || 6001);
 const privateKeyFile = privateKeyLocation + "/private_key";
 
 function generatePrivateKey() {

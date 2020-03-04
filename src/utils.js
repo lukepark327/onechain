@@ -13,6 +13,15 @@ function deepEqual(value, other) {
     return JSON.stringify(value) === JSON.stringify(other);
 }
 
+/**
+ * TODO: mkdir
+ * Recursively make directories by tokenizing with '/'.
+ */
+
+/**
+ * TODO: crypto.js
+ * SHA256, merkles, et al.
+ */
 function SHA256(elems) {
     return _SHA256(elems.reduce(function (acc, elem) {
         return acc + elem;
