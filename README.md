@@ -4,7 +4,7 @@
 ---
 
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![version](https://img.shields.io/badge/version-v2.2.2-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
+[![version](https://img.shields.io/badge/version-v3.0.0-orange.svg)](https://github.com/lukepark327/onechain/blob/master/package.json)
 [![node](https://img.shields.io/badge/node-%3E%3D4.3.2-yellow.svg)](https://nodejs.org/en/)   
 
 # onechain
