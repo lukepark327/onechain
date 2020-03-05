@@ -20,10 +20,14 @@ function initHttpServer() {
         res.send(getBlockchain());
     });
     app.get('/block/:number', function (req, res) {
-        const targetBlock = getBlockchain().find(function (block) {
-            return block.header.index == req.params.number;
-        });
-        res.send(targetBlock);
+        try {
+            const targetBlock = getBlockchain().indexWith(req.params.number);
+            res.send(targetBlock);
+        }
+        catch (err) {
+            res.status(400).send('Bad Request');
+            console.log(err);
+        }
     });
     app.post("/mineBlock", function (req, res) {
         const data = req.body.data || [];
@@ -39,10 +43,14 @@ function initHttpServer() {
         res.send(getCurrentVersion());
     });
     app.get("/blockVersion/:number", function (req, res) {
-        const targetBlock = getBlockchain().find(function (block) {
-            return block.header.index == req.params.number;
-        });
-        res.send(targetBlock.header.version);
+        try {
+            const targetBlock = getBlockchain().indexWith(req.params.number);
+            res.send(targetBlock.header.version);
+        }
+        catch (err) {
+            res.status(400).send('Bad Request');
+            console.log(err);
+        }
     });
     app.get("/peers", function (req, res) {
         res.send(getSockets().map(function (s) {

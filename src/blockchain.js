@@ -1,24 +1,22 @@
 "use strict";
 import { deepCopy, getCurrentVersion, getCurrentTimestamp, hexToBinary, deepEqual } from "./modules"; // utils
 import { SHA256, calculateMerkleRoot } from "./modules"; // crypto
-import { BlockHeader, Block } from "./modules"; // types
+import { BlockHeader, Block, Blockchain } from "./modules"; // types
 import { broadcast, responseLatestMsg } from "./modules"; // network
 
 import { boolean } from "random";
 
-// TODO
 function initBlockchain() {
+    /**
+     * TODO: save blockchain in DB.
+     */
     return getGenesisBlock();
 }
 
-/**
- * TODO: Use database to store the data permanently.
- * A current implemetation stores blockchain in local volatile memory.
- */
-var blockchain = [initBlockchain()];
+var blockchain = new Blockchain([initBlockchain()]);
 
 function getBlockchain() { return deepCopy(blockchain); }
-function getLatestBlock() { return deepCopy(blockchain[blockchain.length - 1]); }
+function getLatestBlock() { return deepCopy(blockchain.latestBlock()); }
 
 function generateRawBlock(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce, data) {
     const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
@@ -59,6 +57,9 @@ function generateNextBlock(blockData) {
 function addBlock(newBlock) {
     if (isValidNewBlock(newBlock, getLatestBlock())) {
         blockchain.push(newBlock);
+        /**
+         * TODO: save blockchain in DB.
+         */
         return true;
     }
     return false;
@@ -79,6 +80,8 @@ function mineBlock(blockData) {
 /**
  * TODO: Implement a stop mechanism.
  * A current implementation doesn't stop until finding matching block.
+ * 
+ * TODO: Multi-threading (clustering)
  */
 function findNonce(version, index, previoushash, timestamp, merkleRoot, difficulty) {
     var nonce = 0;
@@ -99,7 +102,7 @@ const BLOCK_GENERATION_INTERVAL = 10; // in seconds
 const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // in blocks
 
 function getDifficulty(aBlockchain) {
-    const latestBlock = aBlockchain[aBlockchain.length - 1];
+    const latestBlock = aBlockchain.latestBlock();
     if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
         return getAdjustedDifficulty(aBlockchain);
     }
@@ -107,8 +110,8 @@ function getDifficulty(aBlockchain) {
 }
 
 function getAdjustedDifficulty(aBlockchain) {
-    const latestBlock = aBlockchain[aBlockchain.length - 1];
-    const prevAdjustmentBlock = aBlockchain[aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
+    const latestBlock = aBlockchain.latestBlock();
+    const prevAdjustmentBlock = aBlockchain.indexWith(aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL);
     const timeTaken = latestBlock.header.timestamp - prevAdjustmentBlock.header.timestamp;
     const timeExpected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
 
@@ -168,13 +171,13 @@ function isValidNewBlock(newBlock, previousBlock) {
 }
 
 function isValidChain(blockchainToValidate) {
-    if (!deepEqual(blockchainToValidate[0], getGenesisBlock())) {
+    if (!deepEqual(blockchainToValidate.indexWith(0), getGenesisBlock())) {
         return false;
     }
-    var tempBlocks = [blockchainToValidate[0]];
+    var tempBlockchain = new Blockchain([blockchainToValidate.indexWith(0)]);
     for (var i = 1; i < blockchainToValidate.length; i++) {
-        if (isValidNewBlock(blockchainToValidate[i], tempBlocks[i - 1])) {
-            tempBlocks.push(blockchainToValidate[i]);
+        if (isValidNewBlock(blockchainToValidate.indexWith(i), tempBlockchain.indexWith(i - 1))) {
+            tempBlockchain.push(blockchainToValidate.indexWith(i));
         }
         else { return false; }
     }
@@ -194,7 +197,10 @@ function isReplaceNeeded(originalBlockchain, newBlockchain) {
 function replaceChain(newBlockchain) {
     if (isReplaceNeeded(blockchain, newBlockchain) && isValidChain(newBlockchain)) {
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
-        blockchain = newBlockchain;
+        blockchain = deepCopy(newBlockchain);
+        /**
+         * TODO: save blockchain in DB.
+         */
         broadcast(responseLatestMsg());
     }
     else { console.log("Received blockchain invalid"); }

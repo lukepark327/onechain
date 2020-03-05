@@ -36,11 +36,6 @@ class BlockHeader {
             this.nonce
         ]);
     }
-
-    /**
-     * TODO
-     */
-    // print()
 }
 
 class Block {
@@ -58,77 +53,68 @@ class Block {
     }
 
     decode(encodedBlock) {
-        decodedBlock = JSON.parse(encodedBlock);
-        objectifiedBlock = Object.assign(new Block(), decodedBlock);
+        var decodedBlock = JSON.parse(encodedBlock);
+        var objectifiedBlock = Object.assign(new Block(), decodedBlock);
         objectifiedBlock.header = Object.assign(new BlockHeader(), objectifiedBlock.header);
         return objectifiedBlock;
     }
-
-    /**
-     * TODO
-     */
-    // save()
-    // load()
-    // print()
-}
-
-class BlockchainIterator {
-    constructor(currentBlockHash) {
-        this._currentBlockHash = currentBlockHash;
-    }
-
-    get currentBlockHash() {
-        return this._currentBlockHash.toUpperCase(); // always return upper case letters.
-    }
-
-    /**
-     * @param {string} newCurrentBlockHash
-     */
-    set currentBlockHash(newCurrentBlockHash) {
-        this._currentBlockHash = newCurrentBlockHash;
-    }
-
-    /**
-     * TODO
-     */
-    // async prev() {
-    //     const aBlock = await new Block().load(this.currentBlockHash);
-    //     if (aBlock === undefined) { return undefined; }
-
-    //     this.currentBlockHash = aBlock.header.previousHash;
-    //     return aBlock;
-    // }
 }
 
 class Blockchain {
-    constructor(latestBlock) {
-        this.latestBlock = ut.deepCopy(latestBlock);
+    constructor(blocks) {
+        this._blocks = deepCopy(blocks);
+        try { this._length = this.blocks.length; } catch (err) { /* console.log(err); */ } // for decode()
     }
 
-    update(newLatestBlock) {
-        this.latestBlock = ut.deepCopy(newLatestBlock);
+    get blocks() {
+        return this._blocks;
+    }
+
+    get length() {
+        return this._length;
+    }
+
+    push(newBlock) {
+        this.blocks.push(newBlock);
+        this._length = this.blocks.length;
+    }
+
+    indexWith(index) {
+        if (index >= this.length || index < (-1) * this.length) { throw RangeError(); }
+
+        if (index < 0) { return this.blocks[this.length + index]; }
+        else { return this.blocks[index]; }
+    }
+
+    latestBlock() {
+        return this.indexWith(-1);
     }
 
     latestBlockHash() {
-        return this.latestBlock.hash();
+        return this.latestBlock().hash();
     }
 
-    length() {
-        if (this.latestBlock === undefined) { return 0; }
-        return this.latestBlock.header.index + 1; // block index starts from '0'.
+    encode() {
+        return JSON.stringify(this);
     }
 
-    /**
-     * TODO
-     */
-    // iterator()
-    // asArray()
-    // indexWith()
-    // encode()
-    // decode()
-    // load()
+    decode(encodedBlockchain) {
+        var decodedBlockchain = JSON.parse(encodedBlockchain);
+        var objectifiedBlockchain = Object.assign(new Blockchain(), decodedBlockchain);
+
+        var decodedBlocks = objectifiedBlockchain.blocks.map(function (encodedBlock) {
+            /**
+             * TODO: optimization.
+             * Meaningless repetition of JSON.stringify and JSON.parse in Block().decode()
+             */
+            return new Block().decode(JSON.stringify(encodedBlock));
+        });
+
+        return new Blockchain(decodedBlocks);
+    }
+
     // save()
-    // print()
+    // load()
 }
 
 export default {

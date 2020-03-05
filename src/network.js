@@ -1,5 +1,5 @@
 "use strict";
-import { BlockHeader, Block } from "./modules"; // types
+import { Blockchain } from "./modules"; // types
 import { getLatestBlock, addBlock, replaceChain, getBlockchain } from "./modules"; // blockchain
 
 import WebSocket, { Server } from "ws";
@@ -29,14 +29,14 @@ function queryChainLengthMsg() {
 function responseChainMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify(getBlockchain())
+        "data": getBlockchain().encode()
     });
 }
 
 function responseLatestMsg() {
     return ({
         "type": MessageType.RESPONSE_BLOCKCHAIN,
-        "data": JSON.stringify([getLatestBlock()])
+        "data": new Blockchain([getLatestBlock()]).encode()
     });
 }
 
@@ -105,14 +105,8 @@ function connectToPeers(newPeers) {
 }
 
 function handleBlockchainResponse(message) {
-    const receivedBlockchain = JSON.parse(message.data);
-    // TODO: optimization
-    for (var i = 0; i < receivedBlockchain.length; i++) {
-        receivedBlockchain[i] = Object.assign(new Block(), receivedBlockchain[i]);
-        receivedBlockchain[i].header = Object.assign(new BlockHeader(), receivedBlockchain[i].header);
-    }
-
-    const latestBlockReceived = receivedBlockchain[receivedBlockchain.length - 1];
+    const receivedBlockchain = new Blockchain().decode(message.data);
+    const latestBlockReceived = receivedBlockchain.latestBlock();
     const latestBlockHeld = getLatestBlock();
 
     if (latestBlockReceived.header.index > latestBlockHeld.header.index) {
