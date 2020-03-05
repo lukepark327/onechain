@@ -1,8 +1,8 @@
 "use strict";
-import WebSocket, { Server } from "ws";
-
 import { BlockHeader, Block } from "./modules"; // types
 import { getLatestBlock, addBlock, replaceChain, getBlockchain } from "./modules"; // blockchain
+
+import WebSocket, { Server } from "ws";
 
 const p2p_port = process.env.P2P_PORT || 6001;
 

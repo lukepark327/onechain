@@ -1,7 +1,5 @@
 'use strict';
 import { cloneDeep } from "lodash";
-import { SHA256 as _SHA256 } from "crypto-js";
-import merkle from "merkle";
 import { existsSync, mkdirSync, readFileSync } from "fs";
 
 function deepCopy(src) {
@@ -16,30 +14,10 @@ function deepEqual(value, other) {
 function recursiveMkdir(path) {
     var pathSplited = path.split('/');
     var tempPath = '';
-    for (var i=0; i<pathSplited.length; i++) {
+    for (var i = 0; i < pathSplited.length; i++) {
         tempPath += (pathSplited[i] + '/');
         if (!existsSync(tempPath)) { mkdirSync(tempPath); }
     }
-}
-
-/**
- * TODO: crypto.js
- * SHA256, merkles, et al.
- */
-function SHA256(elems) {
-    return _SHA256(elems.reduce(function (acc, elem) {
-        return acc + elem;
-    })).toString().toUpperCase();
-}
-
-function calculateMerkleTree(data) {
-    return merkle("sha256").sync(data);
-}
-
-function calculateMerkleRoot(data) {
-    const merkleTree = calculateMerkleTree(data);
-    const merkleRoot = merkleTree.root() || '0'.repeat(64);
-    return merkleRoot;
 }
 
 function hexToBinary(s) {
@@ -72,9 +50,6 @@ export default {
     deepCopy,
     deepEqual,
     recursiveMkdir,
-    SHA256,
-    calculateMerkleTree,
-    calculateMerkleRoot,
     hexToBinary,
     getCurrentTimestamp,
     getCurrentVersion

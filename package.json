@@ -8,7 +8,7 @@
     "url": "git://github.com/lukepark327/onechain.git"
   },
   "scripts": {
-    "start": "babel-node src/main.js"
+    "start": "nodemon --exec babel-node src/main.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.6",
@@ -23,6 +23,7 @@
     "level": "^6.0.0",
     "lodash": "^4.17.15",
     "merkle": "^0.6.0",
+    "nodemon": "^2.0.2",
     "random": "^2.1.1",
     "ws": "^3.3.3"
   },

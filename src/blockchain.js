@@ -1,9 +1,10 @@
 "use strict";
-import { boolean } from "random";
-
-import { deepCopy, calculateMerkleRoot, getCurrentVersion, getCurrentTimestamp, SHA256, hexToBinary, deepEqual } from "./modules"; // utils
+import { deepCopy, getCurrentVersion, getCurrentTimestamp, hexToBinary, deepEqual } from "./modules"; // utils
+import { SHA256, calculateMerkleRoot } from "./modules"; // crypto
 import { BlockHeader, Block } from "./modules"; // types
 import { broadcast, responseLatestMsg } from "./modules"; // network
+
+import { boolean } from "random";
 
 // TODO
 function initBlockchain() {

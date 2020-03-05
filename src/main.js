@@ -1,12 +1,12 @@
 "use strict";
-import cors from "cors";
-import express from "express";
-import { json } from "body-parser";
-
 import { getCurrentVersion } from "./modules"; // utils
 import { getBlockchain, mineBlock } from "./modules"; // blockchain
 import { getSockets, connectToPeers, initP2PServer } from "./modules"; // network
 import { getPublicFromWallet, initWallet } from "./modules"; // wallet
+
+import cors from "cors";
+import express from "express";
+import { json } from "body-parser";
 
 const http_port = process.env.HTTP_PORT || 3001;
 const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];

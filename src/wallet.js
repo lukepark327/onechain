@@ -1,9 +1,8 @@
 "use strict";
 import { recursiveMkdir } from "./modules"; // utils
+import { ec } from "./modules"; // crypto
 
 import { existsSync, writeFileSync, readFileSync } from "fs";
-import { ec as _ec } from "elliptic";
-const ec = new _ec("secp256k1");
 
 const privateKeyLocation = "wallet/" + (process.env.PRIVATE_KEY || process.env.P2P_PORT || 6001);
 const privateKeyFile = privateKeyLocation + "/private_key";

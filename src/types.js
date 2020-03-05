@@ -1,5 +1,6 @@
 "use strict";
-import { SHA256, deepCopy } from "./modules"; // utils
+import { deepCopy } from "./modules"; // utils
+import { SHA256 } from "./modules"; // crypto
 // import { db } from "./modules"; // database
 
 class BlockHeader {
