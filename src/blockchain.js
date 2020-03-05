@@ -72,7 +72,7 @@ function mineBlock(blockData) {
         return newBlock;
     }
     else {
-        return null; // TODO: undefined
+        return null;
     }
 }
 
