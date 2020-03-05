@@ -1,7 +1,7 @@
 "use strict";
 import { deepCopy } from "./modules"; // utils
 import { SHA256 } from "./modules"; // crypto
-// import { db } from "./modules"; // database
+import { db } from "./modules"; // database
 
 class BlockHeader {
     constructor(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce) {
@@ -113,8 +113,21 @@ class Blockchain {
         return new Blockchain(decodedBlocks);
     }
 
-    // save()
-    // load()
+    async save() {
+        const encodedBlockchain = this.encode();
+        try { await db.put("Blockchain", encodedBlockchain); }
+        catch (err) { throw err; }
+    }
+
+    async load() {
+        try {
+            const encodedBlockchain = await db.get("Blockchain");
+            return new Blockchain().decode(encodedBlockchain);
+        }
+        catch (err) {
+            return undefined;
+        }
+    }
 }
 
 export default {

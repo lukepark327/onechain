@@ -6,14 +6,19 @@ import { broadcast, responseLatestMsg } from "./modules"; // network
 
 import { boolean } from "random";
 
-function initBlockchain() {
-    /**
-     * TODO: save blockchain in DB.
-     */
-    return getGenesisBlock();
-}
+var blockchain;
 
-var blockchain = new Blockchain([initBlockchain()]);
+async function initBlockchain() {
+    const loadedBlockchain = await new Blockchain().load();
+    if (loadedBlockchain !== undefined) {
+        blockchain = loadedBlockchain;
+    }
+    else {
+        const newBlockchain = new Blockchain([getGenesisBlock()]);
+        try { newBlockchain.save(); } catch (err) { throw err; }
+        blockchain = newBlockchain;
+    }
+}
 
 function getBlockchain() { return deepCopy(blockchain); }
 function getLatestBlock() { return deepCopy(blockchain.latestBlock()); }
@@ -57,9 +62,7 @@ function generateNextBlock(blockData) {
 function addBlock(newBlock) {
     if (isValidNewBlock(newBlock, getLatestBlock())) {
         blockchain.push(newBlock);
-        /**
-         * TODO: save blockchain in DB.
-         */
+        try { blockchain.save(); } catch (err) { throw err; }
         return true;
     }
     return false;
@@ -197,16 +200,17 @@ function isReplaceNeeded(originalBlockchain, newBlockchain) {
 function replaceChain(newBlockchain) {
     if (isReplaceNeeded(blockchain, newBlockchain) && isValidChain(newBlockchain)) {
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
+
         blockchain = deepCopy(newBlockchain);
-        /**
-         * TODO: save blockchain in DB.
-         */
+        try { blockchain.save(); } catch (err) { throw err; }
+
         broadcast(responseLatestMsg());
     }
     else { console.log("Received blockchain invalid"); }
 }
 
 export default {
+    initBlockchain,
     getBlockchain,
     getLatestBlock,
     addBlock,

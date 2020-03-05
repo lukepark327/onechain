@@ -1,6 +1,6 @@
 "use strict";
 import { getCurrentVersion } from "./modules"; // utils
-import { getBlockchain, mineBlock } from "./modules"; // blockchain
+import { initBlockchain, getBlockchain, mineBlock } from "./modules"; // blockchain
 import { getSockets, connectToPeers, initP2PServer } from "./modules"; // network
 import { getPublicFromWallet, initWallet } from "./modules"; // wallet
 
@@ -75,7 +75,10 @@ function initHttpServer() {
 }
 
 // main
-connectToPeers(initialPeers);
-initHttpServer();
-initP2PServer();
-initWallet();
+(async function () {
+    await initBlockchain();
+    connectToPeers(initialPeers);
+    initHttpServer();
+    initP2PServer();
+    initWallet();
+})();
