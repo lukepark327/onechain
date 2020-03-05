@@ -1,5 +1,7 @@
 "use strict";
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
+import { recursiveMkdir } from "./modules"; // utils
+
+import { existsSync, writeFileSync, readFileSync } from "fs";
 import { ec as _ec } from "elliptic";
 const ec = new _ec("secp256k1");
 
@@ -18,8 +20,7 @@ function initWallet() {
         return;
     }
 
-    if (!existsSync("wallet/")) { mkdirSync("wallet/"); }
-    if (!existsSync(privateKeyLocation)) { mkdirSync(privateKeyLocation); }
+    recursiveMkdir(privateKeyLocation);
 
     const newPrivateKey = generatePrivateKey();
     writeFileSync(privateKeyFile, newPrivateKey);

@@ -2,7 +2,7 @@
 import { cloneDeep } from "lodash";
 import { SHA256 as _SHA256 } from "crypto-js";
 import merkle from "merkle";
-import { readFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync } from "fs";
 
 function deepCopy(src) {
     return cloneDeep(src);
@@ -13,10 +13,14 @@ function deepEqual(value, other) {
     return JSON.stringify(value) === JSON.stringify(other);
 }
 
-/**
- * TODO: mkdir
- * Recursively make directories by tokenizing with '/'.
- */
+function recursiveMkdir(path) {
+    var pathSplited = path.split('/');
+    var tempPath = '';
+    for (var i=0; i<pathSplited.length; i++) {
+        tempPath += (pathSplited[i] + '/');
+        if (!existsSync(tempPath)) { mkdirSync(tempPath); }
+    }
+}
 
 /**
  * TODO: crypto.js
@@ -67,6 +71,7 @@ function getCurrentVersion() {
 export default {
     deepCopy,
     deepEqual,
+    recursiveMkdir,
     SHA256,
     calculateMerkleTree,
     calculateMerkleRoot,

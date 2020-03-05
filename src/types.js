@@ -71,6 +71,34 @@ class Block {
     // print()
 }
 
+class BlockchainIterator {
+    constructor(currentBlockHash) {
+        this._currentBlockHash = currentBlockHash;
+    }
+
+    get currentBlockHash() {
+        return this._currentBlockHash.toUpperCase(); // always return upper case letters.
+    }
+
+    /**
+     * @param {string} newCurrentBlockHash
+     */
+    set currentBlockHash(newCurrentBlockHash) {
+        this._currentBlockHash = newCurrentBlockHash;
+    }
+
+    /**
+     * TODO
+     */
+    // async prev() {
+    //     const aBlock = await new Block().load(this.currentBlockHash);
+    //     if (aBlock === undefined) { return undefined; }
+
+    //     this.currentBlockHash = aBlock.header.previousHash;
+    //     return aBlock;
+    // }
+}
+
 class Blockchain {
     constructor(latestBlock) {
         this.latestBlock = ut.deepCopy(latestBlock);
@@ -92,8 +120,13 @@ class Blockchain {
     /**
      * TODO
      */
-    // save()
+    // iterator()
+    // asArray()
+    // indexWith()
+    // encode()
+    // decode()
     // load()
+    // save()
     // print()
 }
 
