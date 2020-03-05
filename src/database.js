@@ -1,10 +1,13 @@
 "use strict";
-const level = require("level");
-const path = require("path");
+import { recursiveMkdir } from "./modules"; // utils
 
-const dbPath = path.join(__dirname, "../db");
-const db = level(dbPath);
+import level from "level";
 
-module.exports = {
+const dbLocation = "db/" + (process.env.DB || process.env.P2P_PORT || 6001);
+recursiveMkdir(dbLocation);
+
+const db = level(dbLocation);
+
+export default {
     db
 };

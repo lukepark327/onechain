@@ -1,24 +1,27 @@
 "use strict";
-const random = require("random");
+import { deepCopy, getCurrentVersion, getCurrentTimestamp, hexToBinary, deepEqual } from "./modules"; // utils
+import { SHA256, calculateMerkleRoot } from "./modules"; // crypto
+import { BlockHeader, Block, Blockchain } from "./modules"; // types
+import { broadcast, responseLatestMsg } from "./modules"; // network
 
-// const db = require("./database").db;
-const BlockHeader = require("./types").BlockHeader;
-const Block = require("./types").Block;
-const ut = require("./utils");
+import { boolean } from "random";
 
-// TODO
-function initBlockchain() {
-    return getGenesisBlock();
+var blockchain;
+
+async function initBlockchain() {
+    const loadedBlockchain = await new Blockchain().load();
+    if (loadedBlockchain !== undefined) {
+        blockchain = loadedBlockchain;
+    }
+    else {
+        const newBlockchain = new Blockchain([getGenesisBlock()]);
+        try { newBlockchain.save(); } catch (err) { throw err; }
+        blockchain = newBlockchain;
+    }
 }
 
-/**
- * TODO: Use database to store the data permanently.
- * A current implemetation stores blockchain in local volatile memory.
- */
-var blockchain = [getGenesisBlock()];
-
-function getBlockchain() { return ut.deepCopy(blockchain); }
-function getLatestBlock() { return ut.deepCopy(blockchain[blockchain.length - 1]); }
+function getBlockchain() { return deepCopy(blockchain); }
+function getLatestBlock() { return deepCopy(blockchain.latestBlock()); }
 
 function generateRawBlock(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce, data) {
     const header = new BlockHeader(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce);
@@ -26,7 +29,7 @@ function generateRawBlock(version, index, previousHash, timestamp, merkleRoot, d
 }
 
 function generateBlock(version, index, previousHash, timestamp, difficulty, nonce, data) {
-    const merkleRoot = ut.calculateMerkleRoot(data);
+    const merkleRoot = calculateMerkleRoot(data);
     return generateRawBlock(version, index, previousHash, timestamp, merkleRoot, difficulty, nonce, data);
 }
 
@@ -45,11 +48,11 @@ function getGenesisBlock() {
 function generateNextBlock(blockData) {
     const previousBlock = getLatestBlock();
 
-    const currentVersion = ut.getCurrentVersion();
+    const currentVersion = getCurrentVersion();
     const nextIndex = previousBlock.header.index + 1;
     const previousHash = previousBlock.hash();
-    const nextTimestamp = ut.getCurrentTimestamp();
-    const merkleRoot = ut.calculateMerkleRoot(blockData);
+    const nextTimestamp = getCurrentTimestamp();
+    const merkleRoot = calculateMerkleRoot(blockData);
     const difficulty = getDifficulty(getBlockchain());
     const validNonce = findNonce(currentVersion, nextIndex, previousHash, nextTimestamp, merkleRoot, difficulty);
 
@@ -59,6 +62,7 @@ function generateNextBlock(blockData) {
 function addBlock(newBlock) {
     if (isValidNewBlock(newBlock, getLatestBlock())) {
         blockchain.push(newBlock);
+        try { blockchain.save(); } catch (err) { throw err; }
         return true;
     }
     return false;
@@ -68,31 +72,31 @@ function mineBlock(blockData) {
     const newBlock = generateNextBlock(blockData);
 
     if (addBlock(newBlock)) {
-        const nw = require("./network");
-
-        nw.broadcast(nw.responseLatestMsg());
+        broadcast(responseLatestMsg());
         return newBlock;
     }
     else {
-        return null; // TODO: undefined
+        return null;
     }
 }
 
 /**
  * TODO: Implement a stop mechanism.
  * A current implementation doesn't stop until finding matching block.
+ * 
+ * TODO: Multi-threading (clustering)
  */
 function findNonce(version, index, previoushash, timestamp, merkleRoot, difficulty) {
     var nonce = 0;
     while (true) {
-        var hash = ut.SHA256([version, index, previoushash, timestamp, merkleRoot, difficulty, nonce]);
+        var hash = SHA256([version, index, previoushash, timestamp, merkleRoot, difficulty, nonce]);
         if (hashMatchesDifficulty(hash, difficulty)) { return nonce; }
         nonce++;
     }
 }
 
 function hashMatchesDifficulty(hash, difficulty) {
-    const hashBinary = ut.hexToBinary(hash);
+    const hashBinary = hexToBinary(hash);
     const requiredPrefix = '0'.repeat(difficulty);
     return hashBinary.startsWith(requiredPrefix);
 }
@@ -101,7 +105,7 @@ const BLOCK_GENERATION_INTERVAL = 10; // in seconds
 const DIFFICULTY_ADJUSTMENT_INTERVAL = 10; // in blocks
 
 function getDifficulty(aBlockchain) {
-    const latestBlock = aBlockchain[aBlockchain.length - 1];
+    const latestBlock = aBlockchain.latestBlock();
     if (latestBlock.header.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.header.index !== 0) {
         return getAdjustedDifficulty(aBlockchain);
     }
@@ -109,8 +113,8 @@ function getDifficulty(aBlockchain) {
 }
 
 function getAdjustedDifficulty(aBlockchain) {
-    const latestBlock = aBlockchain[aBlockchain.length - 1];
-    const prevAdjustmentBlock = aBlockchain[aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
+    const latestBlock = aBlockchain.latestBlock();
+    const prevAdjustmentBlock = aBlockchain.indexWith(aBlockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL);
     const timeTaken = latestBlock.header.timestamp - prevAdjustmentBlock.header.timestamp;
     const timeExpected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
 
@@ -126,19 +130,19 @@ function getAdjustedDifficulty(aBlockchain) {
 }
 
 function isValidBlockStructure(block) {
-    return typeof(block.header.version) === 'string'
-        && typeof(block.header.index) === 'number'
-        && typeof(block.header.previousHash) === 'string'
-        && typeof(block.header.timestamp) === 'number'
-        && typeof(block.header.merkleRoot) === 'string'
-        && typeof(block.header.difficulty) === 'number'
-        && typeof(block.header.nonce) === 'number'
-        && typeof(block.data) === 'object';
+    return typeof (block.header.version) === 'string'
+        && typeof (block.header.index) === 'number'
+        && typeof (block.header.previousHash) === 'string'
+        && typeof (block.header.timestamp) === 'number'
+        && typeof (block.header.merkleRoot) === 'string'
+        && typeof (block.header.difficulty) === 'number'
+        && typeof (block.header.nonce) === 'number'
+        && typeof (block.data) === 'object';
 }
 
 function isValidTimestamp(newBlock, previousBlock) {
     return (previousBlock.header.timestamp - 60 < newBlock.header.timestamp)
-        && newBlock.header.timestamp - 60 < ut.getCurrentTimestamp();
+        && newBlock.header.timestamp - 60 < getCurrentTimestamp();
 }
 
 function isValidNewBlock(newBlock, previousBlock) {
@@ -154,7 +158,7 @@ function isValidNewBlock(newBlock, previousBlock) {
         console.log("Invalid previousHash");
         return false;
     }
-    else if (ut.calculateMerkleRoot(newBlock.data) !== newBlock.header.merkleRoot) {
+    else if (calculateMerkleRoot(newBlock.data) !== newBlock.header.merkleRoot) {
         console.log("Invalid merkleRoot");
         return false;
     }
@@ -170,34 +174,43 @@ function isValidNewBlock(newBlock, previousBlock) {
 }
 
 function isValidChain(blockchainToValidate) {
-    if (!ut.isEqual(blockchainToValidate[0], getGenesisBlock())) {
+    if (!deepEqual(blockchainToValidate.indexWith(0), getGenesisBlock())) {
         return false;
     }
-    var tempBlocks = [blockchainToValidate[0]];
+    var tempBlockchain = new Blockchain([blockchainToValidate.indexWith(0)]);
     for (var i = 1; i < blockchainToValidate.length; i++) {
-        if (isValidNewBlock(blockchainToValidate[i], tempBlocks[i - 1])) {
-            tempBlocks.push(blockchainToValidate[i]);
+        if (isValidNewBlock(blockchainToValidate.indexWith(i), tempBlockchain.indexWith(i - 1))) {
+            tempBlockchain.push(blockchainToValidate.indexWith(i));
         }
         else { return false; }
     }
     return true;
 }
 
-function replaceChain(newBlocks) {
-    if (
-        isValidChain(newBlocks)
-        && (newBlocks.length > blockchain.length || (newBlocks.length === blockchain.length) && random.boolean())
-    ) {
-        const nw = require("./network");
+function isReplaceNeeded(originalBlockchain, newBlockchain) {
+    /**
+     * TODO: the haviest chain rule.
+     * The current implementation is the longest chain rule.
+     */
+    if (originalBlockchain.length < newBlockchain.length) { return true; }
+    else if (originalBlockchain.length > newBlockchain.length) { return false; }
+    else { return boolean(); }
+}
 
+function replaceChain(newBlockchain) {
+    if (isReplaceNeeded(blockchain, newBlockchain) && isValidChain(newBlockchain)) {
         console.log("Received blockchain is valid. Replacing current blockchain with received blockchain");
-        blockchain = newBlocks;
-        nw.broadcast(nw.responseLatestMsg());
+
+        blockchain = deepCopy(newBlockchain);
+        try { blockchain.save(); } catch (err) { throw err; }
+
+        broadcast(responseLatestMsg());
     }
     else { console.log("Received blockchain invalid"); }
 }
 
-module.exports = {
+export default {
+    initBlockchain,
     getBlockchain,
     getLatestBlock,
     addBlock,

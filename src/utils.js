@@ -1,31 +1,23 @@
 'use strict';
-const _ = require("lodash");
-const cryptoJS = require("crypto-js");
-const merkle = require("merkle");
+import { cloneDeep } from "lodash";
+import { existsSync, mkdirSync, readFileSync } from "fs";
 
 function deepCopy(src) {
-    return _.cloneDeep(src);
+    return cloneDeep(src);
 }
 
-function isEqual(value, other) {
+function deepEqual(value, other) {
     // return _.isEqual(value, other); // Can not get rid of functions.
     return JSON.stringify(value) === JSON.stringify(other);
 }
 
-function SHA256(elems) {
-    return cryptoJS.SHA256(elems.reduce(function (acc, elem) {
-        return acc + elem;
-    })).toString().toUpperCase();
-}
-
-function calculateMerkleTree(data) {
-    return merkle("sha256").sync(data);
-}
-
-function calculateMerkleRoot(data) {
-    const merkleTree = calculateMerkleTree(data);
-    const merkleRoot = merkleTree.root() || '0'.repeat(64);
-    return merkleRoot;
+function recursiveMkdir(path) {
+    var pathSplited = path.split('/');
+    var tempPath = '';
+    for (var i = 0; i < pathSplited.length; i++) {
+        tempPath += (pathSplited[i] + '/');
+        if (!existsSync(tempPath)) { mkdirSync(tempPath); }
+    }
 }
 
 function hexToBinary(s) {
@@ -49,19 +41,15 @@ function getCurrentTimestamp() {
 }
 
 function getCurrentVersion() {
-    const fs = require("fs");
-
-    const packageJson = fs.readFileSync("./package.json");
+    const packageJson = readFileSync("./package.json");
     const currentVersion = JSON.parse(packageJson).version;
     return currentVersion;
 }
 
-module.exports = {
+export default {
     deepCopy,
-    isEqual,
-    SHA256,
-    calculateMerkleTree,
-    calculateMerkleRoot,
+    deepEqual,
+    recursiveMkdir,
     hexToBinary,
     getCurrentTimestamp,
     getCurrentVersion
