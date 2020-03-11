@@ -130,14 +130,14 @@ function getAdjustedDifficulty(aBlockchain) {
 }
 
 function isValidBlockStructure(block) {
-    return typeof (block.header.version) === 'string'
-        && typeof (block.header.index) === 'number'
-        && typeof (block.header.previousHash) === 'string'
-        && typeof (block.header.timestamp) === 'number'
-        && typeof (block.header.merkleRoot) === 'string'
-        && typeof (block.header.difficulty) === 'number'
-        && typeof (block.header.nonce) === 'number'
-        && typeof (block.data) === 'object';
+    return typeof (block.header.version) === "string"
+        && typeof (block.header.index) === "number"
+        && typeof (block.header.previousHash) === "string"
+        && typeof (block.header.timestamp) === "number"
+        && typeof (block.header.merkleRoot) === "string"
+        && typeof (block.header.difficulty) === "number"
+        && typeof (block.header.nonce) === "number"
+        && typeof (block.data) === "object";
 }
 
 function isValidTimestamp(newBlock, previousBlock) {
@@ -163,7 +163,7 @@ function isValidNewBlock(newBlock, previousBlock) {
         return false;
     }
     else if (!isValidTimestamp(newBlock, previousBlock)) {
-        console.log('Invalid timestamp');
+        console.log("Invalid timestamp");
         return false;
     }
     else if (!hashMatchesDifficulty(newBlock.hash(), newBlock.header.difficulty)) {

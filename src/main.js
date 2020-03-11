@@ -19,13 +19,13 @@ function initHttpServer() {
     app.get("/blocks", function (req, res) {
         res.send(getBlockchain());
     });
-    app.get('/block/:number', function (req, res) {
+    app.get("/block/:number", function (req, res) {
         try {
             const targetBlock = getBlockchain().indexWith(req.params.number);
             res.send(targetBlock);
         }
         catch (err) {
-            res.status(400).send('Bad Request');
+            res.status(400).send("Bad Request");
             console.log(err);
         }
     });
@@ -33,7 +33,7 @@ function initHttpServer() {
         const data = req.body.data || [];
         const newBlock = mineBlock(data);
         if (newBlock === null) {
-            res.status(400).send('Bad Request');
+            res.status(400).send("Bad Request");
         }
         else {
             res.send(newBlock);
@@ -48,7 +48,7 @@ function initHttpServer() {
             res.send(targetBlock.header.version);
         }
         catch (err) {
-            res.status(400).send('Bad Request');
+            res.status(400).send("Bad Request");
             console.log(err);
         }
     });
